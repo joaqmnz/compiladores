@@ -2,12 +2,14 @@
 
 package bemtevi.node;
 
+import java.util.*;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
 public final class ABlocoExp extends PExp
 {
-    private PBlloco _blloco_;
+    private final LinkedList<PBllocoFecho> _bllocoFecho_ = new LinkedList<PBllocoFecho>();
+    private PExp _exp_;
 
     public ABlocoExp()
     {
@@ -15,10 +17,13 @@ public final class ABlocoExp extends PExp
     }
 
     public ABlocoExp(
-        @SuppressWarnings("hiding") PBlloco _blloco_)
+        @SuppressWarnings("hiding") List<?> _bllocoFecho_,
+        @SuppressWarnings("hiding") PExp _exp_)
     {
         // Constructor
-        setBlloco(_blloco_);
+        setBllocoFecho(_bllocoFecho_);
+
+        setExp(_exp_);
 
     }
 
@@ -26,7 +31,8 @@ public final class ABlocoExp extends PExp
     public Object clone()
     {
         return new ABlocoExp(
-            cloneNode(this._blloco_));
+            cloneList(this._bllocoFecho_),
+            cloneNode(this._exp_));
     }
 
     @Override
@@ -35,16 +41,42 @@ public final class ABlocoExp extends PExp
         ((Analysis) sw).caseABlocoExp(this);
     }
 
-    public PBlloco getBlloco()
+    public LinkedList<PBllocoFecho> getBllocoFecho()
     {
-        return this._blloco_;
+        return this._bllocoFecho_;
     }
 
-    public void setBlloco(PBlloco node)
+    public void setBllocoFecho(List<?> list)
     {
-        if(this._blloco_ != null)
+        for(PBllocoFecho e : this._bllocoFecho_)
         {
-            this._blloco_.parent(null);
+            e.parent(null);
+        }
+        this._bllocoFecho_.clear();
+
+        for(Object obj_e : list)
+        {
+            PBllocoFecho e = (PBllocoFecho) obj_e;
+            if(e.parent() != null)
+            {
+                e.parent().removeChild(e);
+            }
+
+            e.parent(this);
+            this._bllocoFecho_.add(e);
+        }
+    }
+
+    public PExp getExp()
+    {
+        return this._exp_;
+    }
+
+    public void setExp(PExp node)
+    {
+        if(this._exp_ != null)
+        {
+            this._exp_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +89,29 @@ public final class ABlocoExp extends PExp
             node.parent(this);
         }
 
-        this._blloco_ = node;
+        this._exp_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._blloco_);
+            + toString(this._bllocoFecho_)
+            + toString(this._exp_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._blloco_ == child)
+        if(this._bllocoFecho_.remove(child))
         {
-            this._blloco_ = null;
+            return;
+        }
+
+        if(this._exp_ == child)
+        {
+            this._exp_ = null;
             return;
         }
 
@@ -84,9 +122,27 @@ public final class ABlocoExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._blloco_ == oldChild)
+        for(ListIterator<PBllocoFecho> i = this._bllocoFecho_.listIterator(); i.hasNext();)
         {
-            setBlloco((PBlloco) newChild);
+            if(i.next() == oldChild)
+            {
+                if(newChild != null)
+                {
+                    i.set((PBllocoFecho) newChild);
+                    newChild.parent(this);
+                    oldChild.parent(null);
+                    return;
+                }
+
+                i.remove();
+                oldChild.parent(null);
+                return;
+            }
+        }
+
+        if(this._exp_ == oldChild)
+        {
+            setExp((PExp) newChild);
             return;
         }
 

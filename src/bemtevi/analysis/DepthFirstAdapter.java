@@ -483,9 +483,16 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseABlocoExp(ABlocoExp node)
     {
         inABlocoExp(node);
-        if(node.getBlloco() != null)
         {
-            node.getBlloco().apply(this);
+            List<PBllocoFecho> copy = new ArrayList<PBllocoFecho>(node.getBllocoFecho());
+            for(PBllocoFecho e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getExp() != null)
+        {
+            node.getExp().apply(this);
         }
         outABlocoExp(node);
     }

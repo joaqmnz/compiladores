@@ -74,7 +74,7 @@ Productions
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
 		|{chamada} chamada {-> chamada.exp}
-		|{bloco} blloco {-> New exp.bloco(blloco)}
+		|{bloco} blloco {-> blloco.exp}
 		|{instancia} instancia {-> instancia.exp}
 		|{ternario} se abre_parenteses [esquerdo]:exp fecha_parenteses entao [centro]:exp senao [direito]: exp {-> New exp.ternario(esquerdo.exp, centro.exp, direito.exp)};
 	
@@ -120,8 +120,8 @@ Productions
 		|{falso} falso {-> New exp.falso(falso)}
 		|{parenteses} abre_parenteses exp fecha_parenteses {-> exp.exp};
 	
-	blloco {-> blloco} = 
-		abre_colchete blloco_fecho* exp fecha_colchete {-> New blloco([blloco_fecho], exp)};
+	blloco {-> exp} = 
+		abre_colchete blloco_fecho* exp fecha_colchete {-> New exp.bloco([blloco_fecho], exp)};
 	blloco_fecho {-> blloco_fecho} = 
 		{constante} dec_cons {-> dec_cons.blloco_fecho}
 		|{objeto} dec_obj {-> dec_obj.blloco_fecho}
@@ -201,8 +201,6 @@ Productions
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
 
 
-	
-
 Abstract Syntax Tree
 	inicio = 
 		{exp} exp
@@ -225,7 +223,7 @@ Abstract Syntax Tree
 		|{negativo} exp
 		|{chamada} id_fecho* lista_exp
 		|{instancia} lista_init
-		|{bloco} blloco
+		|{bloco} blloco_fecho* exp
 		|{numero} numero
 		|{id} id
 		|{string} string

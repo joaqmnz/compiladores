@@ -865,13 +865,7 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PExp pexpNode1;
-        {
-            // Block
-        PBlloco pbllocoNode2;
-        pbllocoNode2 = (PBlloco)nodeArrayList1.get(0);
-
-        pexpNode1 = new ABlocoExp(pbllocoNode2);
-        }
+        pexpNode1 = (PExp)nodeArrayList1.get(0);
 	nodeList.add(pexpNode1);
         return nodeList;
     }
@@ -1447,7 +1441,7 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBlloco pbllocoNode1;
+        PExp pexpNode1;
         {
             // Block
         LinkedList<Object> listNode2 = new LinkedList<Object>();
@@ -1457,9 +1451,9 @@ public class Parser
         }
         pexpNode3 = (PExp)nodeArrayList2.get(0);
 
-        pbllocoNode1 = new ABlloco(listNode2, pexpNode3);
+        pexpNode1 = new ABlocoExp(listNode2, pexpNode3);
         }
-	nodeList.add(pbllocoNode1);
+	nodeList.add(pexpNode1);
         return nodeList;
     }
 
@@ -1474,7 +1468,7 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBlloco pbllocoNode1;
+        PExp pexpNode1;
         {
             // Block
         LinkedList<Object> listNode3 = new LinkedList<Object>();
@@ -1490,9 +1484,9 @@ public class Parser
         }
         pexpNode4 = (PExp)nodeArrayList3.get(0);
 
-        pbllocoNode1 = new ABlloco(listNode3, pexpNode4);
+        pexpNode1 = new ABlocoExp(listNode3, pexpNode4);
         }
-	nodeList.add(pbllocoNode1);
+	nodeList.add(pexpNode1);
         return nodeList;
     }
 

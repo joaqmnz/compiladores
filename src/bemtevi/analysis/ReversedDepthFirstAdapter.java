@@ -484,9 +484,17 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseABlocoExp(ABlocoExp node)
     {
         inABlocoExp(node);
-        if(node.getBlloco() != null)
+        if(node.getExp() != null)
         {
-            node.getBlloco().apply(this);
+            node.getExp().apply(this);
+        }
+        {
+            List<PBllocoFecho> copy = new ArrayList<PBllocoFecho>(node.getBllocoFecho());
+            Collections.reverse(copy);
+            for(PBllocoFecho e : copy)
+            {
+                e.apply(this);
+            }
         }
         outABlocoExp(node);
     }
