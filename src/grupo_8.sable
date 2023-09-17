@@ -68,7 +68,8 @@ Productions
 
 	inicio {-> inicio} = 
 		{exp} exp {-> New inicio.exp(exp)}
-		|{familia} familia {-> New inicio.familia(familia)};
+		|{familia} familia {-> New inicio.familia(familia)}
+		|{funcao} dec_funcao {-> New inicio.funcao(dec_funcao)};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
@@ -132,19 +133,21 @@ Productions
 		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
 	id_fecho {-> id_fecho} = 
 		ponto_final id {-> New id_fecho(ponto_final, id)};
+
+	tipo {-> tipo} = 
+		{primitivo} primitivo {-> New tipo.primitivo(primitivo)}
+		|{molde} id_molde {-> New tipo.molde(id_molde)};
+
 	tipo_primitivo {-> tipo_primitivo} = 
 		primitivo {-> New tipo_primitivo(primitivo)};
 	tipo_molde {-> tipo_molde} = 
 		id_molde {-> New tipo_molde(id_molde)};
-	tipo = 
-		{primitivo} tipo_primitivo
-		|{molde} tipo_molde;
-	
+
 	dec_obj {-> bloco_fecho} = 
 		objeto dois_pontos tipo_molde id ponto_virgula {-> New bloco_fecho.objeto(tipo_molde, id)};
-	
 	dec_cons {-> bloco_fecho} = 
 		constante dois_pontos tipo_primitivo id ponto_virgula {-> New bloco_fecho.constante(tipo_primitivo, id)};
+
 	chamada {-> exp} = 
 		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada([id_fecho], lista_exp)};
 	lista_exp {-> lista_exp} = 
@@ -170,7 +173,10 @@ Productions
 	relacao {-> relacao} = 
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 	
-	parametros {-> parametros} = 
+	dec_funcao {-> dec_funcao} =
+		{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
+ 	
+ 	parametros {-> parametros} = 
  	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
  	    |{vazio} {-> New parametros.vazio()};
 	parametro_fecho {-> parametro_fecho} = 
@@ -195,10 +201,13 @@ Productions
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
 
 
+	
+
 Abstract Syntax Tree
 	inicio = 
 		{exp} exp
-		|{familia} familia;
+		|{familia} familia
+		|{funcao} dec_funcao;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
@@ -262,16 +271,19 @@ Abstract Syntax Tree
 	
 	id_fecho = 
 		ponto_final id;
-	
+
+	tipo = 
+		{primitivo} primitivo
+		|{molde} id_molde;
+
 	tipo_primitivo = 
 		primitivo;
 	
 	tipo_molde = 
 		id_molde;
-	
-	tipo = 
-		{primitivo} tipo_primitivo
-		|{molde} tipo_molde;
+
+	dec_funcao =
+		{func2} tipo id parametros;
 
 	parametros = 
  	    {parametro} parametro parametro_fecho*
@@ -296,4 +308,3 @@ Abstract Syntax Tree
 	parametro_assinatura = 
 		{tipo} tipo
 		|{assinatura} assinatura;
-	
