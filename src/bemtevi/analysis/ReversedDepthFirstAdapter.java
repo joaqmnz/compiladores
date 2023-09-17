@@ -36,67 +36,25 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outStart(node);
     }
 
-    public void inAExpInicio(AExpInicio node)
+    public void inAInicio(AInicio node)
     {
         defaultIn(node);
     }
 
-    public void outAExpInicio(AExpInicio node)
+    public void outAInicio(AInicio node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAExpInicio(AExpInicio node)
+    public void caseAInicio(AInicio node)
     {
-        inAExpInicio(node);
-        if(node.getExp() != null)
+        inAInicio(node);
+        if(node.getPrograma() != null)
         {
-            node.getExp().apply(this);
+            node.getPrograma().apply(this);
         }
-        outAExpInicio(node);
-    }
-
-    public void inAFamiliaInicio(AFamiliaInicio node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFamiliaInicio(AFamiliaInicio node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFamiliaInicio(AFamiliaInicio node)
-    {
-        inAFamiliaInicio(node);
-        if(node.getFamilia() != null)
-        {
-            node.getFamilia().apply(this);
-        }
-        outAFamiliaInicio(node);
-    }
-
-    public void inAFuncaoInicio(AFuncaoInicio node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFuncaoInicio(AFuncaoInicio node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFuncaoInicio(AFuncaoInicio node)
-    {
-        inAFuncaoInicio(node);
-        if(node.getDecFuncao() != null)
-        {
-            node.getDecFuncao().apply(this);
-        }
-        outAFuncaoInicio(node);
+        outAInicio(node);
     }
 
     public void inATernarioExp(ATernarioExp node)
@@ -1441,5 +1399,117 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getAssinatura().apply(this);
         }
         outAAssinaturaParametroAssinatura(node);
+    }
+
+    public void inAAtributos(AAtributos node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAtributos(AAtributos node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAtributos(AAtributos node)
+    {
+        inAAtributos(node);
+        {
+            List<PBllocoFecho> copy = new ArrayList<PBllocoFecho>(node.getBllocoFecho());
+            Collections.reverse(copy);
+            for(PBllocoFecho e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outAAtributos(node);
+    }
+
+    public void inAMetodos(AMetodos node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMetodos(AMetodos node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMetodos(AMetodos node)
+    {
+        inAMetodos(node);
+        {
+            List<PDecFuncao> copy = new ArrayList<PDecFuncao>(node.getDecFuncao());
+            Collections.reverse(copy);
+            for(PDecFuncao e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outAMetodos(node);
+    }
+
+    public void inADefMolde(ADefMolde node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADefMolde(ADefMolde node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADefMolde(ADefMolde node)
+    {
+        inADefMolde(node);
+        if(node.getMetodos() != null)
+        {
+            node.getMetodos().apply(this);
+        }
+        if(node.getAtributos() != null)
+        {
+            node.getAtributos().apply(this);
+        }
+        if(node.getIdMolde() != null)
+        {
+            node.getIdMolde().apply(this);
+        }
+        outADefMolde(node);
+    }
+
+    public void inAPrograma(APrograma node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrograma(APrograma node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrograma(APrograma node)
+    {
+        inAPrograma(node);
+        {
+            List<PDefMolde> copy = new ArrayList<PDefMolde>(node.getDireita());
+            Collections.reverse(copy);
+            for(PDefMolde e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getEsquerda() != null)
+        {
+            node.getEsquerda().apply(this);
+        }
+        if(node.getFamilia() != null)
+        {
+            node.getFamilia().apply(this);
+        }
+        outAPrograma(node);
     }
 }

@@ -75,19 +75,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAExpInicio(AExpInicio node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFamiliaInicio(AFamiliaInicio node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFuncaoInicio(AFuncaoInicio node)
+    public void caseAInicio(AInicio node)
     {
         defaultCase(node);
     }
@@ -424,6 +412,30 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAtributos(AAtributos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMetodos(AMetodos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefMolde(ADefMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPrograma(APrograma node)
     {
         defaultCase(node);
     }

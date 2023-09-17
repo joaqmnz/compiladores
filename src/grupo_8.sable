@@ -67,9 +67,10 @@ Ignored Tokens
 Productions
 
 	inicio {-> inicio} = 
-		{exp} exp {-> New inicio.exp(exp)}
-		|{familia} familia {-> New inicio.familia(familia)}
-		|{funcao} dec_funcao {-> New inicio.funcao(dec_funcao)};
+		programa {-> New inicio(programa)};
+	
+	programa {-> programa} = 
+	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia,esquerda.def_molde,[direita.def_molde])};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
@@ -200,13 +201,22 @@ Productions
 	parametro_assinatura {-> parametro_assinatura} = 
 		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
+	
+	atributos {-> atributos} = 
+ 	    atributos_fecho* {-> New atributos([atributos_fecho.blloco_fecho])};
+    atributos_fecho {-> blloco_fecho} = 
+ 	    {objeto} dec_obj {-> dec_obj.blloco_fecho}
+     	|{constante} dec_cons {-> dec_cons.blloco_fecho};
+	metodos {-> metodos} = 
+ 	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
+ 	    
+ 	def_molde {-> def_molde} = 
+ 	    molde id_molde contem atributos metodos fim {-> New def_molde(id_molde, atributos,metodos)};
 
 
 Abstract Syntax Tree
 	inicio = 
-		{exp} exp
-		|{familia} familia
-		|{funcao} dec_funcao;
+		programa;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
@@ -308,3 +318,16 @@ Abstract Syntax Tree
 	parametro_assinatura = 
 		{tipo} tipo
 		|{assinatura} assinatura;
+
+	atributos = 
+ 	    blloco_fecho*;
+		
+	metodos = 
+ 	    dec_funcao*;
+ 	   
+ 	def_molde = 
+ 	    id_molde atributos metodos ;
+ 	    
+ 	programa = 
+	    familia [esquerda]:def_molde [direita]:def_molde*;
+	
