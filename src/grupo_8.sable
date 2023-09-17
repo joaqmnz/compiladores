@@ -308,3 +308,4 @@ Abstract Syntax Tree
 	parametro_assinatura = 
 		{tipo} tipo
 		|{assinatura} assinatura;
+
