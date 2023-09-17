@@ -5,46 +5,46 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ABlocoExp extends PExp
+public final class AAssinaturaParametro extends PParametro
 {
-    private PBlloco _blloco_;
+    private PAssinatura _assinatura_;
 
-    public ABlocoExp()
+    public AAssinaturaParametro()
     {
         // Constructor
     }
 
-    public ABlocoExp(
-        @SuppressWarnings("hiding") PBlloco _blloco_)
+    public AAssinaturaParametro(
+        @SuppressWarnings("hiding") PAssinatura _assinatura_)
     {
         // Constructor
-        setBlloco(_blloco_);
+        setAssinatura(_assinatura_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ABlocoExp(
-            cloneNode(this._blloco_));
+        return new AAssinaturaParametro(
+            cloneNode(this._assinatura_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseABlocoExp(this);
+        ((Analysis) sw).caseAAssinaturaParametro(this);
     }
 
-    public PBlloco getBlloco()
+    public PAssinatura getAssinatura()
     {
-        return this._blloco_;
+        return this._assinatura_;
     }
 
-    public void setBlloco(PBlloco node)
+    public void setAssinatura(PAssinatura node)
     {
-        if(this._blloco_ != null)
+        if(this._assinatura_ != null)
         {
-            this._blloco_.parent(null);
+            this._assinatura_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ABlocoExp extends PExp
             node.parent(this);
         }
 
-        this._blloco_ = node;
+        this._assinatura_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._blloco_);
+            + toString(this._assinatura_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._blloco_ == child)
+        if(this._assinatura_ == child)
         {
-            this._blloco_ = null;
+            this._assinatura_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ABlocoExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._blloco_ == oldChild)
+        if(this._assinatura_ == oldChild)
         {
-            setBlloco((PBlloco) newChild);
+            setAssinatura((PAssinatura) newChild);
             return;
         }
 

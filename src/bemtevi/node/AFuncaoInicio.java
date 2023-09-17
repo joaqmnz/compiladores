@@ -5,46 +5,46 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ABlocoExp extends PExp
+public final class AFuncaoInicio extends PInicio
 {
-    private PBlloco _blloco_;
+    private PDecFuncao _decFuncao_;
 
-    public ABlocoExp()
+    public AFuncaoInicio()
     {
         // Constructor
     }
 
-    public ABlocoExp(
-        @SuppressWarnings("hiding") PBlloco _blloco_)
+    public AFuncaoInicio(
+        @SuppressWarnings("hiding") PDecFuncao _decFuncao_)
     {
         // Constructor
-        setBlloco(_blloco_);
+        setDecFuncao(_decFuncao_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ABlocoExp(
-            cloneNode(this._blloco_));
+        return new AFuncaoInicio(
+            cloneNode(this._decFuncao_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseABlocoExp(this);
+        ((Analysis) sw).caseAFuncaoInicio(this);
     }
 
-    public PBlloco getBlloco()
+    public PDecFuncao getDecFuncao()
     {
-        return this._blloco_;
+        return this._decFuncao_;
     }
 
-    public void setBlloco(PBlloco node)
+    public void setDecFuncao(PDecFuncao node)
     {
-        if(this._blloco_ != null)
+        if(this._decFuncao_ != null)
         {
-            this._blloco_.parent(null);
+            this._decFuncao_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ABlocoExp extends PExp
             node.parent(this);
         }
 
-        this._blloco_ = node;
+        this._decFuncao_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._blloco_);
+            + toString(this._decFuncao_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._blloco_ == child)
+        if(this._decFuncao_ == child)
         {
-            this._blloco_ = null;
+            this._decFuncao_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ABlocoExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._blloco_ == oldChild)
+        if(this._decFuncao_ == oldChild)
         {
-            setBlloco((PBlloco) newChild);
+            setDecFuncao((PDecFuncao) newChild);
             return;
         }
 

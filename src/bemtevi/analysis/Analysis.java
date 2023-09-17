@@ -14,6 +14,7 @@ public interface Analysis extends Switch
     void caseStart(Start node);
     void caseAExpInicio(AExpInicio node);
     void caseAFamiliaInicio(AFamiliaInicio node);
+    void caseAFuncaoInicio(AFuncaoInicio node);
     void caseATernarioExp(ATernarioExp node);
     void caseAOuExp(AOuExp node);
     void caseAEExp(AEExp node);
@@ -27,9 +28,9 @@ public interface Analysis extends Switch
     void caseAModuloExp(AModuloExp node);
     void caseANegacaoExp(ANegacaoExp node);
     void caseANegativoExp(ANegativoExp node);
-    void caseABlocoExp(ABlocoExp node);
     void caseAChamadaExp(AChamadaExp node);
     void caseAInstanciaExp(AInstanciaExp node);
+    void caseABlocoExp(ABlocoExp node);
     void caseANumeroExp(ANumeroExp node);
     void caseAIdExp(AIdExp node);
     void caseAStringExp(AStringExp node);
@@ -40,9 +41,10 @@ public interface Analysis extends Switch
     void caseAVazioFamilia(AVazioFamilia node);
     void caseAFamiliaFecho(AFamiliaFecho node);
     void caseARelacao(ARelacao node);
-    void caseAConstanteBlocoFecho(AConstanteBlocoFecho node);
-    void caseAObjetoBlocoFecho(AObjetoBlocoFecho node);
-    void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node);
+    void caseABlloco(ABlloco node);
+    void caseAConstanteBllocoFecho(AConstanteBllocoFecho node);
+    void caseAObjetoBllocoFecho(AObjetoBllocoFecho node);
+    void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node);
     void caseAExpListaExp(AExpListaExp node);
     void caseAVazioListaExp(AVazioListaExp node);
     void caseAInitListaInit(AInitListaInit node);
@@ -53,8 +55,24 @@ public interface Analysis extends Switch
     void caseAIdIdOuAttr(AIdIdOuAttr node);
     void caseAAttrIdOuAttr(AAttrIdOuAttr node);
     void caseAIdFecho(AIdFecho node);
+    void caseAPrimitivoTipo(APrimitivoTipo node);
+    void caseAMoldeTipo(AMoldeTipo node);
     void caseATipoPrimitivo(ATipoPrimitivo node);
     void caseATipoMolde(ATipoMolde node);
+    void caseAFunc2DecFuncao(AFunc2DecFuncao node);
+    void caseAParametroParametros(AParametroParametros node);
+    void caseAVazioParametros(AVazioParametros node);
+    void caseAParametroFecho(AParametroFecho node);
+    void caseAIdParametro(AIdParametro node);
+    void caseAAssinaturaParametro(AAssinaturaParametro node);
+    void caseAAssinatura(AAssinatura node);
+    void caseAParametrosAssinatura(AParametrosAssinatura node);
+    void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node);
+    void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node);
+    void caseATipoParametroAssinatura(ATipoParametroAssinatura node);
+    void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node);
+    void caseAAtributos(AAtributos node);
+    void caseAMetodos(AMetodos node);
 
     void caseTPrimitivo(TPrimitivo node);
     void caseTNumero(TNumero node);

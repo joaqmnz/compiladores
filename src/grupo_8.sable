@@ -201,16 +201,13 @@ Productions
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
 
 	atributos {-> atributos} = 
- 	    atributos_fecho* {-> New atributos([atributos_fecho])};
-    atributos_fecho {-> bloco_fecho} = 
- 	    {objeto} dec_obj {-> dec_obj.bloco_fecho}
-     	|{constante} dec_cons {-> dec_cons.bloco_fecho} ;
-	
+ 	    atributos_fecho* {-> New atributos([atributos_fecho.blloco_fecho])};
+    atributos_fecho {-> blloco_fecho} = 
+ 	    {objeto} dec_obj {-> dec_obj.blloco_fecho}
+     	|{constante} dec_cons {-> dec_cons.blloco_fecho};
 	metodos {-> metodos} = 
- 	    dec_funcao* {-> dec_funcao.metodos};
+ 	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
 
-
-	
 
 Abstract Syntax Tree
 	inicio = 
@@ -322,16 +319,7 @@ Abstract Syntax Tree
 		|{assinatura} assinatura;
 
 	atributos = 
- 	    atributos_fecho*;
-    atributos_fecho = 
- 	    {objeto} dec_obj
- 	    |{constante} dec_cons;
+ 	    blloco_fecho*;
 		
 	metodos = 
  	    dec_funcao*;
- 	    
- 	dec_obj = 
- 	     tipo_molde id ;
- 
-    dec_cons = 
- 	    tipo_primitivo id ;
