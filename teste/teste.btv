@@ -1,5 +1,1 @@
-[
-    constante: Numero primo;
-
-    3 - 1
-]
+funcao: Numero primo();
