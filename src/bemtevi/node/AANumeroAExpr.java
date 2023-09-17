@@ -5,46 +5,46 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMoldeTipo extends PTipo
+public final class AANumeroAExpr extends PAExpr
 {
-    private TIdMolde _idMolde_;
+    private TNumero _numero_;
 
-    public AMoldeTipo()
+    public AANumeroAExpr()
     {
         // Constructor
     }
 
-    public AMoldeTipo(
-        @SuppressWarnings("hiding") TIdMolde _idMolde_)
+    public AANumeroAExpr(
+        @SuppressWarnings("hiding") TNumero _numero_)
     {
         // Constructor
-        setIdMolde(_idMolde_);
+        setNumero(_numero_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMoldeTipo(
-            cloneNode(this._idMolde_));
+        return new AANumeroAExpr(
+            cloneNode(this._numero_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMoldeTipo(this);
+        ((Analysis) sw).caseAANumeroAExpr(this);
     }
 
-    public TIdMolde getIdMolde()
+    public TNumero getNumero()
     {
-        return this._idMolde_;
+        return this._numero_;
     }
 
-    public void setIdMolde(TIdMolde node)
+    public void setNumero(TNumero node)
     {
-        if(this._idMolde_ != null)
+        if(this._numero_ != null)
         {
-            this._idMolde_.parent(null);
+            this._numero_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMoldeTipo extends PTipo
             node.parent(this);
         }
 
-        this._idMolde_ = node;
+        this._numero_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._idMolde_);
+            + toString(this._numero_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._idMolde_ == child)
+        if(this._numero_ == child)
         {
-            this._idMolde_ = null;
+            this._numero_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMoldeTipo extends PTipo
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._idMolde_ == oldChild)
+        if(this._numero_ == oldChild)
         {
-            setIdMolde((TIdMolde) newChild);
+            setNumero((TNumero) newChild);
             return;
         }
 

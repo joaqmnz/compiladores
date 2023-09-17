@@ -1046,6 +1046,48 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAIdFecho(node);
     }
 
+    public void inAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrimitivoTipo(APrimitivoTipo node)
+    {
+        inAPrimitivoTipo(node);
+        if(node.getPrimitivo() != null)
+        {
+            node.getPrimitivo().apply(this);
+        }
+        outAPrimitivoTipo(node);
+    }
+
+    public void inAMoldeTipo(AMoldeTipo node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMoldeTipo(AMoldeTipo node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        inAMoldeTipo(node);
+        if(node.getIdMolde() != null)
+        {
+            node.getIdMolde().apply(this);
+        }
+        outAMoldeTipo(node);
+    }
+
     public void inATipoPrimitivo(ATipoPrimitivo node)
     {
         defaultIn(node);
@@ -1088,48 +1130,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outATipoMolde(node);
     }
 
-    public void inAPrimitivoTipo(APrimitivoTipo node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAPrimitivoTipo(APrimitivoTipo node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAPrimitivoTipo(APrimitivoTipo node)
-    {
-        inAPrimitivoTipo(node);
-        if(node.getTipoPrimitivo() != null)
-        {
-            node.getTipoPrimitivo().apply(this);
-        }
-        outAPrimitivoTipo(node);
-    }
-
-    public void inAMoldeTipo(AMoldeTipo node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAMoldeTipo(AMoldeTipo node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAMoldeTipo(AMoldeTipo node)
-    {
-        inAMoldeTipo(node);
-        if(node.getTipoMolde() != null)
-        {
-            node.getTipoMolde().apply(this);
-        }
-        outAMoldeTipo(node);
-    }
-
     public void inAFunc2DecFuncao(AFunc2DecFuncao node)
     {
         defaultIn(node);
@@ -1147,6 +1147,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getParametros() != null)
         {
             node.getParametros().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
         }
         if(node.getTipo() != null)
         {

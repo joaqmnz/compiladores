@@ -54,10 +54,10 @@ public interface Analysis extends Switch
     void caseAIdIdOuAttr(AIdIdOuAttr node);
     void caseAAttrIdOuAttr(AAttrIdOuAttr node);
     void caseAIdFecho(AIdFecho node);
-    void caseATipoPrimitivo(ATipoPrimitivo node);
-    void caseATipoMolde(ATipoMolde node);
     void caseAPrimitivoTipo(APrimitivoTipo node);
     void caseAMoldeTipo(AMoldeTipo node);
+    void caseATipoPrimitivo(ATipoPrimitivo node);
+    void caseATipoMolde(ATipoMolde node);
     void caseAFunc2DecFuncao(AFunc2DecFuncao node);
     void caseAParametroParametros(AParametroParametros node);
     void caseAVazioParametros(AVazioParametros node);

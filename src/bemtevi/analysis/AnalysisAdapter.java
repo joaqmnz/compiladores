@@ -327,18 +327,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseATipoPrimitivo(ATipoPrimitivo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATipoMolde(ATipoMolde node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAPrimitivoTipo(APrimitivoTipo node)
     {
         defaultCase(node);
@@ -346,6 +334,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoPrimitivo(ATipoPrimitivo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoMolde(ATipoMolde node)
     {
         defaultCase(node);
     }

@@ -7,7 +7,7 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class APrimitivoTipo extends PTipo
 {
-    private PTipoPrimitivo _tipoPrimitivo_;
+    private TPrimitivo _primitivo_;
 
     public APrimitivoTipo()
     {
@@ -15,10 +15,10 @@ public final class APrimitivoTipo extends PTipo
     }
 
     public APrimitivoTipo(
-        @SuppressWarnings("hiding") PTipoPrimitivo _tipoPrimitivo_)
+        @SuppressWarnings("hiding") TPrimitivo _primitivo_)
     {
         // Constructor
-        setTipoPrimitivo(_tipoPrimitivo_);
+        setPrimitivo(_primitivo_);
 
     }
 
@@ -26,7 +26,7 @@ public final class APrimitivoTipo extends PTipo
     public Object clone()
     {
         return new APrimitivoTipo(
-            cloneNode(this._tipoPrimitivo_));
+            cloneNode(this._primitivo_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class APrimitivoTipo extends PTipo
         ((Analysis) sw).caseAPrimitivoTipo(this);
     }
 
-    public PTipoPrimitivo getTipoPrimitivo()
+    public TPrimitivo getPrimitivo()
     {
-        return this._tipoPrimitivo_;
+        return this._primitivo_;
     }
 
-    public void setTipoPrimitivo(PTipoPrimitivo node)
+    public void setPrimitivo(TPrimitivo node)
     {
-        if(this._tipoPrimitivo_ != null)
+        if(this._primitivo_ != null)
         {
-            this._tipoPrimitivo_.parent(null);
+            this._primitivo_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class APrimitivoTipo extends PTipo
             node.parent(this);
         }
 
-        this._tipoPrimitivo_ = node;
+        this._primitivo_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._tipoPrimitivo_);
+            + toString(this._primitivo_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._tipoPrimitivo_ == child)
+        if(this._primitivo_ == child)
         {
-            this._tipoPrimitivo_ = null;
+            this._primitivo_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class APrimitivoTipo extends PTipo
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._tipoPrimitivo_ == oldChild)
+        if(this._primitivo_ == oldChild)
         {
-            setTipoPrimitivo((PTipoPrimitivo) newChild);
+            setPrimitivo((TPrimitivo) newChild);
             return;
         }
 

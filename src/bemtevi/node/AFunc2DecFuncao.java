@@ -8,6 +8,7 @@ import bemtevi.analysis.*;
 public final class AFunc2DecFuncao extends PDecFuncao
 {
     private PTipo _tipo_;
+    private TId _id_;
     private PParametros _parametros_;
 
     public AFunc2DecFuncao()
@@ -17,10 +18,13 @@ public final class AFunc2DecFuncao extends PDecFuncao
 
     public AFunc2DecFuncao(
         @SuppressWarnings("hiding") PTipo _tipo_,
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PParametros _parametros_)
     {
         // Constructor
         setTipo(_tipo_);
+
+        setId(_id_);
 
         setParametros(_parametros_);
 
@@ -31,6 +35,7 @@ public final class AFunc2DecFuncao extends PDecFuncao
     {
         return new AFunc2DecFuncao(
             cloneNode(this._tipo_),
+            cloneNode(this._id_),
             cloneNode(this._parametros_));
     }
 
@@ -65,6 +70,31 @@ public final class AFunc2DecFuncao extends PDecFuncao
         this._tipo_ = node;
     }
 
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
+    }
+
     public PParametros getParametros()
     {
         return this._parametros_;
@@ -95,6 +125,7 @@ public final class AFunc2DecFuncao extends PDecFuncao
     {
         return ""
             + toString(this._tipo_)
+            + toString(this._id_)
             + toString(this._parametros_);
     }
 
@@ -105,6 +136,12 @@ public final class AFunc2DecFuncao extends PDecFuncao
         if(this._tipo_ == child)
         {
             this._tipo_ = null;
+            return;
+        }
+
+        if(this._id_ == child)
+        {
+            this._id_ = null;
             return;
         }
 
@@ -124,6 +161,12 @@ public final class AFunc2DecFuncao extends PDecFuncao
         if(this._tipo_ == oldChild)
         {
             setTipo((PTipo) newChild);
+            return;
+        }
+
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
             return;
         }
 
