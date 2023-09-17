@@ -67,14 +67,15 @@ Ignored Tokens
 Productions
 
 	inicio {-> inicio} = 
-		{exp} exp {-> New inicio.exp(exp)}
-		|{familia} familia {-> New inicio.familia(familia)}
-		|{funcao} dec_funcao {-> New inicio.funcao(dec_funcao)};
+		programa {-> New inicio(programa)};
+	
+	programa {-> programa} = 
+	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia,esquerda.def_molde,[direita.def_molde])};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
 		|{chamada} chamada {-> chamada.exp}
-		|{bloco} blloco {-> New exp.bloco(blloco)}
+		|{bloco} blloco {-> blloco.exp}
 		|{instancia} instancia {-> instancia.exp}
 		|{ternario} se abre_parenteses [esquerdo]:exp fecha_parenteses entao [centro]:exp senao [direito]: exp {-> New exp.ternario(esquerdo.exp, centro.exp, direito.exp)};
 	
@@ -120,8 +121,8 @@ Productions
 		|{falso} falso {-> New exp.falso(falso)}
 		|{parenteses} abre_parenteses exp fecha_parenteses {-> exp.exp};
 	
-	blloco {-> blloco} = 
-		abre_colchete blloco_fecho* exp fecha_colchete {-> New blloco([blloco_fecho], exp)};
+	blloco {-> exp} = 
+		abre_colchete blloco_fecho* exp fecha_colchete {-> New exp.bloco([blloco_fecho], exp)};
 	blloco_fecho {-> blloco_fecho} = 
 		{constante} dec_cons {-> dec_cons.blloco_fecho}
 		|{objeto} dec_obj {-> dec_obj.blloco_fecho}
@@ -174,7 +175,8 @@ Productions
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 	
 	dec_funcao {-> dec_funcao} =
-		{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
+		{func1} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses blloco {-> New dec_funcao.func1(tipo, id, parametros, blloco.exp) }
+		|{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
  	
  	parametros {-> parametros} = 
  	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
@@ -199,7 +201,7 @@ Productions
 	parametro_assinatura {-> parametro_assinatura} = 
 		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
-
+	
 	atributos {-> atributos} = 
  	    atributos_fecho* {-> New atributos([atributos_fecho.blloco_fecho])};
     atributos_fecho {-> blloco_fecho} = 
@@ -209,17 +211,12 @@ Productions
  	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
  	    
  	def_molde {-> def_molde} = 
- 	    molde id_molde contem atributos metodos fim {-> New def_molde(atributos,metodos)};
- 	    
- 	programa {-> programa} = 
-	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia,esquerda.def_molde,[direita.def_molde])};
-	
+ 	    molde id_molde contem atributos metodos fim {-> New def_molde(id_molde, atributos,metodos)};
+
+
 Abstract Syntax Tree
 	inicio = 
-		{exp} exp
-		|{familia} familia
-		|{funcao} dec_funcao
-		|{programa} programa;
+		programa;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
@@ -237,7 +234,7 @@ Abstract Syntax Tree
 		|{negativo} exp
 		|{chamada} id_fecho* lista_exp
 		|{instancia} lista_init
-		|{bloco} blloco
+		|{bloco} blloco_fecho* exp
 		|{numero} numero
 		|{id} id
 		|{string} string
@@ -254,9 +251,6 @@ Abstract Syntax Tree
 
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
-
-	blloco = 
-		blloco_fecho* exp;
 
 	blloco_fecho = 
 		{constante} tipo_primitivo id
@@ -298,7 +292,8 @@ Abstract Syntax Tree
 		id_molde;
 
 	dec_funcao =
-		{func2} tipo id parametros;
+		{func1} tipo id parametros exp
+		|{func2} tipo id parametros;
 
 	parametros = 
  	    {parametro} parametro parametro_fecho*
@@ -331,7 +326,7 @@ Abstract Syntax Tree
  	    dec_funcao*;
  	   
  	def_molde = 
- 	    atributos metodos ;
+ 	    id_molde atributos metodos ;
  	    
  	programa = 
 	    familia [esquerda]:def_molde [direita]:def_molde*;
