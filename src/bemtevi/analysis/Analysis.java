@@ -41,7 +41,6 @@ public interface Analysis extends Switch
     void caseAVazioFamilia(AVazioFamilia node);
     void caseAFamiliaFecho(AFamiliaFecho node);
     void caseARelacao(ARelacao node);
-    void caseABlloco(ABlloco node);
     void caseAConstanteBllocoFecho(AConstanteBllocoFecho node);
     void caseAObjetoBllocoFecho(AObjetoBllocoFecho node);
     void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node);
@@ -59,6 +58,7 @@ public interface Analysis extends Switch
     void caseAMoldeTipo(AMoldeTipo node);
     void caseATipoPrimitivo(ATipoPrimitivo node);
     void caseATipoMolde(ATipoMolde node);
+    void caseAFunc1DecFuncao(AFunc1DecFuncao node);
     void caseAFunc2DecFuncao(AFunc2DecFuncao node);
     void caseAParametroParametros(AParametroParametros node);
     void caseAVazioParametros(AVazioParametros node);

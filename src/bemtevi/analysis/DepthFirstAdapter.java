@@ -718,34 +718,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outARelacao(node);
     }
 
-    public void inABlloco(ABlloco node)
-    {
-        defaultIn(node);
-    }
-
-    public void outABlloco(ABlloco node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseABlloco(ABlloco node)
-    {
-        inABlloco(node);
-        {
-            List<PBllocoFecho> copy = new ArrayList<PBllocoFecho>(node.getBllocoFecho());
-            for(PBllocoFecho e : copy)
-            {
-                e.apply(this);
-            }
-        }
-        if(node.getExp() != null)
-        {
-            node.getExp().apply(this);
-        }
-        outABlloco(node);
-    }
-
     public void inAConstanteBllocoFecho(AConstanteBllocoFecho node)
     {
         defaultIn(node);
@@ -1149,6 +1121,39 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getIdMolde().apply(this);
         }
         outATipoMolde(node);
+    }
+
+    public void inAFunc1DecFuncao(AFunc1DecFuncao node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunc1DecFuncao(AFunc1DecFuncao node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunc1DecFuncao(AFunc1DecFuncao node)
+    {
+        inAFunc1DecFuncao(node);
+        if(node.getTipo() != null)
+        {
+            node.getTipo().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getParametros() != null)
+        {
+            node.getParametros().apply(this);
+        }
+        if(node.getExp() != null)
+        {
+            node.getExp().apply(this);
+        }
+        outAFunc1DecFuncao(node);
     }
 
     public void inAFunc2DecFuncao(AFunc2DecFuncao node)

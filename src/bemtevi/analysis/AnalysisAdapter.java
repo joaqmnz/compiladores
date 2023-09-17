@@ -249,12 +249,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseABlloco(ABlloco node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAConstanteBllocoFecho(AConstanteBllocoFecho node)
     {
         defaultCase(node);
@@ -352,6 +346,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseATipoMolde(ATipoMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc1DecFuncao(AFunc1DecFuncao node)
     {
         defaultCase(node);
     }

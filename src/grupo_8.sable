@@ -174,7 +174,8 @@ Productions
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 	
 	dec_funcao {-> dec_funcao} =
-		{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
+		{func1} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses blloco {-> New dec_funcao.func1(tipo, id, parametros, blloco.exp) }
+		|{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
  	
  	parametros {-> parametros} = 
  	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
@@ -241,9 +242,6 @@ Abstract Syntax Tree
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
 
-	blloco = 
-		blloco_fecho* exp;
-
 	blloco_fecho = 
 		{constante} tipo_primitivo id
 		|{objeto} tipo_molde id
@@ -284,7 +282,8 @@ Abstract Syntax Tree
 		id_molde;
 
 	dec_funcao =
-		{func2} tipo id parametros;
+		{func1} tipo id parametros exp
+		|{func2} tipo id parametros;
 
 	parametros = 
  	    {parametro} parametro parametro_fecho*
