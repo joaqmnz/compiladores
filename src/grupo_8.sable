@@ -229,3 +229,6 @@ Abstract Syntax Tree
 	tipo_molde = 
 		id_molde;
 
+	parametros = 
+ 	    {parametro} parametro parametro_fecho*
+ 	    |{vazio}
