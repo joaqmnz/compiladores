@@ -207,13 +207,19 @@ Productions
      	|{constante} dec_cons {-> dec_cons.blloco_fecho};
 	metodos {-> metodos} = 
  	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
-
-
+ 	    
+ 	def_molde {-> def_molde} = 
+ 	    molde id_molde contem atributos metodos fim {-> New def_molde(atributos,metodos)};
+ 	    
+ 	programa {-> programa} = 
+	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia,esquerda.def_molde,[direita.def_molde])};
+	
 Abstract Syntax Tree
 	inicio = 
 		{exp} exp
 		|{familia} familia
-		|{funcao} dec_funcao;
+		|{funcao} dec_funcao
+		|{programa} programa;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
@@ -323,3 +329,10 @@ Abstract Syntax Tree
 		
 	metodos = 
  	    dec_funcao*;
+ 	   
+ 	def_molde = 
+ 	    atributos metodos ;
+ 	    
+ 	programa = 
+	    familia [esquerda]:def_molde [direita]:def_molde*;
+	
