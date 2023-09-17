@@ -1,3 +1,17 @@
-molde Atributo contem
-    constante : Numero num;
+molde LetraA se passa por Vogal; molde LetraB se passa por Consoante;
+
+molde Vogal contem
+    constante : Numero c;
+fim
+
+molde Consoante contem
+    constante : Numero c;
+fim
+
+molde LetraA contem
+    constante : Texto t;
+fim
+
+molde LetraB contem
+    constante : Texto t;
 fim
