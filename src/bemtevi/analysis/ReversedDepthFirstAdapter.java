@@ -420,35 +420,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outANegativoExp(node);
     }
 
-    public void inABlocoExp(ABlocoExp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outABlocoExp(ABlocoExp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseABlocoExp(ABlocoExp node)
-    {
-        inABlocoExp(node);
-        if(node.getExp() != null)
-        {
-            node.getExp().apply(this);
-        }
-        {
-            List<PBlocoFecho> copy = new ArrayList<PBlocoFecho>(node.getBlocoFecho());
-            Collections.reverse(copy);
-            for(PBlocoFecho e : copy)
-            {
-                e.apply(this);
-            }
-        }
-        outABlocoExp(node);
-    }
-
     public void inAChamadaExp(AChamadaExp node)
     {
         defaultIn(node);
@@ -497,6 +468,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getListaInit().apply(this);
         }
         outAInstanciaExp(node);
+    }
+
+    public void inABlocoExp(ABlocoExp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABlocoExp(ABlocoExp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABlocoExp(ABlocoExp node)
+    {
+        inABlocoExp(node);
+        if(node.getBlloco() != null)
+        {
+            node.getBlloco().apply(this);
+        }
+        outABlocoExp(node);
     }
 
     public void inANumeroExp(ANumeroExp node)
@@ -721,20 +713,49 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outARelacao(node);
     }
 
-    public void inAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    public void inABlloco(ABlloco node)
     {
         defaultIn(node);
     }
 
-    public void outAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    public void outABlloco(ABlloco node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    public void caseABlloco(ABlloco node)
     {
-        inAConstanteBlocoFecho(node);
+        inABlloco(node);
+        if(node.getExp() != null)
+        {
+            node.getExp().apply(this);
+        }
+        {
+            List<PBllocoFecho> copy = new ArrayList<PBllocoFecho>(node.getBllocoFecho());
+            Collections.reverse(copy);
+            for(PBllocoFecho e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outABlloco(node);
+    }
+
+    public void inAConstanteBllocoFecho(AConstanteBllocoFecho node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAConstanteBllocoFecho(AConstanteBllocoFecho node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAConstanteBllocoFecho(AConstanteBllocoFecho node)
+    {
+        inAConstanteBllocoFecho(node);
         if(node.getId() != null)
         {
             node.getId().apply(this);
@@ -743,23 +764,23 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getTipoPrimitivo().apply(this);
         }
-        outAConstanteBlocoFecho(node);
+        outAConstanteBllocoFecho(node);
     }
 
-    public void inAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    public void inAObjetoBllocoFecho(AObjetoBllocoFecho node)
     {
         defaultIn(node);
     }
 
-    public void outAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    public void outAObjetoBllocoFecho(AObjetoBllocoFecho node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    public void caseAObjetoBllocoFecho(AObjetoBllocoFecho node)
     {
-        inAObjetoBlocoFecho(node);
+        inAObjetoBllocoFecho(node);
         if(node.getId() != null)
         {
             node.getId().apply(this);
@@ -768,23 +789,23 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getTipoMolde().apply(this);
         }
-        outAObjetoBlocoFecho(node);
+        outAObjetoBllocoFecho(node);
     }
 
-    public void inADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void inADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
     {
         defaultIn(node);
     }
 
-    public void outADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void outADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
     {
-        inADefinicaoBlocoFecho(node);
+        inADefinicaoBllocoFecho(node);
         if(node.getExp() != null)
         {
             node.getExp().apply(this);
@@ -793,7 +814,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getIdOuAttr().apply(this);
         }
-        outADefinicaoBlocoFecho(node);
+        outADefinicaoBllocoFecho(node);
     }
 
     public void inAExpListaExp(AExpListaExp node)
@@ -1046,6 +1067,48 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAIdFecho(node);
     }
 
+    public void inAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrimitivoTipo(APrimitivoTipo node)
+    {
+        inAPrimitivoTipo(node);
+        if(node.getPrimitivo() != null)
+        {
+            node.getPrimitivo().apply(this);
+        }
+        outAPrimitivoTipo(node);
+    }
+
+    public void inAMoldeTipo(AMoldeTipo node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMoldeTipo(AMoldeTipo node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        inAMoldeTipo(node);
+        if(node.getIdMolde() != null)
+        {
+            node.getIdMolde().apply(this);
+        }
+        outAMoldeTipo(node);
+    }
+
     public void inATipoPrimitivo(ATipoPrimitivo node)
     {
         defaultIn(node);
@@ -1088,48 +1151,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outATipoMolde(node);
     }
 
-    public void inAPrimitivoTipo(APrimitivoTipo node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAPrimitivoTipo(APrimitivoTipo node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAPrimitivoTipo(APrimitivoTipo node)
-    {
-        inAPrimitivoTipo(node);
-        if(node.getTipoPrimitivo() != null)
-        {
-            node.getTipoPrimitivo().apply(this);
-        }
-        outAPrimitivoTipo(node);
-    }
-
-    public void inAMoldeTipo(AMoldeTipo node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAMoldeTipo(AMoldeTipo node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAMoldeTipo(AMoldeTipo node)
-    {
-        inAMoldeTipo(node);
-        if(node.getTipoMolde() != null)
-        {
-            node.getTipoMolde().apply(this);
-        }
-        outAMoldeTipo(node);
-    }
-
     public void inAFunc2DecFuncao(AFunc2DecFuncao node)
     {
         defaultIn(node);
@@ -1147,6 +1168,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getParametros() != null)
         {
             node.getParametros().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
         }
         if(node.getTipo() != null)
         {

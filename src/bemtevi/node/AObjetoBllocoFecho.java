@@ -5,56 +5,51 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunc2DecFuncao extends PDecFuncao
+public final class AObjetoBllocoFecho extends PBllocoFecho
 {
-    private PTipo _tipo_;
+    private PTipoMolde _tipoMolde_;
     private TId _id_;
-    private PParametros _parametros_;
 
-    public AFunc2DecFuncao()
+    public AObjetoBllocoFecho()
     {
         // Constructor
     }
 
-    public AFunc2DecFuncao(
-        @SuppressWarnings("hiding") PTipo _tipo_,
-        @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") PParametros _parametros_)
+    public AObjetoBllocoFecho(
+        @SuppressWarnings("hiding") PTipoMolde _tipoMolde_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setTipo(_tipo_);
+        setTipoMolde(_tipoMolde_);
 
         setId(_id_);
-
-        setParametros(_parametros_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunc2DecFuncao(
-            cloneNode(this._tipo_),
-            cloneNode(this._id_),
-            cloneNode(this._parametros_));
+        return new AObjetoBllocoFecho(
+            cloneNode(this._tipoMolde_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunc2DecFuncao(this);
+        ((Analysis) sw).caseAObjetoBllocoFecho(this);
     }
 
-    public PTipo getTipo()
+    public PTipoMolde getTipoMolde()
     {
-        return this._tipo_;
+        return this._tipoMolde_;
     }
 
-    public void setTipo(PTipo node)
+    public void setTipoMolde(PTipoMolde node)
     {
-        if(this._tipo_ != null)
+        if(this._tipoMolde_ != null)
         {
-            this._tipo_.parent(null);
+            this._tipoMolde_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +62,7 @@ public final class AFunc2DecFuncao extends PDecFuncao
             node.parent(this);
         }
 
-        this._tipo_ = node;
+        this._tipoMolde_ = node;
     }
 
     public TId getId()
@@ -95,59 +90,27 @@ public final class AFunc2DecFuncao extends PDecFuncao
         this._id_ = node;
     }
 
-    public PParametros getParametros()
-    {
-        return this._parametros_;
-    }
-
-    public void setParametros(PParametros node)
-    {
-        if(this._parametros_ != null)
-        {
-            this._parametros_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._parametros_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._tipo_)
-            + toString(this._id_)
-            + toString(this._parametros_);
+            + toString(this._tipoMolde_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._tipo_ == child)
+        if(this._tipoMolde_ == child)
         {
-            this._tipo_ = null;
+            this._tipoMolde_ = null;
             return;
         }
 
         if(this._id_ == child)
         {
             this._id_ = null;
-            return;
-        }
-
-        if(this._parametros_ == child)
-        {
-            this._parametros_ = null;
             return;
         }
 
@@ -158,21 +121,15 @@ public final class AFunc2DecFuncao extends PDecFuncao
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._tipo_ == oldChild)
+        if(this._tipoMolde_ == oldChild)
         {
-            setTipo((PTipo) newChild);
+            setTipoMolde((PTipoMolde) newChild);
             return;
         }
 
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
-            return;
-        }
-
-        if(this._parametros_ == oldChild)
-        {
-            setParametros((PParametros) newChild);
             return;
         }
 

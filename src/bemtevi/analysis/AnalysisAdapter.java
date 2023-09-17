@@ -171,12 +171,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseABlocoExp(ABlocoExp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAChamadaExp(AChamadaExp node)
     {
         defaultCase(node);
@@ -184,6 +178,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAInstanciaExp(AInstanciaExp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseABlocoExp(ABlocoExp node)
     {
         defaultCase(node);
     }
@@ -249,19 +249,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    public void caseABlloco(ABlloco node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    public void caseAConstanteBllocoFecho(AConstanteBllocoFecho node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void caseAObjetoBllocoFecho(AObjetoBllocoFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
     {
         defaultCase(node);
     }
@@ -327,18 +333,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseATipoPrimitivo(ATipoPrimitivo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATipoMolde(ATipoMolde node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAPrimitivoTipo(APrimitivoTipo node)
     {
         defaultCase(node);
@@ -346,6 +340,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoPrimitivo(ATipoPrimitivo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoMolde(ATipoMolde node)
     {
         defaultCase(node);
     }

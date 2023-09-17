@@ -5,56 +5,51 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunc2DecFuncao extends PDecFuncao
+public final class AConstanteBllocoFecho extends PBllocoFecho
 {
-    private PTipo _tipo_;
+    private PTipoPrimitivo _tipoPrimitivo_;
     private TId _id_;
-    private PParametros _parametros_;
 
-    public AFunc2DecFuncao()
+    public AConstanteBllocoFecho()
     {
         // Constructor
     }
 
-    public AFunc2DecFuncao(
-        @SuppressWarnings("hiding") PTipo _tipo_,
-        @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") PParametros _parametros_)
+    public AConstanteBllocoFecho(
+        @SuppressWarnings("hiding") PTipoPrimitivo _tipoPrimitivo_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setTipo(_tipo_);
+        setTipoPrimitivo(_tipoPrimitivo_);
 
         setId(_id_);
-
-        setParametros(_parametros_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunc2DecFuncao(
-            cloneNode(this._tipo_),
-            cloneNode(this._id_),
-            cloneNode(this._parametros_));
+        return new AConstanteBllocoFecho(
+            cloneNode(this._tipoPrimitivo_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunc2DecFuncao(this);
+        ((Analysis) sw).caseAConstanteBllocoFecho(this);
     }
 
-    public PTipo getTipo()
+    public PTipoPrimitivo getTipoPrimitivo()
     {
-        return this._tipo_;
+        return this._tipoPrimitivo_;
     }
 
-    public void setTipo(PTipo node)
+    public void setTipoPrimitivo(PTipoPrimitivo node)
     {
-        if(this._tipo_ != null)
+        if(this._tipoPrimitivo_ != null)
         {
-            this._tipo_.parent(null);
+            this._tipoPrimitivo_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +62,7 @@ public final class AFunc2DecFuncao extends PDecFuncao
             node.parent(this);
         }
 
-        this._tipo_ = node;
+        this._tipoPrimitivo_ = node;
     }
 
     public TId getId()
@@ -95,59 +90,27 @@ public final class AFunc2DecFuncao extends PDecFuncao
         this._id_ = node;
     }
 
-    public PParametros getParametros()
-    {
-        return this._parametros_;
-    }
-
-    public void setParametros(PParametros node)
-    {
-        if(this._parametros_ != null)
-        {
-            this._parametros_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._parametros_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._tipo_)
-            + toString(this._id_)
-            + toString(this._parametros_);
+            + toString(this._tipoPrimitivo_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._tipo_ == child)
+        if(this._tipoPrimitivo_ == child)
         {
-            this._tipo_ = null;
+            this._tipoPrimitivo_ = null;
             return;
         }
 
         if(this._id_ == child)
         {
             this._id_ = null;
-            return;
-        }
-
-        if(this._parametros_ == child)
-        {
-            this._parametros_ = null;
             return;
         }
 
@@ -158,21 +121,15 @@ public final class AFunc2DecFuncao extends PDecFuncao
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._tipo_ == oldChild)
+        if(this._tipoPrimitivo_ == oldChild)
         {
-            setTipo((PTipo) newChild);
+            setTipoPrimitivo((PTipoPrimitivo) newChild);
             return;
         }
 
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
-            return;
-        }
-
-        if(this._parametros_ == oldChild)
-        {
-            setParametros((PParametros) newChild);
             return;
         }
 
