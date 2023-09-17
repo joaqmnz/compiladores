@@ -200,6 +200,15 @@ Productions
 		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
 		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
 
+	atributos {-> atributos} = 
+ 	    atributos_fecho* {-> New atributos([atributos_fecho])};
+    atributos_fecho {-> bloco_fecho} = 
+ 	    {objeto} dec_obj {-> dec_obj.bloco_fecho}
+     	|{constante} dec_cons {-> dec_cons.bloco_fecho} ;
+	
+	metodos {-> metodos} = 
+ 	    dec_funcao* {-> dec_funcao.metodos};
+
 
 	
 
@@ -311,3 +320,18 @@ Abstract Syntax Tree
 	parametro_assinatura = 
 		{tipo} tipo
 		|{assinatura} assinatura;
+
+	atributos = 
+ 	    atributos_fecho*;
+    atributos_fecho = 
+ 	    {objeto} dec_obj
+ 	    |{constante} dec_cons;
+		
+	metodos = 
+ 	    dec_funcao*;
+ 	    
+ 	dec_obj = 
+ 	     tipo_molde id ;
+ 
+    dec_cons = 
+ 	    tipo_primitivo id ;
