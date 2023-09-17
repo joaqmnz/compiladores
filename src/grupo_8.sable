@@ -73,8 +73,8 @@ Productions
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
-		|{bloco} blloco {-> blloco.exp}
 		|{chamada} chamada {-> chamada.exp}
+		|{bloco} blloco {-> New exp.bloco(blloco)}
 		|{instancia} instancia {-> instancia.exp}
 		|{ternario} se abre_parenteses [esquerdo]:exp fecha_parenteses entao [centro]:exp senao [direito]: exp {-> New exp.ternario(esquerdo.exp, centro.exp, direito.exp)};
 	
@@ -120,14 +120,14 @@ Productions
 		|{falso} falso {-> New exp.falso(falso)}
 		|{parenteses} abre_parenteses exp fecha_parenteses {-> exp.exp};
 	
-	blloco {-> exp} = 
-		abre_colchete [esquerdo]:blloco_fecho* [direito]:exp fecha_colchete {-> New exp.bloco([esquerdo.bloco_fecho], direito.exp)};
-	blloco_fecho {-> bloco_fecho} = 
-		{constante} dec_cons {-> dec_cons.bloco_fecho}
-		|{objeto} dec_obj {-> dec_obj.bloco_fecho}
-		|{definicao} definicao {-> definicao.bloco_fecho};
-	definicao {-> bloco_fecho} = 
-		id_ou_attr igual exp ponto_virgula {-> New bloco_fecho.definicao(id_ou_attr, exp)};
+	blloco {-> blloco} = 
+		abre_colchete blloco_fecho* exp fecha_colchete {-> New blloco([blloco_fecho], exp)};
+	blloco_fecho {-> blloco_fecho} = 
+		{constante} dec_cons {-> dec_cons.blloco_fecho}
+		|{objeto} dec_obj {-> dec_obj.blloco_fecho}
+		|{definicao} definicao {-> definicao.blloco_fecho};
+	definicao {-> blloco_fecho} = 
+		id_ou_attr igual exp ponto_virgula {-> New blloco_fecho.definicao(id_ou_attr, exp)};
 	id_ou_attr {-> id_ou_attr} = 
 		{id} id {-> New id_ou_attr.id(id)}
 		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
@@ -143,10 +143,10 @@ Productions
 	tipo_molde {-> tipo_molde} = 
 		id_molde {-> New tipo_molde(id_molde)};
 
-	dec_obj {-> bloco_fecho} = 
-		objeto dois_pontos tipo_molde id ponto_virgula {-> New bloco_fecho.objeto(tipo_molde, id)};
-	dec_cons {-> bloco_fecho} = 
-		constante dois_pontos tipo_primitivo id ponto_virgula {-> New bloco_fecho.constante(tipo_primitivo, id)};
+	dec_obj {-> blloco_fecho} = 
+		objeto dois_pontos tipo_molde id ponto_virgula {-> New blloco_fecho.objeto(tipo_molde, id)};
+	dec_cons {-> blloco_fecho} = 
+		constante dois_pontos tipo_primitivo id ponto_virgula {-> New blloco_fecho.constante(tipo_primitivo, id)};
 
 	chamada {-> exp} = 
 		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada([id_fecho], lista_exp)};
@@ -223,9 +223,9 @@ Abstract Syntax Tree
 		|{modulo} [esq]:exp [dir]:exp
 		|{negacao} exp
 		|{negativo} exp
-		|{bloco} bloco_fecho* exp
 		|{chamada} id_fecho* lista_exp
 		|{instancia} lista_init
+		|{bloco} blloco
 		|{numero} numero
 		|{id} id
 		|{string} string
@@ -243,7 +243,10 @@ Abstract Syntax Tree
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
 
-	bloco_fecho = 
+	blloco = 
+		blloco_fecho* exp;
+
+	blloco_fecho = 
 		{constante} tipo_primitivo id
 		|{objeto} tipo_molde id
 		|{definicao} id_ou_attr exp;
