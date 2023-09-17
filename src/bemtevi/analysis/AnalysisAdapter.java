@@ -75,6 +75,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAExpInicio(AExpInicio node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFamiliaInicio(AFamiliaInicio node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseATernarioExp(ATernarioExp node)
     {
         defaultCase(node);

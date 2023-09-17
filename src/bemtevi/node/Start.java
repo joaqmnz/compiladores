@@ -7,7 +7,7 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class Start extends Node
 {
-    private PExp _pExp_;
+    private PInicio _pInicio_;
     private EOF _eof_;
 
     public Start()
@@ -16,10 +16,10 @@ public final class Start extends Node
     }
 
     public Start(
-        @SuppressWarnings("hiding") PExp _pExp_,
+        @SuppressWarnings("hiding") PInicio _pInicio_,
         @SuppressWarnings("hiding") EOF _eof_)
     {
-        setPExp(_pExp_);
+        setPInicio(_pInicio_);
         setEOF(_eof_);
     }
 
@@ -27,7 +27,7 @@ public final class Start extends Node
     public Object clone()
     {
         return new Start(
-            cloneNode(this._pExp_),
+            cloneNode(this._pInicio_),
             cloneNode(this._eof_));
     }
 
@@ -37,16 +37,16 @@ public final class Start extends Node
         ((Analysis) sw).caseStart(this);
     }
 
-    public PExp getPExp()
+    public PInicio getPInicio()
     {
-        return this._pExp_;
+        return this._pInicio_;
     }
 
-    public void setPExp(PExp node)
+    public void setPInicio(PInicio node)
     {
-        if(this._pExp_ != null)
+        if(this._pInicio_ != null)
         {
-            this._pExp_.parent(null);
+            this._pInicio_.parent(null);
         }
 
         if(node != null)
@@ -59,7 +59,7 @@ public final class Start extends Node
             node.parent(this);
         }
 
-        this._pExp_ = node;
+        this._pInicio_ = node;
     }
 
     public EOF getEOF()
@@ -90,9 +90,9 @@ public final class Start extends Node
     @Override
     void removeChild(Node child)
     {
-        if(this._pExp_ == child)
+        if(this._pInicio_ == child)
         {
-            this._pExp_ = null;
+            this._pInicio_ = null;
             return;
         }
 
@@ -108,9 +108,9 @@ public final class Start extends Node
     @Override
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(this._pExp_ == oldChild)
+        if(this._pInicio_ == oldChild)
         {
-            setPExp((PExp) newChild);
+            setPInicio((PInicio) newChild);
             return;
         }
 
@@ -127,7 +127,7 @@ public final class Start extends Node
     public String toString()
     {
         return "" +
-            toString(this._pExp_) +
+            toString(this._pInicio_) +
             toString(this._eof_);
     }
 }

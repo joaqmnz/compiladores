@@ -32,8 +32,50 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inStart(node);
         node.getEOF().apply(this);
-        node.getPExp().apply(this);
+        node.getPInicio().apply(this);
         outStart(node);
+    }
+
+    public void inAExpInicio(AExpInicio node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAExpInicio(AExpInicio node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAExpInicio(AExpInicio node)
+    {
+        inAExpInicio(node);
+        if(node.getExp() != null)
+        {
+            node.getExp().apply(this);
+        }
+        outAExpInicio(node);
+    }
+
+    public void inAFamiliaInicio(AFamiliaInicio node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFamiliaInicio(AFamiliaInicio node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFamiliaInicio(AFamiliaInicio node)
+    {
+        inAFamiliaInicio(node);
+        if(node.getFamilia() != null)
+        {
+            node.getFamilia().apply(this);
+        }
+        outAFamiliaInicio(node);
     }
 
     public void inATernarioExp(ATernarioExp node)

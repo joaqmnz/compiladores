@@ -67,7 +67,8 @@ Ignored Tokens
 Productions
 
 	inicio {-> inicio} = 
-		{exp} exp {-> exp.inicio};
+		{exp} exp {-> New inicio.exp(exp)}
+		|{familia} familia {-> New inicio.familia(familia)};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
@@ -171,7 +172,8 @@ Productions
 
 Abstract Syntax Tree
 	inicio = 
-		exp;
+		{exp} exp
+		|{familia} familia;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp

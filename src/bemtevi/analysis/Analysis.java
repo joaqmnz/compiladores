@@ -12,6 +12,8 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
+    void caseAExpInicio(AExpInicio node);
+    void caseAFamiliaInicio(AFamiliaInicio node);
     void caseATernarioExp(ATernarioExp node);
     void caseAOuExp(AOuExp node);
     void caseAEExp(AEExp node);
