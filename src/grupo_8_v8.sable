@@ -1,0 +1,231 @@
+Package bemtevi;
+
+Helpers
+	digito = ['0' .. '9'];
+	caractere_maiusculo = ['A' .. 'Z'];
+	caractere_minusculo = ['a' .. 'z'];
+	alfabeto = (caractere_minusculo | caractere_maiusculo);
+	espaco = ' ';
+	tab = '	';
+	hifen = '_';
+	ponto = '.';
+	virgula = ',';
+	numero_inteiro = digito+;
+	numero_virgula = digito+ virgula digito+;
+	numero_cientifico = digito ('e' | 'E') ('-' | '+') digito;
+	abre_chaves = '{';
+	fecha_chaves = '}';
+	rc = 13;
+	nl = 10;
+
+Tokens
+	primitivo = 'Bool' | 'Numero' | 'Texto';
+	numero = numero_inteiro | numero_virgula | numero_cientifico;
+	verdade = 'verdade';
+	falso = 'falso';
+	molde = 'molde';
+	se = 'se';
+	entao = 'entao';
+	senao = 'senao';
+	passa = 'passa';
+	por = 'por';
+	ponto_virgula = ';';
+	contem = 'contem';
+	constante = 'constante';
+	funcao = 'funcao';
+	objeto = 'objeto';
+	fim = 'fim';
+	separador = '|';
+	dois_pontos = ':';
+	ponto_final = '.';
+	abre_parenteses = '(';
+	fecha_parenteses = ')';
+	abre_colchete = '[';
+	fecha_colchete = ']';
+	abre_aspas = '"';
+	multiplicacao = '*';
+	soma = '+';
+	subtracao = '-';
+	divisao = '/';
+	modulo = '%';
+	igual_igual = '==';
+	igual = '=';
+	menor_que = '<';
+	menor_igual = '<=';
+	exclamacao = '!';
+	e = 'e';
+	ou = 'ou';
+	entrada = '>>';
+	vazio = (espaco | rc | nl | tab)+;
+	comentario_linha = '--' ([0x00 .. 0x09] | [0x0b .. 0x0c] | [0x0e .. 0xff])*;
+	id_molde = caractere_maiusculo (caractere_minusculo | hifen | caractere_maiusculo)*;
+	id = caractere_minusculo (hifen | caractere_minusculo | caractere_maiusculo)*;
+	texto = (caractere_maiusculo | caractere_minusculo)+;
+	comentario_bloco = abre_chaves ([0x00 .. 0x7c] | [0x7e .. 0xff])* fecha_chaves;
+	string = '"' ([0x00 .. 0x21] | [0x23 .. 0xff])* '"';
+
+Ignored Tokens
+ 	vazio, comentario_linha, comentario_bloco;
+
+ 
+Productions
+
+	exp {-> exp} = 
+		{ou} ou_logico {-> ou_logico.exp}
+		|{bloco} blloco {-> blloco.exp}
+		|{chamada} chamada {-> chamada.exp}
+		|{instancia} instancia {-> instancia.exp}
+		|{ternario} se abre_parenteses [esquerdo]:exp fecha_parenteses entao [centro]:exp senao [direito]: exp {-> New exp.ternario(esquerdo.exp, centro.exp, direito.exp)};
+	
+	ou_logico {-> exp} = 
+		{ou} ou_logico ou e_logico {-> New exp.ou(ou_logico.exp, e_logico.exp)}
+		|{e} e_logico {-> e_logico.exp};
+	
+	e_logico {-> exp} = 
+		{comparacao} comparacao {-> comparacao.exp}
+		|{e} e_logico e comparacao {-> New exp.e(e_logico.exp, comparacao.exp)};
+	
+	comparacao {-> exp} = 
+		{relacional} relacional {-> relacional.exp}
+		|{comparacao} comparacao igual_igual relacional {-> New exp.comparacao(comparacao.exp, relacional.exp)};
+	
+	relacional {-> exp} = 
+		{aritmeticos1} aritmeticos1 {-> aritmeticos1.exp}
+		|{menor} relacional menor_que termo {-> New exp.menor_que(relacional.exp, termo.exp)}
+		|{menor_igual} relacional menor_igual aritmeticos1 {-> New exp.menor_igual(relacional.exp, aritmeticos1.exp)};
+	
+	aritmeticos1 {-> exp} = 
+		{aritmeticos2} aritmeticos2 {-> aritmeticos2.exp}
+		|{soma} aritmeticos1 soma aritmeticos2 {-> New exp.soma(aritmeticos1.exp, aritmeticos2.exp)}
+		|{subtracao} aritmeticos1 subtracao aritmeticos2 {-> New exp.subtracao(aritmeticos1.exp, aritmeticos2.exp)};
+	
+	aritmeticos2 {-> exp} = 
+		{aritmeticos3} aritmeticos3 {-> aritmeticos3.exp}
+		|{multiplicacao} aritmeticos2 multiplicacao aritmeticos3 {-> New exp.multiplicacao(aritmeticos2.exp, aritmeticos3.exp)}
+		|{divisao} aritmeticos2 divisao aritmeticos3 {-> New exp.divisao(aritmeticos2.exp, aritmeticos3.exp)}
+		|{modulo} aritmeticos2 modulo aritmeticos3 {-> New exp.modulo(aritmeticos2.exp, aritmeticos3.exp)};
+	
+	aritmeticos3 {-> exp} = 
+		{termo} termo {-> termo.exp}
+		|{negacao} exclamacao termo {-> New exp.negacao(termo.exp)}
+		|{negativo} subtracao termo {-> New exp.negativo(termo.exp)};
+	
+	termo {-> exp} =  
+		{numero} numero {-> New exp.numero(numero)}
+		|{string} string {-> New exp.string(string)}
+		|{id} id {-> New exp.id(id)}
+		|{texto} texto {-> New exp.texto(texto)}
+		|{verdade} verdade {-> New exp.verdade(verdade)}
+		|{falso} falso {-> New exp.falso(falso)}
+		|{parenteses} abre_parenteses exp fecha_parenteses {-> exp.exp};
+	
+	blloco {-> exp} = 
+		abre_colchete [esquerdo]:blloco_fecho* [direito]:exp fecha_colchete {-> New exp.bloco([esquerdo.bloco_fecho], direito.exp)};
+	blloco_fecho {-> bloco_fecho} = 
+		{constante} dec_cons {-> dec_cons.bloco_fecho}
+		|{objeto} dec_obj {-> dec_obj.bloco_fecho}
+		|{definicao} definicao {-> definicao.bloco_fecho};
+
+	definicao {-> bloco_fecho} = 
+		id_ou_attr igual exp ponto_virgula {-> New bloco_fecho.definicao(id_ou_attr, exp)};
+	id_ou_attr {-> id_ou_attr} = 
+		{id} id {-> New id_ou_attr.id(id)}
+		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
+
+	id_fecho {-> id_fecho} = 
+		ponto_final id {-> New id_fecho(ponto_final, id)};
+
+	tipo_primitivo {-> tipo_primitivo} = 
+		primitivo {-> New tipo_primitivo(primitivo)};
+
+	tipo_molde {-> tipo_molde} = 
+		id_molde {-> New tipo_molde(id_molde)};
+
+	tipo = 
+		{primitivo} tipo_primitivo
+		|{molde} tipo_molde;
+	
+	dec_obj {-> bloco_fecho} = 
+		objeto dois_pontos tipo_molde id ponto_virgula {-> New bloco_fecho.objeto(tipo_molde, id)};
+	
+	dec_cons {-> bloco_fecho} = 
+		constante dois_pontos tipo_primitivo id ponto_virgula {-> New bloco_fecho.constante(tipo_primitivo, id)};
+
+	chamada {-> exp} = 
+		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada([id_fecho], lista_exp)};
+	lista_exp {-> lista_exp} = 
+		{exp} exp l_exp_fecho* {-> New lista_exp.exp(exp, [l_exp_fecho])}
+		|{vazio} {-> New lista_exp.vazio()};
+	l_exp_fecho {-> l_exp_fecho} = 
+		separador exp {-> New l_exp_fecho(separador, exp)};
+
+	instancia {-> exp} = 
+		id_molde abre_colchete lista_init fecha_colchete {-> New exp.instancia(lista_init)};
+	lista_init {-> lista_init} = 
+		{init} init_objeto l_init_fecho* {-> New lista_init.init(init_objeto, [l_init_fecho])}
+		|{vazio} {-> New lista_init.vazio()};
+	l_init_fecho {-> l_init_fecho} = 
+		separador init_objeto {-> New l_init_fecho(separador, init_objeto)};
+	init_objeto {-> init_objeto} = 
+		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
+
+Abstract Syntax Tree
+	exp = 
+		{ternario} [esq]:exp [cent]:exp [dir]:exp
+		|{ou} [esq]:exp [dir]:exp
+		|{e} [esq]:exp [dir]:exp
+		|{comparacao} [esq]:exp [dir]:exp
+		|{menor_que} [esq]:exp [dir]:exp
+		|{menor_igual} [esq]:exp [dir]:exp
+		|{soma} [esq]:exp [dir]:exp
+		|{subtracao} [esq]:exp [dir]:exp
+		|{multiplicacao} [esq]:exp [dir]:exp
+		|{divisao} [esq]:exp [dir]:exp
+		|{modulo} [esq]:exp [dir]:exp
+		|{negacao} exp
+		|{negativo} exp
+		|{bloco} bloco_fecho* exp
+		|{chamada} id_fecho* lista_exp
+		|{instancia} lista_init
+		|{numero} numero
+		|{id} id
+		|{string} string
+		|{texto} texto
+		|{verdade} verdade
+		|{falso} falso;
+	
+	bloco_fecho = 
+		{constante} tipo_primitivo id
+		|{objeto} tipo_molde id
+		|{definicao} id_ou_attr exp;
+	
+	lista_exp = 
+		{exp} exp l_exp_fecho*
+		|{vazio};
+	
+	lista_init = 
+		{init} init_objeto l_init_fecho*
+		|{vazio};
+	
+	l_init_fecho = 
+		separador init_objeto;
+	
+	init_objeto = 
+		id id_fecho* exp;
+	
+	l_exp_fecho = 
+		separador exp;
+	
+	id_ou_attr = 
+		{id} id
+		|{attr} id id_fecho+;
+	
+	id_fecho = 
+		ponto_final id;
+	
+	tipo_primitivo = 
+		primitivo;
+	
+	tipo_molde = 
+		id_molde;
+
