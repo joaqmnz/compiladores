@@ -1,5 +1,4 @@
 Package bemtevi;
-
 Helpers
 	digito = ['0' .. '9'];
 	caractere_maiusculo = ['A' .. 'Z'];
@@ -17,7 +16,6 @@ Helpers
 	fecha_chaves = '}';
 	rc = 13;
 	nl = 10;
-
 Tokens
 	primitivo = 'Bool' | 'Numero' | 'Texto';
 	numero = numero_inteiro | numero_virgula | numero_cientifico;
@@ -63,11 +61,9 @@ Tokens
 	texto = (caractere_maiusculo | caractere_minusculo)+;
 	comentario_bloco = abre_chaves ([0x00 .. 0x7c] | [0x7e .. 0xff])* fecha_chaves;
 	string = '"' ([0x00 .. 0x21] | [0x23 .. 0xff])* '"';
-
 Ignored Tokens
  	vazio, comentario_linha, comentario_bloco;
 
- 
 Productions
 
 	inicio {-> inicio} = 
@@ -128,22 +124,17 @@ Productions
 		{constante} dec_cons {-> dec_cons.bloco_fecho}
 		|{objeto} dec_obj {-> dec_obj.bloco_fecho}
 		|{definicao} definicao {-> definicao.bloco_fecho};
-
 	definicao {-> bloco_fecho} = 
 		id_ou_attr igual exp ponto_virgula {-> New bloco_fecho.definicao(id_ou_attr, exp)};
 	id_ou_attr {-> id_ou_attr} = 
 		{id} id {-> New id_ou_attr.id(id)}
 		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
-
 	id_fecho {-> id_fecho} = 
 		ponto_final id {-> New id_fecho(ponto_final, id)};
-
 	tipo_primitivo {-> tipo_primitivo} = 
 		primitivo {-> New tipo_primitivo(primitivo)};
-
 	tipo_molde {-> tipo_molde} = 
 		id_molde {-> New tipo_molde(id_molde)};
-
 	tipo = 
 		{primitivo} tipo_primitivo
 		|{molde} tipo_molde;
@@ -153,7 +144,6 @@ Productions
 	
 	dec_cons {-> bloco_fecho} = 
 		constante dois_pontos tipo_primitivo id ponto_virgula {-> New bloco_fecho.constante(tipo_primitivo, id)};
-
 	chamada {-> exp} = 
 		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada([id_fecho], lista_exp)};
 	lista_exp {-> lista_exp} = 
@@ -161,7 +151,6 @@ Productions
 		|{vazio} {-> New lista_exp.vazio()};
 	l_exp_fecho {-> l_exp_fecho} = 
 		separador exp {-> New l_exp_fecho(separador, exp)};
-
 	instancia {-> exp} = 
 		id_molde abre_colchete lista_init fecha_colchete {-> New exp.instancia(lista_init)};
 	lista_init {-> lista_init} = 
@@ -171,7 +160,7 @@ Productions
 		separador init_objeto {-> New l_init_fecho(separador, init_objeto)};
 	init_objeto {-> init_objeto} = 
 		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
-	
+
 	familia {-> familia} = 
 		{familia} relacao familia_fecho* ponto_final {-> New familia.familia(relacao, [familia_fecho])}
 		|{vazio} {-> New familia.vazio()};
@@ -207,17 +196,17 @@ Abstract Syntax Tree
 		|{texto} texto
 		|{verdade} verdade
 		|{falso} falso;
-	
+
 	familia = 
 		{familia} relacao familia_fecho*
 		|{vazio};
-	
+
 	familia_fecho = 
 		ponto_virgula relacao;
-	
+
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
-	
+
 	bloco_fecho = 
 		{constante} tipo_primitivo id
 		|{objeto} tipo_molde id
@@ -252,7 +241,3 @@ Abstract Syntax Tree
 	
 	tipo_molde = 
 		id_molde;
-
-	parametros = 
- 	    {parametro} parametro parametro_fecho*
- 	    |{vazio}
