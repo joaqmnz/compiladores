@@ -87,6 +87,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAFuncaoInicio(AFuncaoInicio node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseATernarioExp(ATernarioExp node)
     {
         defaultCase(node);
@@ -328,6 +334,90 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseATipoMolde(ATipoMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc2DecFuncao(AFunc2DecFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametroParametros(AParametroParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametros(AVazioParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametroFecho(AParametroFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdParametro(AIdParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametro(AAssinaturaParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinatura(AAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametrosAssinatura(AParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoParametroAssinatura(ATipoParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node)
     {
         defaultCase(node);
     }

@@ -14,6 +14,7 @@ public interface Analysis extends Switch
     void caseStart(Start node);
     void caseAExpInicio(AExpInicio node);
     void caseAFamiliaInicio(AFamiliaInicio node);
+    void caseAFuncaoInicio(AFuncaoInicio node);
     void caseATernarioExp(ATernarioExp node);
     void caseAOuExp(AOuExp node);
     void caseAEExp(AEExp node);
@@ -55,6 +56,20 @@ public interface Analysis extends Switch
     void caseAIdFecho(AIdFecho node);
     void caseATipoPrimitivo(ATipoPrimitivo node);
     void caseATipoMolde(ATipoMolde node);
+    void caseAPrimitivoTipo(APrimitivoTipo node);
+    void caseAMoldeTipo(AMoldeTipo node);
+    void caseAFunc2DecFuncao(AFunc2DecFuncao node);
+    void caseAParametroParametros(AParametroParametros node);
+    void caseAVazioParametros(AVazioParametros node);
+    void caseAParametroFecho(AParametroFecho node);
+    void caseAIdParametro(AIdParametro node);
+    void caseAAssinaturaParametro(AAssinaturaParametro node);
+    void caseAAssinatura(AAssinatura node);
+    void caseAParametrosAssinatura(AParametrosAssinatura node);
+    void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node);
+    void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node);
+    void caseATipoParametroAssinatura(ATipoParametroAssinatura node);
+    void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node);
 
     void caseTPrimitivo(TPrimitivo node);
     void caseTNumero(TNumero node);

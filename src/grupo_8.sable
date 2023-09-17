@@ -68,7 +68,8 @@ Productions
 
 	inicio {-> inicio} = 
 		{exp} exp {-> New inicio.exp(exp)}
-		|{familia} familia {-> New inicio.familia(familia)};
+		|{familia} familia {-> New inicio.familia(familia)}
+		|{funcao} dec_funcao {-> New inicio.funcao(dec_funcao)};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
@@ -136,9 +137,9 @@ Productions
 		primitivo {-> New tipo_primitivo(primitivo)};
 	tipo_molde {-> tipo_molde} = 
 		id_molde {-> New tipo_molde(id_molde)};
-	tipo = 
-		{primitivo} tipo_primitivo
-		|{molde} tipo_molde;
+	tipo {-> tipo} = 
+		{primitivo} tipo_primitivo {-> New tipo.primitivo(tipo_primitivo)}
+		|{molde} tipo_molde {-> New tipo.molde(tipo_molde)};
 	
 	dec_obj {-> bloco_fecho} = 
 		objeto dois_pontos tipo_molde id ponto_virgula {-> New bloco_fecho.objeto(tipo_molde, id)};
@@ -169,11 +170,42 @@ Productions
 		ponto_virgula relacao {-> New familia_fecho(ponto_virgula, relacao)};
 	relacao {-> relacao} = 
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
+	
+	dec_funcao {-> dec_funcao} =
+		{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, parametros) };
+ 	
+ 	parametros {-> parametros} = 
+ 	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
+ 	    |{vazio} {-> New parametros.vazio()};
+	parametro_fecho {-> parametro_fecho} = 
+		separador parametro {-> New parametro_fecho(separador,parametro)};
+
+	parametro {-> parametro}= 
+		{id} tipo id {-> New parametro.id(tipo,id)}
+		|{assinatura} assinatura {-> New parametro.assinatura(assinatura)};
+
+	assinatura {->assinatura} = 
+		tipo id abre_parenteses parametros_assinatura fecha_parenteses {-> New assinatura(parametros_assinatura)};
+
+	parametros_assinatura {-> parametros_assinatura}= 
+		parametro_assinatura parametros_assinatura_fecho* {-> New parametros_assinatura(parametro_assinatura,[parametros_assinatura_fecho])}
+		|{vazio} {-> New parametros_assinatura.vazio()};
+
+	parametros_assinatura_fecho {-> parametros_assinatura_fecho}= 
+		separador parametro_assinatura {-> New parametros_assinatura_fecho(separador,parametro_assinatura)};
+	
+	parametro_assinatura {-> parametro_assinatura} = 
+		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
+		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
+
+
+	
 
 Abstract Syntax Tree
 	inicio = 
 		{exp} exp
-		|{familia} familia;
+		|{familia} familia
+		|{funcao} dec_funcao;
 
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
