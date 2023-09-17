@@ -560,6 +560,101 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFalsoExp(node);
     }
 
+    public void inAFamiliaFamilia(AFamiliaFamilia node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFamiliaFamilia(AFamiliaFamilia node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFamiliaFamilia(AFamiliaFamilia node)
+    {
+        inAFamiliaFamilia(node);
+        if(node.getRelacao() != null)
+        {
+            node.getRelacao().apply(this);
+        }
+        {
+            List<PFamiliaFecho> copy = new ArrayList<PFamiliaFecho>(node.getFamiliaFecho());
+            for(PFamiliaFecho e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outAFamiliaFamilia(node);
+    }
+
+    public void inAVazioFamilia(AVazioFamilia node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVazioFamilia(AVazioFamilia node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVazioFamilia(AVazioFamilia node)
+    {
+        inAVazioFamilia(node);
+        outAVazioFamilia(node);
+    }
+
+    public void inAFamiliaFecho(AFamiliaFecho node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFamiliaFecho(AFamiliaFecho node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFamiliaFecho(AFamiliaFecho node)
+    {
+        inAFamiliaFecho(node);
+        if(node.getPontoVirgula() != null)
+        {
+            node.getPontoVirgula().apply(this);
+        }
+        if(node.getRelacao() != null)
+        {
+            node.getRelacao().apply(this);
+        }
+        outAFamiliaFecho(node);
+    }
+
+    public void inARelacao(ARelacao node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARelacao(ARelacao node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARelacao(ARelacao node)
+    {
+        inARelacao(node);
+        if(node.getEsquerdo() != null)
+        {
+            node.getEsquerdo().apply(this);
+        }
+        if(node.getDireito() != null)
+        {
+            node.getDireito().apply(this);
+        }
+        outARelacao(node);
+    }
+
     public void inAConstanteBlocoFecho(AConstanteBlocoFecho node)
     {
         defaultIn(node);

@@ -207,6 +207,30 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAFamiliaFamilia(AFamiliaFamilia node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioFamilia(AVazioFamilia node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFamiliaFecho(AFamiliaFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARelacao(ARelacao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAConstanteBlocoFecho(AConstanteBlocoFecho node)
     {
         defaultCase(node);

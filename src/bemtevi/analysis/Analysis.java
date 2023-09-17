@@ -34,6 +34,10 @@ public interface Analysis extends Switch
     void caseATextoExp(ATextoExp node);
     void caseAVerdadeExp(AVerdadeExp node);
     void caseAFalsoExp(AFalsoExp node);
+    void caseAFamiliaFamilia(AFamiliaFamilia node);
+    void caseAVazioFamilia(AVazioFamilia node);
+    void caseAFamiliaFecho(AFamiliaFecho node);
+    void caseARelacao(ARelacao node);
     void caseAConstanteBlocoFecho(AConstanteBlocoFecho node);
     void caseAObjetoBlocoFecho(AObjetoBlocoFecho node);
     void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node);

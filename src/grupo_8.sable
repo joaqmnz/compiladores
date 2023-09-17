@@ -70,6 +70,9 @@ Ignored Tokens
  
 Productions
 
+	inicio {-> inicio} = 
+		{exp} exp {-> exp.inicio};
+
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
 		|{bloco} blloco {-> blloco.exp}
@@ -168,8 +171,19 @@ Productions
 		separador init_objeto {-> New l_init_fecho(separador, init_objeto)};
 	init_objeto {-> init_objeto} = 
 		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
+	
+	familia {-> familia} = 
+		{familia} relacao familia_fecho* ponto_final {-> New familia.familia(relacao, [familia_fecho])}
+		|{vazio} {-> New familia.vazio()};
+	familia_fecho {-> familia_fecho} = 
+		ponto_virgula relacao {-> New familia_fecho(ponto_virgula, relacao)};
+	relacao {-> relacao} = 
+ 		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 
 Abstract Syntax Tree
+	inicio = 
+		exp;
+
 	exp = 
 		{ternario} [esq]:exp [cent]:exp [dir]:exp
 		|{ou} [esq]:exp [dir]:exp
@@ -193,6 +207,16 @@ Abstract Syntax Tree
 		|{texto} texto
 		|{verdade} verdade
 		|{falso} falso;
+	
+	familia = 
+		{familia} relacao familia_fecho*
+		|{vazio};
+	
+	familia_fecho = 
+		ponto_virgula relacao;
+	
+	relacao = 
+		[esquerdo]:id_molde [direito]:id_molde;
 	
 	bloco_fecho = 
 		{constante} tipo_primitivo id
