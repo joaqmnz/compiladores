@@ -93,7 +93,7 @@ Productions
 	
 	relacional {-> exp} = 
 		{aritmeticos1} aritmeticos1 {-> aritmeticos1.exp}
-		|{menor} relacional menor_que termo {-> New exp.menor_que(relacional.exp, termo.exp)}
+		|{menor} relacional menor_que aritmeticos1 {-> New exp.menor_que(relacional.exp, aritmeticos1.exp)}
 		|{menor_igual} relacional menor_igual aritmeticos1 {-> New exp.menor_igual(relacional.exp, aritmeticos1.exp)};
 	
 	aritmeticos1 {-> exp} = 
