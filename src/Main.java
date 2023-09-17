@@ -11,7 +11,7 @@ public class Main
  {
   try
   {
-   String arquivo = "../teste/teste.calc";
+   String arquivo = "../teste/teste.btv";
   
    Lexer lex = new Lexer(
 		    new PushbackReader(  
