@@ -5,51 +5,51 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ADefinicaoBlocoFecho extends PBlocoFecho
+public final class AConstanteBllocoFecho extends PBllocoFecho
 {
-    private PIdOuAttr _idOuAttr_;
-    private PExp _exp_;
+    private PTipoPrimitivo _tipoPrimitivo_;
+    private TId _id_;
 
-    public ADefinicaoBlocoFecho()
+    public AConstanteBllocoFecho()
     {
         // Constructor
     }
 
-    public ADefinicaoBlocoFecho(
-        @SuppressWarnings("hiding") PIdOuAttr _idOuAttr_,
-        @SuppressWarnings("hiding") PExp _exp_)
+    public AConstanteBllocoFecho(
+        @SuppressWarnings("hiding") PTipoPrimitivo _tipoPrimitivo_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setIdOuAttr(_idOuAttr_);
+        setTipoPrimitivo(_tipoPrimitivo_);
 
-        setExp(_exp_);
+        setId(_id_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ADefinicaoBlocoFecho(
-            cloneNode(this._idOuAttr_),
-            cloneNode(this._exp_));
+        return new AConstanteBllocoFecho(
+            cloneNode(this._tipoPrimitivo_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseADefinicaoBlocoFecho(this);
+        ((Analysis) sw).caseAConstanteBllocoFecho(this);
     }
 
-    public PIdOuAttr getIdOuAttr()
+    public PTipoPrimitivo getTipoPrimitivo()
     {
-        return this._idOuAttr_;
+        return this._tipoPrimitivo_;
     }
 
-    public void setIdOuAttr(PIdOuAttr node)
+    public void setTipoPrimitivo(PTipoPrimitivo node)
     {
-        if(this._idOuAttr_ != null)
+        if(this._tipoPrimitivo_ != null)
         {
-            this._idOuAttr_.parent(null);
+            this._tipoPrimitivo_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class ADefinicaoBlocoFecho extends PBlocoFecho
             node.parent(this);
         }
 
-        this._idOuAttr_ = node;
+        this._tipoPrimitivo_ = node;
     }
 
-    public PExp getExp()
+    public TId getId()
     {
-        return this._exp_;
+        return this._id_;
     }
 
-    public void setExp(PExp node)
+    public void setId(TId node)
     {
-        if(this._exp_ != null)
+        if(this._id_ != null)
         {
-            this._exp_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class ADefinicaoBlocoFecho extends PBlocoFecho
             node.parent(this);
         }
 
-        this._exp_ = node;
+        this._id_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._idOuAttr_)
-            + toString(this._exp_);
+            + toString(this._tipoPrimitivo_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._idOuAttr_ == child)
+        if(this._tipoPrimitivo_ == child)
         {
-            this._idOuAttr_ = null;
+            this._tipoPrimitivo_ = null;
             return;
         }
 
-        if(this._exp_ == child)
+        if(this._id_ == child)
         {
-            this._exp_ = null;
+            this._id_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class ADefinicaoBlocoFecho extends PBlocoFecho
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._idOuAttr_ == oldChild)
+        if(this._tipoPrimitivo_ == oldChild)
         {
-            setIdOuAttr((PIdOuAttr) newChild);
+            setTipoPrimitivo((PTipoPrimitivo) newChild);
             return;
         }
 
-        if(this._exp_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setExp((PExp) newChild);
+            setId((TId) newChild);
             return;
         }
 

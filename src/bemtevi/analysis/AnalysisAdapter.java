@@ -75,13 +75,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAExpInicio(AExpInicio node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFamiliaInicio(AFamiliaInicio node)
+    public void caseAInicio(AInicio node)
     {
         defaultCase(node);
     }
@@ -165,12 +159,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseABlocoExp(ABlocoExp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAChamadaExp(AChamadaExp node)
     {
         defaultCase(node);
@@ -178,6 +166,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAInstanciaExp(AInstanciaExp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseABlocoExp(ABlocoExp node)
     {
         defaultCase(node);
     }
@@ -243,19 +237,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    public void caseAConstanteBllocoFecho(AConstanteBllocoFecho node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    public void caseAObjetoBllocoFecho(AObjetoBllocoFecho node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
     {
         defaultCase(node);
     }
@@ -321,6 +315,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseATipoPrimitivo(ATipoPrimitivo node)
     {
         defaultCase(node);
@@ -328,6 +334,108 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseATipoMolde(ATipoMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc1DecFuncao(AFunc1DecFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc2DecFuncao(AFunc2DecFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametroParametros(AParametroParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametros(AVazioParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametroFecho(AParametroFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdParametro(AIdParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametro(AAssinaturaParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinatura(AAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametrosAssinatura(AParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoParametroAssinatura(ATipoParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAtributos(AAtributos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMetodos(AMetodos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefMolde(ADefMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPrograma(APrograma node)
     {
         defaultCase(node);
     }

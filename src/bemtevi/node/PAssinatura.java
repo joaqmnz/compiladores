@@ -2,7 +2,7 @@
 
 package bemtevi.node;
 
-public abstract class PBlocoFecho extends Node
+public abstract class PAssinatura extends Node
 {
     // Empty body
 }

@@ -5,46 +5,46 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFamiliaInicio extends PInicio
+public final class AParametroFecho extends PParametroFecho
 {
-    private PFamilia _familia_;
+    private PParametro _parametro_;
 
-    public AFamiliaInicio()
+    public AParametroFecho()
     {
         // Constructor
     }
 
-    public AFamiliaInicio(
-        @SuppressWarnings("hiding") PFamilia _familia_)
+    public AParametroFecho(
+        @SuppressWarnings("hiding") PParametro _parametro_)
     {
         // Constructor
-        setFamilia(_familia_);
+        setParametro(_parametro_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFamiliaInicio(
-            cloneNode(this._familia_));
+        return new AParametroFecho(
+            cloneNode(this._parametro_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFamiliaInicio(this);
+        ((Analysis) sw).caseAParametroFecho(this);
     }
 
-    public PFamilia getFamilia()
+    public PParametro getParametro()
     {
-        return this._familia_;
+        return this._parametro_;
     }
 
-    public void setFamilia(PFamilia node)
+    public void setParametro(PParametro node)
     {
-        if(this._familia_ != null)
+        if(this._parametro_ != null)
         {
-            this._familia_.parent(null);
+            this._parametro_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AFamiliaInicio extends PInicio
             node.parent(this);
         }
 
-        this._familia_ = node;
+        this._parametro_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._familia_);
+            + toString(this._parametro_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._familia_ == child)
+        if(this._parametro_ == child)
         {
-            this._familia_ = null;
+            this._parametro_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AFamiliaInicio extends PInicio
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._familia_ == oldChild)
+        if(this._parametro_ == oldChild)
         {
-            setFamilia((PFamilia) newChild);
+            setParametro((PParametro) newChild);
             return;
         }
 

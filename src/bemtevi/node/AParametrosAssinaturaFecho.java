@@ -5,46 +5,46 @@ package bemtevi.node;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AExpInicio extends PInicio
+public final class AParametrosAssinaturaFecho extends PParametrosAssinaturaFecho
 {
-    private PExp _exp_;
+    private PParametroAssinatura _parametroAssinatura_;
 
-    public AExpInicio()
+    public AParametrosAssinaturaFecho()
     {
         // Constructor
     }
 
-    public AExpInicio(
-        @SuppressWarnings("hiding") PExp _exp_)
+    public AParametrosAssinaturaFecho(
+        @SuppressWarnings("hiding") PParametroAssinatura _parametroAssinatura_)
     {
         // Constructor
-        setExp(_exp_);
+        setParametroAssinatura(_parametroAssinatura_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AExpInicio(
-            cloneNode(this._exp_));
+        return new AParametrosAssinaturaFecho(
+            cloneNode(this._parametroAssinatura_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAExpInicio(this);
+        ((Analysis) sw).caseAParametrosAssinaturaFecho(this);
     }
 
-    public PExp getExp()
+    public PParametroAssinatura getParametroAssinatura()
     {
-        return this._exp_;
+        return this._parametroAssinatura_;
     }
 
-    public void setExp(PExp node)
+    public void setParametroAssinatura(PParametroAssinatura node)
     {
-        if(this._exp_ != null)
+        if(this._parametroAssinatura_ != null)
         {
-            this._exp_.parent(null);
+            this._parametroAssinatura_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AExpInicio extends PInicio
             node.parent(this);
         }
 
-        this._exp_ = node;
+        this._parametroAssinatura_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._exp_);
+            + toString(this._parametroAssinatura_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._exp_ == child)
+        if(this._parametroAssinatura_ == child)
         {
-            this._exp_ = null;
+            this._parametroAssinatura_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AExpInicio extends PInicio
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._exp_ == oldChild)
+        if(this._parametroAssinatura_ == oldChild)
         {
-            setExp((PExp) newChild);
+            setParametroAssinatura((PParametroAssinatura) newChild);
             return;
         }
 

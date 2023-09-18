@@ -7,7 +7,6 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class ALExpFecho extends PLExpFecho
 {
-    private TSeparador _separador_;
     private PExp _exp_;
 
     public ALExpFecho()
@@ -16,12 +15,9 @@ public final class ALExpFecho extends PLExpFecho
     }
 
     public ALExpFecho(
-        @SuppressWarnings("hiding") TSeparador _separador_,
         @SuppressWarnings("hiding") PExp _exp_)
     {
         // Constructor
-        setSeparador(_separador_);
-
         setExp(_exp_);
 
     }
@@ -30,7 +26,6 @@ public final class ALExpFecho extends PLExpFecho
     public Object clone()
     {
         return new ALExpFecho(
-            cloneNode(this._separador_),
             cloneNode(this._exp_));
     }
 
@@ -38,31 +33,6 @@ public final class ALExpFecho extends PLExpFecho
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseALExpFecho(this);
-    }
-
-    public TSeparador getSeparador()
-    {
-        return this._separador_;
-    }
-
-    public void setSeparador(TSeparador node)
-    {
-        if(this._separador_ != null)
-        {
-            this._separador_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._separador_ = node;
     }
 
     public PExp getExp()
@@ -94,7 +64,6 @@ public final class ALExpFecho extends PLExpFecho
     public String toString()
     {
         return ""
-            + toString(this._separador_)
             + toString(this._exp_);
     }
 
@@ -102,12 +71,6 @@ public final class ALExpFecho extends PLExpFecho
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._separador_ == child)
-        {
-            this._separador_ = null;
-            return;
-        }
-
         if(this._exp_ == child)
         {
             this._exp_ = null;
@@ -121,12 +84,6 @@ public final class ALExpFecho extends PLExpFecho
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._separador_ == oldChild)
-        {
-            setSeparador((TSeparador) newChild);
-            return;
-        }
-
         if(this._exp_ == oldChild)
         {
             setExp((PExp) newChild);

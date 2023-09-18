@@ -7,7 +7,6 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class ALInitFecho extends PLInitFecho
 {
-    private TSeparador _separador_;
     private PInitObjeto _initObjeto_;
 
     public ALInitFecho()
@@ -16,12 +15,9 @@ public final class ALInitFecho extends PLInitFecho
     }
 
     public ALInitFecho(
-        @SuppressWarnings("hiding") TSeparador _separador_,
         @SuppressWarnings("hiding") PInitObjeto _initObjeto_)
     {
         // Constructor
-        setSeparador(_separador_);
-
         setInitObjeto(_initObjeto_);
 
     }
@@ -30,7 +26,6 @@ public final class ALInitFecho extends PLInitFecho
     public Object clone()
     {
         return new ALInitFecho(
-            cloneNode(this._separador_),
             cloneNode(this._initObjeto_));
     }
 
@@ -38,31 +33,6 @@ public final class ALInitFecho extends PLInitFecho
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseALInitFecho(this);
-    }
-
-    public TSeparador getSeparador()
-    {
-        return this._separador_;
-    }
-
-    public void setSeparador(TSeparador node)
-    {
-        if(this._separador_ != null)
-        {
-            this._separador_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._separador_ = node;
     }
 
     public PInitObjeto getInitObjeto()
@@ -94,7 +64,6 @@ public final class ALInitFecho extends PLInitFecho
     public String toString()
     {
         return ""
-            + toString(this._separador_)
             + toString(this._initObjeto_);
     }
 
@@ -102,12 +71,6 @@ public final class ALInitFecho extends PLInitFecho
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._separador_ == child)
-        {
-            this._separador_ = null;
-            return;
-        }
-
         if(this._initObjeto_ == child)
         {
             this._initObjeto_ = null;
@@ -121,12 +84,6 @@ public final class ALInitFecho extends PLInitFecho
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._separador_ == oldChild)
-        {
-            setSeparador((TSeparador) newChild);
-            return;
-        }
-
         if(this._initObjeto_ == oldChild)
         {
             setInitObjeto((PInitObjeto) newChild);

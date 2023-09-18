@@ -155,14 +155,14 @@ Productions
 		{exp} exp l_exp_fecho* {-> New lista_exp.exp(exp, [l_exp_fecho])}
 		|{vazio} {-> New lista_exp.vazio()};
 	l_exp_fecho {-> l_exp_fecho} = 
-		separador exp {-> New l_exp_fecho(separador, exp)};
+		separador exp {-> New l_exp_fecho(exp)};
 	instancia {-> exp} = 
 		id_molde abre_colchete lista_init fecha_colchete {-> New exp.instancia(lista_init)};
 	lista_init {-> lista_init} = 
 		{init} init_objeto l_init_fecho* {-> New lista_init.init(init_objeto, [l_init_fecho])}
 		|{vazio} {-> New lista_init.vazio()};
 	l_init_fecho {-> l_init_fecho} = 
-		separador init_objeto {-> New l_init_fecho(separador, init_objeto)};
+		separador init_objeto {-> New l_init_fecho(init_objeto)};
 	init_objeto {-> init_objeto} = 
 		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
 
@@ -182,7 +182,7 @@ Productions
  	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
  	    |{vazio} {-> New parametros.vazio()};
 	parametro_fecho {-> parametro_fecho} = 
-		separador parametro {-> New parametro_fecho(separador,parametro)};
+		separador parametro {-> New parametro_fecho(parametro)};
 
 	parametro {-> parametro}= 
 		{id} tipo id {-> New parametro.id(tipo,id)}
@@ -196,7 +196,7 @@ Productions
 		|{vazio} {-> New parametros_assinatura.vazio()};
 
 	parametros_assinatura_fecho {-> parametros_assinatura_fecho}= 
-		separador parametro_assinatura {-> New parametros_assinatura_fecho(separador,parametro_assinatura)};
+		separador parametro_assinatura {-> New parametros_assinatura_fecho(parametro_assinatura)};
 	
 	parametro_assinatura {-> parametro_assinatura} = 
 		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
@@ -266,13 +266,13 @@ Abstract Syntax Tree
 		|{vazio};
 	
 	l_init_fecho = 
-		separador init_objeto;
+		init_objeto;
 	
 	init_objeto = 
 		id id_fecho* exp;
 	
 	l_exp_fecho = 
-		separador exp;
+		exp;
 	
 	id_ou_attr = 
 		{id} id
@@ -300,7 +300,7 @@ Abstract Syntax Tree
  	    |{vazio};
 
 	parametro_fecho = 
-		separador parametro;
+		parametro;
 	
 	parametro = 
 		{id} tipo id
@@ -313,7 +313,7 @@ Abstract Syntax Tree
 		parametro_assinatura parametros_assinatura_fecho*
 		|{vazio};
 	parametros_assinatura_fecho = 
-		separador parametro_assinatura;
+		parametro_assinatura;
 	
 	parametro_assinatura = 
 		{tipo} tipo
