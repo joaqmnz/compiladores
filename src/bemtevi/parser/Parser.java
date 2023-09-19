@@ -1923,12 +1923,10 @@ public class Parser
         PIdFecho pidfechoNode1;
         {
             // Block
-        TPontoFinal tpontofinalNode2;
-        TId tidNode3;
-        tpontofinalNode2 = (TPontoFinal)nodeArrayList1.get(0);
-        tidNode3 = (TId)nodeArrayList2.get(0);
+        TId tidNode2;
+        tidNode2 = (TId)nodeArrayList2.get(0);
 
-        pidfechoNode1 = new AIdFecho(tpontofinalNode2, tidNode3);
+        pidfechoNode1 = new AIdFecho(tidNode2);
         }
 	nodeList.add(pidfechoNode1);
         return nodeList;
@@ -2412,17 +2410,9 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PFamiliaFecho pfamiliafechoNode1;
-        {
-            // Block
-        TPontoVirgula tpontovirgulaNode2;
-        PRelacao prelacaoNode3;
-        tpontovirgulaNode2 = (TPontoVirgula)nodeArrayList1.get(0);
-        prelacaoNode3 = (PRelacao)nodeArrayList2.get(0);
-
-        pfamiliafechoNode1 = new AFamiliaFecho(tpontovirgulaNode2, prelacaoNode3);
-        }
-	nodeList.add(pfamiliafechoNode1);
+        PRelacao prelacaoNode1;
+        prelacaoNode1 = (PRelacao)nodeArrayList2.get(0);
+	nodeList.add(prelacaoNode1);
         return nodeList;
     }
 
@@ -2664,15 +2654,9 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PParametroFecho pparametrofechoNode1;
-        {
-            // Block
-        PParametro pparametroNode2;
-        pparametroNode2 = (PParametro)nodeArrayList2.get(0);
-
-        pparametrofechoNode1 = new AParametroFecho(pparametroNode2);
-        }
-	nodeList.add(pparametrofechoNode1);
+        PParametro pparametroNode1;
+        pparametroNode1 = (PParametro)nodeArrayList2.get(0);
+	nodeList.add(pparametroNode1);
         return nodeList;
     }
 
@@ -2734,10 +2718,14 @@ public class Parser
         PAssinatura passinaturaNode1;
         {
             // Block
-        PParametrosAssinatura pparametrosassinaturaNode2;
-        pparametrosassinaturaNode2 = (PParametrosAssinatura)nodeArrayList4.get(0);
+        PTipo ptipoNode2;
+        TId tidNode3;
+        PParametrosAssinatura pparametrosassinaturaNode4;
+        ptipoNode2 = (PTipo)nodeArrayList1.get(0);
+        tidNode3 = (TId)nodeArrayList2.get(0);
+        pparametrosassinaturaNode4 = (PParametrosAssinatura)nodeArrayList4.get(0);
 
-        passinaturaNode1 = new AAssinatura(pparametrosassinaturaNode2);
+        passinaturaNode1 = new AAssinatura(ptipoNode2, tidNode3, pparametrosassinaturaNode4);
         }
 	nodeList.add(passinaturaNode1);
         return nodeList;
@@ -2824,15 +2812,9 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PParametrosAssinaturaFecho pparametrosassinaturafechoNode1;
-        {
-            // Block
-        PParametroAssinatura pparametroassinaturaNode2;
-        pparametroassinaturaNode2 = (PParametroAssinatura)nodeArrayList2.get(0);
-
-        pparametrosassinaturafechoNode1 = new AParametrosAssinaturaFecho(pparametroassinaturaNode2);
-        }
-	nodeList.add(pparametrosassinaturafechoNode1);
+        PParametroAssinatura pparametroassinaturaNode1;
+        pparametroassinaturaNode1 = (PParametroAssinatura)nodeArrayList2.get(0);
+	nodeList.add(pparametroassinaturaNode1);
         return nodeList;
     }
 
@@ -3297,11 +3279,11 @@ public class Parser
         LinkedList<Object> listNode2 = new LinkedList<Object>();
         {
             // Block
-        PFamiliaFecho pfamiliafechoNode1;
-        pfamiliafechoNode1 = (PFamiliaFecho)nodeArrayList1.get(0);
-	if(pfamiliafechoNode1 != null)
+        PRelacao prelacaoNode1;
+        prelacaoNode1 = (PRelacao)nodeArrayList1.get(0);
+	if(prelacaoNode1 != null)
 	{
-	  listNode2.add(pfamiliafechoNode1);
+	  listNode2.add(prelacaoNode1);
 	}
         }
 	nodeList.add(listNode2);
@@ -3321,16 +3303,16 @@ public class Parser
         {
             // Block
         LinkedList<Object> listNode1 = new LinkedList<Object>();
-        PFamiliaFecho pfamiliafechoNode2;
+        PRelacao prelacaoNode2;
         listNode1 = (LinkedList)nodeArrayList1.get(0);
-        pfamiliafechoNode2 = (PFamiliaFecho)nodeArrayList2.get(0);
+        prelacaoNode2 = (PRelacao)nodeArrayList2.get(0);
 	if(listNode1 != null)
 	{
 	  listNode3.addAll(listNode1);
 	}
-	if(pfamiliafechoNode2 != null)
+	if(prelacaoNode2 != null)
 	{
-	  listNode3.add(pfamiliafechoNode2);
+	  listNode3.add(prelacaoNode2);
 	}
         }
 	nodeList.add(listNode3);
@@ -3348,11 +3330,11 @@ public class Parser
         LinkedList<Object> listNode2 = new LinkedList<Object>();
         {
             // Block
-        PParametroFecho pparametrofechoNode1;
-        pparametrofechoNode1 = (PParametroFecho)nodeArrayList1.get(0);
-	if(pparametrofechoNode1 != null)
+        PParametro pparametroNode1;
+        pparametroNode1 = (PParametro)nodeArrayList1.get(0);
+	if(pparametroNode1 != null)
 	{
-	  listNode2.add(pparametrofechoNode1);
+	  listNode2.add(pparametroNode1);
 	}
         }
 	nodeList.add(listNode2);
@@ -3372,16 +3354,16 @@ public class Parser
         {
             // Block
         LinkedList<Object> listNode1 = new LinkedList<Object>();
-        PParametroFecho pparametrofechoNode2;
+        PParametro pparametroNode2;
         listNode1 = (LinkedList)nodeArrayList1.get(0);
-        pparametrofechoNode2 = (PParametroFecho)nodeArrayList2.get(0);
+        pparametroNode2 = (PParametro)nodeArrayList2.get(0);
 	if(listNode1 != null)
 	{
 	  listNode3.addAll(listNode1);
 	}
-	if(pparametrofechoNode2 != null)
+	if(pparametroNode2 != null)
 	{
-	  listNode3.add(pparametrofechoNode2);
+	  listNode3.add(pparametroNode2);
 	}
         }
 	nodeList.add(listNode3);
@@ -3399,11 +3381,11 @@ public class Parser
         LinkedList<Object> listNode2 = new LinkedList<Object>();
         {
             // Block
-        PParametrosAssinaturaFecho pparametrosassinaturafechoNode1;
-        pparametrosassinaturafechoNode1 = (PParametrosAssinaturaFecho)nodeArrayList1.get(0);
-	if(pparametrosassinaturafechoNode1 != null)
+        PParametroAssinatura pparametroassinaturaNode1;
+        pparametroassinaturaNode1 = (PParametroAssinatura)nodeArrayList1.get(0);
+	if(pparametroassinaturaNode1 != null)
 	{
-	  listNode2.add(pparametrosassinaturafechoNode1);
+	  listNode2.add(pparametroassinaturaNode1);
 	}
         }
 	nodeList.add(listNode2);
@@ -3423,16 +3405,16 @@ public class Parser
         {
             // Block
         LinkedList<Object> listNode1 = new LinkedList<Object>();
-        PParametrosAssinaturaFecho pparametrosassinaturafechoNode2;
+        PParametroAssinatura pparametroassinaturaNode2;
         listNode1 = (LinkedList)nodeArrayList1.get(0);
-        pparametrosassinaturafechoNode2 = (PParametrosAssinaturaFecho)nodeArrayList2.get(0);
+        pparametroassinaturaNode2 = (PParametroAssinatura)nodeArrayList2.get(0);
 	if(listNode1 != null)
 	{
 	  listNode3.addAll(listNode1);
 	}
-	if(pparametrosassinaturafechoNode2 != null)
+	if(pparametroassinaturaNode2 != null)
 	{
-	  listNode3.add(pparametrosassinaturafechoNode2);
+	  listNode3.add(pparametroassinaturaNode2);
 	}
         }
 	nodeList.add(listNode3);

@@ -595,13 +595,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAFamiliaFamilia(AFamiliaFamilia node)
     {
         inAFamiliaFamilia(node);
-        if(node.getRelacao() != null)
+        if(node.getEsq() != null)
         {
-            node.getRelacao().apply(this);
+            node.getEsq().apply(this);
         }
         {
-            List<PFamiliaFecho> copy = new ArrayList<PFamiliaFecho>(node.getFamiliaFecho());
-            for(PFamiliaFecho e : copy)
+            List<PRelacao> copy = new ArrayList<PRelacao>(node.getDir());
+            for(PRelacao e : copy)
             {
                 e.apply(this);
             }
@@ -624,31 +624,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioFamilia(node);
         outAVazioFamilia(node);
-    }
-
-    public void inAFamiliaFecho(AFamiliaFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFamiliaFecho(AFamiliaFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFamiliaFecho(AFamiliaFecho node)
-    {
-        inAFamiliaFecho(node);
-        if(node.getPontoVirgula() != null)
-        {
-            node.getPontoVirgula().apply(this);
-        }
-        if(node.getRelacao() != null)
-        {
-            node.getRelacao().apply(this);
-        }
-        outAFamiliaFecho(node);
     }
 
     public void inARelacao(ARelacao node)
@@ -978,10 +953,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAIdFecho(AIdFecho node)
     {
         inAIdFecho(node);
-        if(node.getPontoFinal() != null)
-        {
-            node.getPontoFinal().apply(this);
-        }
         if(node.getId() != null)
         {
             node.getId().apply(this);
@@ -1149,13 +1120,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAParametroParametros(AParametroParametros node)
     {
         inAParametroParametros(node);
-        if(node.getParametro() != null)
+        if(node.getEsq() != null)
         {
-            node.getParametro().apply(this);
+            node.getEsq().apply(this);
         }
         {
-            List<PParametroFecho> copy = new ArrayList<PParametroFecho>(node.getParametroFecho());
-            for(PParametroFecho e : copy)
+            List<PParametro> copy = new ArrayList<PParametro>(node.getDir());
+            for(PParametro e : copy)
             {
                 e.apply(this);
             }
@@ -1178,27 +1149,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioParametros(node);
         outAVazioParametros(node);
-    }
-
-    public void inAParametroFecho(AParametroFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAParametroFecho(AParametroFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAParametroFecho(AParametroFecho node)
-    {
-        inAParametroFecho(node);
-        if(node.getParametro() != null)
-        {
-            node.getParametro().apply(this);
-        }
-        outAParametroFecho(node);
     }
 
     public void inAIdParametro(AIdParametro node)
@@ -1261,6 +1211,14 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAAssinatura(AAssinatura node)
     {
         inAAssinatura(node);
+        if(node.getTipo() != null)
+        {
+            node.getTipo().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
         if(node.getParametrosAssinatura() != null)
         {
             node.getParametrosAssinatura().apply(this);
@@ -1282,13 +1240,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAParametrosAssinatura(AParametrosAssinatura node)
     {
         inAParametrosAssinatura(node);
-        if(node.getParametroAssinatura() != null)
+        if(node.getEsq() != null)
         {
-            node.getParametroAssinatura().apply(this);
+            node.getEsq().apply(this);
         }
         {
-            List<PParametrosAssinaturaFecho> copy = new ArrayList<PParametrosAssinaturaFecho>(node.getParametrosAssinaturaFecho());
-            for(PParametrosAssinaturaFecho e : copy)
+            List<PParametroAssinatura> copy = new ArrayList<PParametroAssinatura>(node.getDir());
+            for(PParametroAssinatura e : copy)
             {
                 e.apply(this);
             }
@@ -1311,27 +1269,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioParametrosAssinatura(node);
         outAVazioParametrosAssinatura(node);
-    }
-
-    public void inAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        inAParametrosAssinaturaFecho(node);
-        if(node.getParametroAssinatura() != null)
-        {
-            node.getParametroAssinatura().apply(this);
-        }
-        outAParametrosAssinaturaFecho(node);
     }
 
     public void inATipoParametroAssinatura(ATipoParametroAssinatura node)

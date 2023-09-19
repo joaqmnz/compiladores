@@ -7,6 +7,8 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AAssinatura extends PAssinatura
 {
+    private PTipo _tipo_;
+    private TId _id_;
     private PParametrosAssinatura _parametrosAssinatura_;
 
     public AAssinatura()
@@ -15,9 +17,15 @@ public final class AAssinatura extends PAssinatura
     }
 
     public AAssinatura(
+        @SuppressWarnings("hiding") PTipo _tipo_,
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PParametrosAssinatura _parametrosAssinatura_)
     {
         // Constructor
+        setTipo(_tipo_);
+
+        setId(_id_);
+
         setParametrosAssinatura(_parametrosAssinatura_);
 
     }
@@ -26,6 +34,8 @@ public final class AAssinatura extends PAssinatura
     public Object clone()
     {
         return new AAssinatura(
+            cloneNode(this._tipo_),
+            cloneNode(this._id_),
             cloneNode(this._parametrosAssinatura_));
     }
 
@@ -33,6 +43,56 @@ public final class AAssinatura extends PAssinatura
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAAssinatura(this);
+    }
+
+    public PTipo getTipo()
+    {
+        return this._tipo_;
+    }
+
+    public void setTipo(PTipo node)
+    {
+        if(this._tipo_ != null)
+        {
+            this._tipo_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._tipo_ = node;
+    }
+
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
     }
 
     public PParametrosAssinatura getParametrosAssinatura()
@@ -64,6 +124,8 @@ public final class AAssinatura extends PAssinatura
     public String toString()
     {
         return ""
+            + toString(this._tipo_)
+            + toString(this._id_)
             + toString(this._parametrosAssinatura_);
     }
 
@@ -71,6 +133,18 @@ public final class AAssinatura extends PAssinatura
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._tipo_ == child)
+        {
+            this._tipo_ = null;
+            return;
+        }
+
+        if(this._id_ == child)
+        {
+            this._id_ = null;
+            return;
+        }
+
         if(this._parametrosAssinatura_ == child)
         {
             this._parametrosAssinatura_ = null;
@@ -84,6 +158,18 @@ public final class AAssinatura extends PAssinatura
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._tipo_ == oldChild)
+        {
+            setTipo((PTipo) newChild);
+            return;
+        }
+
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
+            return;
+        }
+
         if(this._parametrosAssinatura_ == oldChild)
         {
             setParametrosAssinatura((PParametrosAssinatura) newChild);

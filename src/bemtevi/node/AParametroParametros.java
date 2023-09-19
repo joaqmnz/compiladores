@@ -8,8 +8,8 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AParametroParametros extends PParametros
 {
-    private PParametro _parametro_;
-    private final LinkedList<PParametroFecho> _parametroFecho_ = new LinkedList<PParametroFecho>();
+    private PParametro _esq_;
+    private final LinkedList<PParametro> _dir_ = new LinkedList<PParametro>();
 
     public AParametroParametros()
     {
@@ -17,13 +17,13 @@ public final class AParametroParametros extends PParametros
     }
 
     public AParametroParametros(
-        @SuppressWarnings("hiding") PParametro _parametro_,
-        @SuppressWarnings("hiding") List<?> _parametroFecho_)
+        @SuppressWarnings("hiding") PParametro _esq_,
+        @SuppressWarnings("hiding") List<?> _dir_)
     {
         // Constructor
-        setParametro(_parametro_);
+        setEsq(_esq_);
 
-        setParametroFecho(_parametroFecho_);
+        setDir(_dir_);
 
     }
 
@@ -31,8 +31,8 @@ public final class AParametroParametros extends PParametros
     public Object clone()
     {
         return new AParametroParametros(
-            cloneNode(this._parametro_),
-            cloneList(this._parametroFecho_));
+            cloneNode(this._esq_),
+            cloneList(this._dir_));
     }
 
     @Override
@@ -41,16 +41,16 @@ public final class AParametroParametros extends PParametros
         ((Analysis) sw).caseAParametroParametros(this);
     }
 
-    public PParametro getParametro()
+    public PParametro getEsq()
     {
-        return this._parametro_;
+        return this._esq_;
     }
 
-    public void setParametro(PParametro node)
+    public void setEsq(PParametro node)
     {
-        if(this._parametro_ != null)
+        if(this._esq_ != null)
         {
-            this._parametro_.parent(null);
+            this._esq_.parent(null);
         }
 
         if(node != null)
@@ -63,32 +63,32 @@ public final class AParametroParametros extends PParametros
             node.parent(this);
         }
 
-        this._parametro_ = node;
+        this._esq_ = node;
     }
 
-    public LinkedList<PParametroFecho> getParametroFecho()
+    public LinkedList<PParametro> getDir()
     {
-        return this._parametroFecho_;
+        return this._dir_;
     }
 
-    public void setParametroFecho(List<?> list)
+    public void setDir(List<?> list)
     {
-        for(PParametroFecho e : this._parametroFecho_)
+        for(PParametro e : this._dir_)
         {
             e.parent(null);
         }
-        this._parametroFecho_.clear();
+        this._dir_.clear();
 
         for(Object obj_e : list)
         {
-            PParametroFecho e = (PParametroFecho) obj_e;
+            PParametro e = (PParametro) obj_e;
             if(e.parent() != null)
             {
                 e.parent().removeChild(e);
             }
 
             e.parent(this);
-            this._parametroFecho_.add(e);
+            this._dir_.add(e);
         }
     }
 
@@ -96,21 +96,21 @@ public final class AParametroParametros extends PParametros
     public String toString()
     {
         return ""
-            + toString(this._parametro_)
-            + toString(this._parametroFecho_);
+            + toString(this._esq_)
+            + toString(this._dir_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._parametro_ == child)
+        if(this._esq_ == child)
         {
-            this._parametro_ = null;
+            this._esq_ = null;
             return;
         }
 
-        if(this._parametroFecho_.remove(child))
+        if(this._dir_.remove(child))
         {
             return;
         }
@@ -122,19 +122,19 @@ public final class AParametroParametros extends PParametros
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._parametro_ == oldChild)
+        if(this._esq_ == oldChild)
         {
-            setParametro((PParametro) newChild);
+            setEsq((PParametro) newChild);
             return;
         }
 
-        for(ListIterator<PParametroFecho> i = this._parametroFecho_.listIterator(); i.hasNext();)
+        for(ListIterator<PParametro> i = this._dir_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
                 if(newChild != null)
                 {
-                    i.set((PParametroFecho) newChild);
+                    i.set((PParametro) newChild);
                     newChild.parent(this);
                     oldChild.parent(null);
                     return;

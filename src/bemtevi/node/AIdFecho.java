@@ -7,7 +7,6 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AIdFecho extends PIdFecho
 {
-    private TPontoFinal _pontoFinal_;
     private TId _id_;
 
     public AIdFecho()
@@ -16,12 +15,9 @@ public final class AIdFecho extends PIdFecho
     }
 
     public AIdFecho(
-        @SuppressWarnings("hiding") TPontoFinal _pontoFinal_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setPontoFinal(_pontoFinal_);
-
         setId(_id_);
 
     }
@@ -30,7 +26,6 @@ public final class AIdFecho extends PIdFecho
     public Object clone()
     {
         return new AIdFecho(
-            cloneNode(this._pontoFinal_),
             cloneNode(this._id_));
     }
 
@@ -38,31 +33,6 @@ public final class AIdFecho extends PIdFecho
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAIdFecho(this);
-    }
-
-    public TPontoFinal getPontoFinal()
-    {
-        return this._pontoFinal_;
-    }
-
-    public void setPontoFinal(TPontoFinal node)
-    {
-        if(this._pontoFinal_ != null)
-        {
-            this._pontoFinal_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._pontoFinal_ = node;
     }
 
     public TId getId()
@@ -94,7 +64,6 @@ public final class AIdFecho extends PIdFecho
     public String toString()
     {
         return ""
-            + toString(this._pontoFinal_)
             + toString(this._id_);
     }
 
@@ -102,12 +71,6 @@ public final class AIdFecho extends PIdFecho
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._pontoFinal_ == child)
-        {
-            this._pontoFinal_ = null;
-            return;
-        }
-
         if(this._id_ == child)
         {
             this._id_ = null;
@@ -121,12 +84,6 @@ public final class AIdFecho extends PIdFecho
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._pontoFinal_ == oldChild)
-        {
-            setPontoFinal((TPontoFinal) newChild);
-            return;
-        }
-
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);

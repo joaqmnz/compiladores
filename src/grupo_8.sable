@@ -133,7 +133,7 @@ Productions
 		{id} id {-> New id_ou_attr.id(id)}
 		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
 	id_fecho {-> id_fecho} = 
-		ponto_final id {-> New id_fecho(ponto_final, id)};
+		ponto_final id {-> New id_fecho(id)};
 
 	tipo {-> tipo} = 
 		{primitivo} primitivo {-> New tipo.primitivo(primitivo)}
@@ -167,10 +167,10 @@ Productions
 		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
 
 	familia {-> familia} = 
-		{familia} relacao familia_fecho* ponto_final {-> New familia.familia(relacao, [familia_fecho])}
+		{familia} relacao familia_fecho* ponto_final {-> New familia.familia(relacao, [familia_fecho.relacao])}
 		|{vazio} {-> New familia.vazio()};
-	familia_fecho {-> familia_fecho} = 
-		ponto_virgula relacao {-> New familia_fecho(ponto_virgula, relacao)};
+	familia_fecho {-> relacao} = 
+		ponto_virgula relacao {-> relacao.relacao};
 	relacao {-> relacao} = 
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 	
@@ -179,24 +179,24 @@ Productions
 		|{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
  	
  	parametros {-> parametros} = 
- 	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho])}
+ 	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho.parametro])}
  	    |{vazio} {-> New parametros.vazio()};
-	parametro_fecho {-> parametro_fecho} = 
-		separador parametro {-> New parametro_fecho(parametro)};
+	parametro_fecho {-> parametro} = 
+		separador parametro {-> parametro.parametro};
 
 	parametro {-> parametro}= 
 		{id} tipo id {-> New parametro.id(tipo,id)}
 		|{assinatura} assinatura {-> New parametro.assinatura(assinatura)};
 
 	assinatura {->assinatura} = 
-		tipo id abre_parenteses parametros_assinatura fecha_parenteses {-> New assinatura(parametros_assinatura)};
+		tipo id abre_parenteses parametros_assinatura fecha_parenteses {-> New assinatura(tipo, id, parametros_assinatura)};
 
-	parametros_assinatura {-> parametros_assinatura}= 
-		parametro_assinatura parametros_assinatura_fecho* {-> New parametros_assinatura(parametro_assinatura,[parametros_assinatura_fecho])}
+	parametros_assinatura {-> parametros_assinatura} = 
+		parametro_assinatura parametros_assinatura_fecho* {-> New parametros_assinatura(parametro_assinatura, [parametros_assinatura_fecho.parametro_assinatura])}
 		|{vazio} {-> New parametros_assinatura.vazio()};
 
-	parametros_assinatura_fecho {-> parametros_assinatura_fecho}= 
-		separador parametro_assinatura {-> New parametros_assinatura_fecho(parametro_assinatura)};
+	parametros_assinatura_fecho {-> parametro_assinatura}= 
+		separador parametro_assinatura {-> parametro_assinatura.parametro_assinatura};
 	
 	parametro_assinatura {-> parametro_assinatura} = 
 		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
@@ -243,11 +243,8 @@ Abstract Syntax Tree
 		|{falso} falso;
 
 	familia = 
-		{familia} relacao familia_fecho*
+		{familia} [esq]:relacao [dir]:relacao*
 		|{vazio};
-
-	familia_fecho = 
-		ponto_virgula relacao;
 
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
@@ -279,7 +276,7 @@ Abstract Syntax Tree
 		|{attr} id id_fecho+;
 	
 	id_fecho = 
-		ponto_final id;
+		id;
 
 	tipo = 
 		{primitivo} primitivo
@@ -296,24 +293,19 @@ Abstract Syntax Tree
 		|{func2} tipo id parametros;
 
 	parametros = 
- 	    {parametro} parametro parametro_fecho*
+ 	    {parametro} [esq]:parametro [dir]:parametro*
  	    |{vazio};
 
-	parametro_fecho = 
-		parametro;
-	
 	parametro = 
 		{id} tipo id
 		|{assinatura} assinatura;
 
 	assinatura = 
-		parametros_assinatura ;
+		tipo id parametros_assinatura;
 
 	parametros_assinatura = 
-		parametro_assinatura parametros_assinatura_fecho*
+		[esq]:parametro_assinatura [dir]:parametro_assinatura*
 		|{vazio};
-	parametros_assinatura_fecho = 
-		parametro_assinatura;
 	
 	parametro_assinatura = 
 		{tipo} tipo

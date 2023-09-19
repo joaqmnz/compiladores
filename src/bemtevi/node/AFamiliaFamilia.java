@@ -8,8 +8,8 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AFamiliaFamilia extends PFamilia
 {
-    private PRelacao _relacao_;
-    private final LinkedList<PFamiliaFecho> _familiaFecho_ = new LinkedList<PFamiliaFecho>();
+    private PRelacao _esq_;
+    private final LinkedList<PRelacao> _dir_ = new LinkedList<PRelacao>();
 
     public AFamiliaFamilia()
     {
@@ -17,13 +17,13 @@ public final class AFamiliaFamilia extends PFamilia
     }
 
     public AFamiliaFamilia(
-        @SuppressWarnings("hiding") PRelacao _relacao_,
-        @SuppressWarnings("hiding") List<?> _familiaFecho_)
+        @SuppressWarnings("hiding") PRelacao _esq_,
+        @SuppressWarnings("hiding") List<?> _dir_)
     {
         // Constructor
-        setRelacao(_relacao_);
+        setEsq(_esq_);
 
-        setFamiliaFecho(_familiaFecho_);
+        setDir(_dir_);
 
     }
 
@@ -31,8 +31,8 @@ public final class AFamiliaFamilia extends PFamilia
     public Object clone()
     {
         return new AFamiliaFamilia(
-            cloneNode(this._relacao_),
-            cloneList(this._familiaFecho_));
+            cloneNode(this._esq_),
+            cloneList(this._dir_));
     }
 
     @Override
@@ -41,16 +41,16 @@ public final class AFamiliaFamilia extends PFamilia
         ((Analysis) sw).caseAFamiliaFamilia(this);
     }
 
-    public PRelacao getRelacao()
+    public PRelacao getEsq()
     {
-        return this._relacao_;
+        return this._esq_;
     }
 
-    public void setRelacao(PRelacao node)
+    public void setEsq(PRelacao node)
     {
-        if(this._relacao_ != null)
+        if(this._esq_ != null)
         {
-            this._relacao_.parent(null);
+            this._esq_.parent(null);
         }
 
         if(node != null)
@@ -63,32 +63,32 @@ public final class AFamiliaFamilia extends PFamilia
             node.parent(this);
         }
 
-        this._relacao_ = node;
+        this._esq_ = node;
     }
 
-    public LinkedList<PFamiliaFecho> getFamiliaFecho()
+    public LinkedList<PRelacao> getDir()
     {
-        return this._familiaFecho_;
+        return this._dir_;
     }
 
-    public void setFamiliaFecho(List<?> list)
+    public void setDir(List<?> list)
     {
-        for(PFamiliaFecho e : this._familiaFecho_)
+        for(PRelacao e : this._dir_)
         {
             e.parent(null);
         }
-        this._familiaFecho_.clear();
+        this._dir_.clear();
 
         for(Object obj_e : list)
         {
-            PFamiliaFecho e = (PFamiliaFecho) obj_e;
+            PRelacao e = (PRelacao) obj_e;
             if(e.parent() != null)
             {
                 e.parent().removeChild(e);
             }
 
             e.parent(this);
-            this._familiaFecho_.add(e);
+            this._dir_.add(e);
         }
     }
 
@@ -96,21 +96,21 @@ public final class AFamiliaFamilia extends PFamilia
     public String toString()
     {
         return ""
-            + toString(this._relacao_)
-            + toString(this._familiaFecho_);
+            + toString(this._esq_)
+            + toString(this._dir_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._relacao_ == child)
+        if(this._esq_ == child)
         {
-            this._relacao_ = null;
+            this._esq_ = null;
             return;
         }
 
-        if(this._familiaFecho_.remove(child))
+        if(this._dir_.remove(child))
         {
             return;
         }
@@ -122,19 +122,19 @@ public final class AFamiliaFamilia extends PFamilia
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._relacao_ == oldChild)
+        if(this._esq_ == oldChild)
         {
-            setRelacao((PRelacao) newChild);
+            setEsq((PRelacao) newChild);
             return;
         }
 
-        for(ListIterator<PFamiliaFecho> i = this._familiaFecho_.listIterator(); i.hasNext();)
+        for(ListIterator<PRelacao> i = this._dir_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
                 if(newChild != null)
                 {
-                    i.set((PFamiliaFecho) newChild);
+                    i.set((PRelacao) newChild);
                     newChild.parent(this);
                     oldChild.parent(null);
                     return;

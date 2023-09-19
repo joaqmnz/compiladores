@@ -7,7 +7,6 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AFamiliaFecho extends PFamiliaFecho
 {
-    private TPontoVirgula _pontoVirgula_;
     private PRelacao _relacao_;
 
     public AFamiliaFecho()
@@ -16,12 +15,9 @@ public final class AFamiliaFecho extends PFamiliaFecho
     }
 
     public AFamiliaFecho(
-        @SuppressWarnings("hiding") TPontoVirgula _pontoVirgula_,
         @SuppressWarnings("hiding") PRelacao _relacao_)
     {
         // Constructor
-        setPontoVirgula(_pontoVirgula_);
-
         setRelacao(_relacao_);
 
     }
@@ -30,7 +26,6 @@ public final class AFamiliaFecho extends PFamiliaFecho
     public Object clone()
     {
         return new AFamiliaFecho(
-            cloneNode(this._pontoVirgula_),
             cloneNode(this._relacao_));
     }
 
@@ -38,31 +33,6 @@ public final class AFamiliaFecho extends PFamiliaFecho
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAFamiliaFecho(this);
-    }
-
-    public TPontoVirgula getPontoVirgula()
-    {
-        return this._pontoVirgula_;
-    }
-
-    public void setPontoVirgula(TPontoVirgula node)
-    {
-        if(this._pontoVirgula_ != null)
-        {
-            this._pontoVirgula_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._pontoVirgula_ = node;
     }
 
     public PRelacao getRelacao()
@@ -94,7 +64,6 @@ public final class AFamiliaFecho extends PFamiliaFecho
     public String toString()
     {
         return ""
-            + toString(this._pontoVirgula_)
             + toString(this._relacao_);
     }
 
@@ -102,12 +71,6 @@ public final class AFamiliaFecho extends PFamiliaFecho
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._pontoVirgula_ == child)
-        {
-            this._pontoVirgula_ = null;
-            return;
-        }
-
         if(this._relacao_ == child)
         {
             this._relacao_ = null;
@@ -121,12 +84,6 @@ public final class AFamiliaFecho extends PFamiliaFecho
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._pontoVirgula_ == oldChild)
-        {
-            setPontoVirgula((TPontoVirgula) newChild);
-            return;
-        }
-
         if(this._relacao_ == oldChild)
         {
             setRelacao((PRelacao) newChild);

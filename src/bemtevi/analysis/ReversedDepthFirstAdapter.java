@@ -598,16 +598,16 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAFamiliaFamilia(node);
         {
-            List<PFamiliaFecho> copy = new ArrayList<PFamiliaFecho>(node.getFamiliaFecho());
+            List<PRelacao> copy = new ArrayList<PRelacao>(node.getDir());
             Collections.reverse(copy);
-            for(PFamiliaFecho e : copy)
+            for(PRelacao e : copy)
             {
                 e.apply(this);
             }
         }
-        if(node.getRelacao() != null)
+        if(node.getEsq() != null)
         {
-            node.getRelacao().apply(this);
+            node.getEsq().apply(this);
         }
         outAFamiliaFamilia(node);
     }
@@ -627,31 +627,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioFamilia(node);
         outAVazioFamilia(node);
-    }
-
-    public void inAFamiliaFecho(AFamiliaFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFamiliaFecho(AFamiliaFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFamiliaFecho(AFamiliaFecho node)
-    {
-        inAFamiliaFecho(node);
-        if(node.getRelacao() != null)
-        {
-            node.getRelacao().apply(this);
-        }
-        if(node.getPontoVirgula() != null)
-        {
-            node.getPontoVirgula().apply(this);
-        }
-        outAFamiliaFecho(node);
     }
 
     public void inARelacao(ARelacao node)
@@ -989,10 +964,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        if(node.getPontoFinal() != null)
-        {
-            node.getPontoFinal().apply(this);
-        }
         outAIdFecho(node);
     }
 
@@ -1157,16 +1128,16 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAParametroParametros(node);
         {
-            List<PParametroFecho> copy = new ArrayList<PParametroFecho>(node.getParametroFecho());
+            List<PParametro> copy = new ArrayList<PParametro>(node.getDir());
             Collections.reverse(copy);
-            for(PParametroFecho e : copy)
+            for(PParametro e : copy)
             {
                 e.apply(this);
             }
         }
-        if(node.getParametro() != null)
+        if(node.getEsq() != null)
         {
-            node.getParametro().apply(this);
+            node.getEsq().apply(this);
         }
         outAParametroParametros(node);
     }
@@ -1186,27 +1157,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioParametros(node);
         outAVazioParametros(node);
-    }
-
-    public void inAParametroFecho(AParametroFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAParametroFecho(AParametroFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAParametroFecho(AParametroFecho node)
-    {
-        inAParametroFecho(node);
-        if(node.getParametro() != null)
-        {
-            node.getParametro().apply(this);
-        }
-        outAParametroFecho(node);
     }
 
     public void inAIdParametro(AIdParametro node)
@@ -1273,6 +1223,14 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getParametrosAssinatura().apply(this);
         }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getTipo() != null)
+        {
+            node.getTipo().apply(this);
+        }
         outAAssinatura(node);
     }
 
@@ -1291,16 +1249,16 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAParametrosAssinatura(node);
         {
-            List<PParametrosAssinaturaFecho> copy = new ArrayList<PParametrosAssinaturaFecho>(node.getParametrosAssinaturaFecho());
+            List<PParametroAssinatura> copy = new ArrayList<PParametroAssinatura>(node.getDir());
             Collections.reverse(copy);
-            for(PParametrosAssinaturaFecho e : copy)
+            for(PParametroAssinatura e : copy)
             {
                 e.apply(this);
             }
         }
-        if(node.getParametroAssinatura() != null)
+        if(node.getEsq() != null)
         {
-            node.getParametroAssinatura().apply(this);
+            node.getEsq().apply(this);
         }
         outAParametrosAssinatura(node);
     }
@@ -1320,27 +1278,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAVazioParametrosAssinatura(node);
         outAVazioParametrosAssinatura(node);
-    }
-
-    public void inAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
-    {
-        inAParametrosAssinaturaFecho(node);
-        if(node.getParametroAssinatura() != null)
-        {
-            node.getParametroAssinatura().apply(this);
-        }
-        outAParametrosAssinaturaFecho(node);
     }
 
     public void inATipoParametroAssinatura(ATipoParametroAssinatura node)

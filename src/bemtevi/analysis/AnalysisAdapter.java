@@ -225,12 +225,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFamiliaFecho(AFamiliaFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseARelacao(ARelacao node)
     {
         defaultCase(node);
@@ -363,12 +357,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAParametroFecho(AParametroFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAIdParametro(AIdParametro node)
     {
         defaultCase(node);
@@ -394,12 +382,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAParametrosAssinaturaFecho(AParametrosAssinaturaFecho node)
     {
         defaultCase(node);
     }

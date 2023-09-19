@@ -1,1 +1,7 @@
-Tufao[objeto.numero = 4 + 1]
+molde Planilha contem
+    
+   funcao : Texto busca (Numero n | Texto f (Numero) ) [
+       f (n)
+    ]
+
+fim

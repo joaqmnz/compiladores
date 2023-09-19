@@ -6,17 +6,17 @@ import java.util.*;
 import bemtevi.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AParametrosAssinatura extends PParametrosAssinatura
+public final class AParametrosAssinaturaParametrosAssinatura extends PParametrosAssinatura
 {
     private PParametroAssinatura _esq_;
     private final LinkedList<PParametroAssinatura> _dir_ = new LinkedList<PParametroAssinatura>();
 
-    public AParametrosAssinatura()
+    public AParametrosAssinaturaParametrosAssinatura()
     {
         // Constructor
     }
 
-    public AParametrosAssinatura(
+    public AParametrosAssinaturaParametrosAssinatura(
         @SuppressWarnings("hiding") PParametroAssinatura _esq_,
         @SuppressWarnings("hiding") List<?> _dir_)
     {
@@ -30,7 +30,7 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     @Override
     public Object clone()
     {
-        return new AParametrosAssinatura(
+        return new AParametrosAssinaturaParametrosAssinatura(
             cloneNode(this._esq_),
             cloneList(this._dir_));
     }
@@ -38,7 +38,7 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAParametrosAssinatura(this);
+        ((Analysis) sw).caseAParametrosAssinaturaParametrosAssinatura(this);
     }
 
     public PParametroAssinatura getEsq()
