@@ -8,6 +8,7 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AChamadaExp extends PExp
 {
+    private TId _id_;
     private final LinkedList<PIdFecho> _idFecho_ = new LinkedList<PIdFecho>();
     private PListaExp _listaExp_;
 
@@ -17,10 +18,13 @@ public final class AChamadaExp extends PExp
     }
 
     public AChamadaExp(
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") List<?> _idFecho_,
         @SuppressWarnings("hiding") PListaExp _listaExp_)
     {
         // Constructor
+        setId(_id_);
+
         setIdFecho(_idFecho_);
 
         setListaExp(_listaExp_);
@@ -31,6 +35,7 @@ public final class AChamadaExp extends PExp
     public Object clone()
     {
         return new AChamadaExp(
+            cloneNode(this._id_),
             cloneList(this._idFecho_),
             cloneNode(this._listaExp_));
     }
@@ -39,6 +44,31 @@ public final class AChamadaExp extends PExp
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAChamadaExp(this);
+    }
+
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
     }
 
     public LinkedList<PIdFecho> getIdFecho()
@@ -96,6 +126,7 @@ public final class AChamadaExp extends PExp
     public String toString()
     {
         return ""
+            + toString(this._id_)
             + toString(this._idFecho_)
             + toString(this._listaExp_);
     }
@@ -104,6 +135,12 @@ public final class AChamadaExp extends PExp
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._id_ == child)
+        {
+            this._id_ = null;
+            return;
+        }
+
         if(this._idFecho_.remove(child))
         {
             return;
@@ -122,6 +159,12 @@ public final class AChamadaExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
+            return;
+        }
+
         for(ListIterator<PIdFecho> i = this._idFecho_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)

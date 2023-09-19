@@ -2078,14 +2078,16 @@ public class Parser
         PExp pexpNode1;
         {
             // Block
-        LinkedList<Object> listNode2 = new LinkedList<Object>();
-        PListaExp plistaexpNode3;
+        TId tidNode2;
+        LinkedList<Object> listNode3 = new LinkedList<Object>();
+        PListaExp plistaexpNode4;
+        tidNode2 = (TId)nodeArrayList1.get(0);
         {
             // Block
         }
-        plistaexpNode3 = (PListaExp)nodeArrayList3.get(0);
+        plistaexpNode4 = (PListaExp)nodeArrayList3.get(0);
 
-        pexpNode1 = new AChamadaExp(listNode2, plistaexpNode3);
+        pexpNode1 = new AChamadaExp(tidNode2, listNode3, plistaexpNode4);
         }
 	nodeList.add(pexpNode1);
         return nodeList;
@@ -2106,20 +2108,22 @@ public class Parser
         PExp pexpNode1;
         {
             // Block
-        LinkedList<Object> listNode3 = new LinkedList<Object>();
-        PListaExp plistaexpNode4;
+        TId tidNode2;
+        LinkedList<Object> listNode4 = new LinkedList<Object>();
+        PListaExp plistaexpNode5;
+        tidNode2 = (TId)nodeArrayList1.get(0);
         {
             // Block
-        LinkedList<Object> listNode2 = new LinkedList<Object>();
-        listNode2 = (LinkedList)nodeArrayList2.get(0);
-	if(listNode2 != null)
+        LinkedList<Object> listNode3 = new LinkedList<Object>();
+        listNode3 = (LinkedList)nodeArrayList2.get(0);
+	if(listNode3 != null)
 	{
-	  listNode3.addAll(listNode2);
+	  listNode4.addAll(listNode3);
 	}
         }
-        plistaexpNode4 = (PListaExp)nodeArrayList4.get(0);
+        plistaexpNode5 = (PListaExp)nodeArrayList4.get(0);
 
-        pexpNode1 = new AChamadaExp(listNode3, plistaexpNode4);
+        pexpNode1 = new AChamadaExp(tidNode2, listNode4, plistaexpNode5);
         }
 	nodeList.add(pexpNode1);
         return nodeList;

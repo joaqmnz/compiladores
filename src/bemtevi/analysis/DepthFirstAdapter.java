@@ -392,6 +392,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAChamadaExp(AChamadaExp node)
     {
         inAChamadaExp(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
         {
             List<PIdFecho> copy = new ArrayList<PIdFecho>(node.getIdFecho());
             for(PIdFecho e : copy)

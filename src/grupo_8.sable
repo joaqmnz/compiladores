@@ -150,7 +150,7 @@ Productions
 		constante dois_pontos tipo_primitivo id ponto_virgula {-> New blloco_fecho.constante(tipo_primitivo, id)};
 
 	chamada {-> exp} = 
-		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada([id_fecho], lista_exp)};
+		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada(id, [id_fecho], lista_exp)};
 	lista_exp {-> lista_exp} = 
 		{exp} exp l_exp_fecho* {-> New lista_exp.exp(exp, [l_exp_fecho])}
 		|{vazio} {-> New lista_exp.vazio()};
@@ -232,7 +232,7 @@ Abstract Syntax Tree
 		|{modulo} [esq]:exp [dir]:exp
 		|{negacao} exp
 		|{negativo} exp
-		|{chamada} id_fecho* lista_exp
+		|{chamada} id id_fecho* lista_exp
 		|{instancia} lista_init
 		|{bloco} blloco_fecho* exp
 		|{numero} numero
