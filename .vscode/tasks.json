@@ -5,7 +5,7 @@
         "label": "Executar SableCC",
         "type": "shell",
         "command": "java",
-        "args": ["-jar", "C:\\sablecc-3.7\\lib\\sablecc.jar", "${file}"],
+        "args": ["-jar", "caminho_para_o_sable", "${file}"],
         "group": {
           "kind": "build",
           "isDefault": true
