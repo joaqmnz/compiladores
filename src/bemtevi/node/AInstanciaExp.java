@@ -7,6 +7,7 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AInstanciaExp extends PExp
 {
+    private TIdMolde _idMolde_;
     private PListaInit _listaInit_;
 
     public AInstanciaExp()
@@ -15,9 +16,12 @@ public final class AInstanciaExp extends PExp
     }
 
     public AInstanciaExp(
+        @SuppressWarnings("hiding") TIdMolde _idMolde_,
         @SuppressWarnings("hiding") PListaInit _listaInit_)
     {
         // Constructor
+        setIdMolde(_idMolde_);
+
         setListaInit(_listaInit_);
 
     }
@@ -26,6 +30,7 @@ public final class AInstanciaExp extends PExp
     public Object clone()
     {
         return new AInstanciaExp(
+            cloneNode(this._idMolde_),
             cloneNode(this._listaInit_));
     }
 
@@ -33,6 +38,31 @@ public final class AInstanciaExp extends PExp
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAInstanciaExp(this);
+    }
+
+    public TIdMolde getIdMolde()
+    {
+        return this._idMolde_;
+    }
+
+    public void setIdMolde(TIdMolde node)
+    {
+        if(this._idMolde_ != null)
+        {
+            this._idMolde_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._idMolde_ = node;
     }
 
     public PListaInit getListaInit()
@@ -64,6 +94,7 @@ public final class AInstanciaExp extends PExp
     public String toString()
     {
         return ""
+            + toString(this._idMolde_)
             + toString(this._listaInit_);
     }
 
@@ -71,6 +102,12 @@ public final class AInstanciaExp extends PExp
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._idMolde_ == child)
+        {
+            this._idMolde_ = null;
+            return;
+        }
+
         if(this._listaInit_ == child)
         {
             this._listaInit_ = null;
@@ -84,6 +121,12 @@ public final class AInstanciaExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._idMolde_ == oldChild)
+        {
+            setIdMolde((TIdMolde) newChild);
+            return;
+        }
+
         if(this._listaInit_ == oldChild)
         {
             setListaInit((PListaInit) newChild);

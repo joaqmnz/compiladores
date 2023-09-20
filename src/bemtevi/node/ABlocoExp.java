@@ -8,7 +8,7 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class ABlocoExp extends PExp
 {
-    private final LinkedList<PBllocoFecho> _bllocoFecho_ = new LinkedList<PBllocoFecho>();
+    private final LinkedList<PBlocoFecho> _blocoFecho_ = new LinkedList<PBlocoFecho>();
     private PExp _exp_;
 
     public ABlocoExp()
@@ -17,11 +17,11 @@ public final class ABlocoExp extends PExp
     }
 
     public ABlocoExp(
-        @SuppressWarnings("hiding") List<?> _bllocoFecho_,
+        @SuppressWarnings("hiding") List<?> _blocoFecho_,
         @SuppressWarnings("hiding") PExp _exp_)
     {
         // Constructor
-        setBllocoFecho(_bllocoFecho_);
+        setBlocoFecho(_blocoFecho_);
 
         setExp(_exp_);
 
@@ -31,7 +31,7 @@ public final class ABlocoExp extends PExp
     public Object clone()
     {
         return new ABlocoExp(
-            cloneList(this._bllocoFecho_),
+            cloneList(this._blocoFecho_),
             cloneNode(this._exp_));
     }
 
@@ -41,29 +41,29 @@ public final class ABlocoExp extends PExp
         ((Analysis) sw).caseABlocoExp(this);
     }
 
-    public LinkedList<PBllocoFecho> getBllocoFecho()
+    public LinkedList<PBlocoFecho> getBlocoFecho()
     {
-        return this._bllocoFecho_;
+        return this._blocoFecho_;
     }
 
-    public void setBllocoFecho(List<?> list)
+    public void setBlocoFecho(List<?> list)
     {
-        for(PBllocoFecho e : this._bllocoFecho_)
+        for(PBlocoFecho e : this._blocoFecho_)
         {
             e.parent(null);
         }
-        this._bllocoFecho_.clear();
+        this._blocoFecho_.clear();
 
         for(Object obj_e : list)
         {
-            PBllocoFecho e = (PBllocoFecho) obj_e;
+            PBlocoFecho e = (PBlocoFecho) obj_e;
             if(e.parent() != null)
             {
                 e.parent().removeChild(e);
             }
 
             e.parent(this);
-            this._bllocoFecho_.add(e);
+            this._blocoFecho_.add(e);
         }
     }
 
@@ -96,7 +96,7 @@ public final class ABlocoExp extends PExp
     public String toString()
     {
         return ""
-            + toString(this._bllocoFecho_)
+            + toString(this._blocoFecho_)
             + toString(this._exp_);
     }
 
@@ -104,7 +104,7 @@ public final class ABlocoExp extends PExp
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._bllocoFecho_.remove(child))
+        if(this._blocoFecho_.remove(child))
         {
             return;
         }
@@ -122,13 +122,13 @@ public final class ABlocoExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        for(ListIterator<PBllocoFecho> i = this._bllocoFecho_.listIterator(); i.hasNext();)
+        for(ListIterator<PBlocoFecho> i = this._blocoFecho_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
                 if(newChild != null)
                 {
-                    i.set((PBllocoFecho) newChild);
+                    i.set((PBlocoFecho) newChild);
                     newChild.parent(this);
                     oldChild.parent(null);
                     return;

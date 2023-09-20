@@ -1,4 +1,5 @@
 Package bemtevi;
+
 Helpers
 	digito = ['0' .. '9'];
 	caractere_maiusculo = ['A' .. 'Z'];
@@ -16,6 +17,7 @@ Helpers
 	fecha_chaves = '}';
 	rc = 13;
 	nl = 10;
+
 Tokens
 	primitivo = 'Bool' | 'Numero' | 'Texto';
 	numero = numero_inteiro | numero_virgula | numero_cientifico;
@@ -61,16 +63,125 @@ Tokens
 	texto = (caractere_maiusculo | caractere_minusculo)+;
 	comentario_bloco = abre_chaves ([0x00 .. 0x7c] | [0x7e .. 0xff])* fecha_chaves;
 	string = '"' ([0x00 .. 0x21] | [0x23 .. 0xff])* '"';
+
 Ignored Tokens
  	vazio, comentario_linha, comentario_bloco;
 
 Productions
-
 	inicio {-> inicio} = 
 		programa {-> New inicio(programa)};
 	
 	programa {-> programa} = 
-	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia,esquerda.def_molde,[direita.def_molde])};
+	    familia [esquerda]:def_molde [direita]:def_molde* {-> New programa(familia, esquerda.def_molde, [direita.def_molde])};
+
+	familia {-> familia} = 
+		relacao familia_fecho* ponto_final {-> New familia(relacao, [familia_fecho.relacao])}
+		|{vazio} {-> New familia.vazio()};
+
+	familia_fecho {-> relacao} = 
+		ponto_virgula relacao {-> relacao.relacao};
+
+	relacao {-> relacao} = 
+ 		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
+
+	def_molde {-> def_molde} = 
+ 	    molde id_molde contem atributos metodos fim {-> New def_molde(id_molde, atributos, metodos)};
+
+	atributos {-> atributos} = 
+ 	    atributos_fecho* {-> New atributos([atributos_fecho.bloco_fecho])};
+
+    atributos_fecho {-> bloco_fecho} = 
+ 	    {objeto} dec_obj {-> dec_obj.bloco_fecho}
+     	|{constante} dec_cons {-> dec_cons.bloco_fecho};
+
+	metodos {-> metodos} = 
+ 	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
+
+	tipo {-> tipo} = 
+		{primitivo} primitivo {-> New tipo.primitivo(primitivo)}
+		|{molde} id_molde {-> New tipo.molde(id_molde)};
+
+	dec_funcao {-> dec_funcao} =
+		{func1} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses blloco {-> New dec_funcao.func1(tipo, id, parametros, blloco.exp) }
+		|{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
+
+	parametros {-> parametros} = 
+ 	    parametro parametro_fecho* {-> New parametros(parametro, [parametro_fecho.parametro])}
+ 	    |{vazio} {-> New parametros.vazio()};
+
+	parametro_fecho {-> parametro} = 
+		separador parametro {-> parametro.parametro};
+
+	parametro {-> parametro}= 
+		{id} tipo id {-> New parametro.id(tipo, id)}
+		|{assinatura} assinatura {-> New parametro.assinatura(assinatura)};
+
+	assinatura {->assinatura} = 
+		tipo id abre_parenteses parametros_assinatura fecha_parenteses {-> New assinatura(tipo, id, parametros_assinatura)};
+
+	parametros_assinatura {-> parametros_assinatura} = 
+		parametro_assinatura parametros_assinatura_fecho* {-> New parametros_assinatura(parametro_assinatura, [parametros_assinatura_fecho.parametro_assinatura])}
+		|{vazio} {-> New parametros_assinatura.vazio()};
+
+	parametros_assinatura_fecho {-> parametro_assinatura}= 
+		separador parametro_assinatura {-> parametro_assinatura.parametro_assinatura};
+	
+	parametro_assinatura {-> parametro_assinatura} = 
+		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
+		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
+	
+	blloco {-> exp} = 
+		abre_colchete bloco_fecho* exp fecha_colchete {-> New exp.bloco([bloco_fecho], exp)};
+
+	bloco_fecho {-> bloco_fecho} = 
+		{constante} dec_cons {-> dec_cons.bloco_fecho}
+		|{objeto} dec_obj {-> dec_obj.bloco_fecho}
+		|{definicao} definicao {-> definicao.bloco_fecho};
+	
+	dec_obj {-> bloco_fecho} = 
+		objeto dois_pontos tipo_molde id ponto_virgula {-> New bloco_fecho.objeto(tipo_molde, id)};
+	
+	dec_cons {-> bloco_fecho} = 
+		constante dois_pontos tipo_primitivo id ponto_virgula {-> New bloco_fecho.constante(tipo_primitivo, id)};
+
+	tipo_primitivo {-> tipo_primitivo} = 
+		primitivo {-> New tipo_primitivo(primitivo)};
+
+	tipo_molde {-> tipo_molde} = 
+		id_molde {-> New tipo_molde(id_molde)};
+
+	definicao {-> bloco_fecho} = 
+		id_ou_attr igual exp ponto_virgula {-> New bloco_fecho.definicao(id_ou_attr, exp)};
+
+	id_ou_attr {-> id_ou_attr} = 
+		{id} id {-> New id_ou_attr.id(id)}
+		|{atributo} id id_fecho+ {-> New id_ou_attr.atributo(id, [id_fecho])};
+
+	id_fecho {-> id_fecho} = 
+		ponto_final id {-> New id_fecho(id)};
+	
+	chamada {-> exp} = 
+		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada(id, [id_fecho], lista_exp)};
+
+	lista_exp {-> lista_exp} = 
+		exp l_exp_fecho* {-> New lista_exp(exp, [l_exp_fecho.exp])}
+		|{vazio} {-> New lista_exp.vazio()};
+
+	l_exp_fecho {-> exp} = 
+		separador exp {-> exp.exp};
+
+	instancia {-> exp} = 
+		id_molde abre_colchete lista_init fecha_colchete {-> New exp.instancia(id_molde, lista_init)};
+
+	lista_init {-> lista_init} = 
+		init_objeto l_init_fecho* {-> New lista_init(init_objeto, [l_init_fecho.init_objeto])}
+		|{vazio} {-> New lista_init.vazio()};
+
+	l_init_fecho {-> init_objeto} = 
+		separador init_objeto {-> init_objeto.init_objeto};
+
+	init_objeto {-> init_objeto} = 
+		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
 
 	exp {-> exp} = 
 		{ou} ou_logico {-> ou_logico.exp}
@@ -120,180 +231,40 @@ Productions
 		|{verdade} verdade {-> New exp.verdade(verdade)}
 		|{falso} falso {-> New exp.falso(falso)}
 		|{parenteses} abre_parenteses exp fecha_parenteses {-> exp.exp};
-	
-	blloco {-> exp} = 
-		abre_colchete blloco_fecho* exp fecha_colchete {-> New exp.bloco([blloco_fecho], exp)};
-	blloco_fecho {-> blloco_fecho} = 
-		{constante} dec_cons {-> dec_cons.blloco_fecho}
-		|{objeto} dec_obj {-> dec_obj.blloco_fecho}
-		|{definicao} definicao {-> definicao.blloco_fecho};
-	definicao {-> blloco_fecho} = 
-		id_ou_attr igual exp ponto_virgula {-> New blloco_fecho.definicao(id_ou_attr, exp)};
-	id_ou_attr {-> id_ou_attr} = 
-		{id} id {-> New id_ou_attr.id(id)}
-		|{attr} id id_fecho+ {-> New id_ou_attr.attr(id, [id_fecho])};
-	id_fecho {-> id_fecho} = 
-		ponto_final id {-> New id_fecho(id)};
-
-	tipo {-> tipo} = 
-		{primitivo} primitivo {-> New tipo.primitivo(primitivo)}
-		|{molde} id_molde {-> New tipo.molde(id_molde)};
-
-	tipo_primitivo {-> tipo_primitivo} = 
-		primitivo {-> New tipo_primitivo(primitivo)};
-	tipo_molde {-> tipo_molde} = 
-		id_molde {-> New tipo_molde(id_molde)};
-
-	dec_obj {-> blloco_fecho} = 
-		objeto dois_pontos tipo_molde id ponto_virgula {-> New blloco_fecho.objeto(tipo_molde, id)};
-	dec_cons {-> blloco_fecho} = 
-		constante dois_pontos tipo_primitivo id ponto_virgula {-> New blloco_fecho.constante(tipo_primitivo, id)};
-
-	chamada {-> exp} = 
-		id id_fecho* abre_parenteses lista_exp fecha_parenteses {-> New exp.chamada(id, [id_fecho], lista_exp)};
-	lista_exp {-> lista_exp} = 
-		{exp} exp l_exp_fecho* {-> New lista_exp.exp(exp, [l_exp_fecho])}
-		|{vazio} {-> New lista_exp.vazio()};
-	l_exp_fecho {-> l_exp_fecho} = 
-		separador exp {-> New l_exp_fecho(exp)};
-	instancia {-> exp} = 
-		id_molde abre_colchete lista_init fecha_colchete {-> New exp.instancia(lista_init)};
-	lista_init {-> lista_init} = 
-		{init} init_objeto l_init_fecho* {-> New lista_init.init(init_objeto, [l_init_fecho])}
-		|{vazio} {-> New lista_init.vazio()};
-	l_init_fecho {-> l_init_fecho} = 
-		separador init_objeto {-> New l_init_fecho(init_objeto)};
-	init_objeto {-> init_objeto} = 
-		objeto ponto_final id id_fecho* igual exp {-> New init_objeto(id, [id_fecho], exp)};
-
-	familia {-> familia} = 
-		{familia} relacao familia_fecho* ponto_final {-> New familia.familia(relacao, [familia_fecho.relacao])}
-		|{vazio} {-> New familia.vazio()};
-	familia_fecho {-> relacao} = 
-		ponto_virgula relacao {-> relacao.relacao};
-	relacao {-> relacao} = 
- 		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
-	
-	dec_funcao {-> dec_funcao} =
-		{func1} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses blloco {-> New dec_funcao.func1(tipo, id, parametros, blloco.exp) }
-		|{func2} entrada? funcao dois_pontos tipo id abre_parenteses parametros fecha_parenteses ponto_virgula {-> New dec_funcao.func2(tipo, id, parametros) };
- 	
- 	parametros {-> parametros} = 
- 	    {parametro} parametro parametro_fecho* {-> New parametros.parametro(parametro,[parametro_fecho.parametro])}
- 	    |{vazio} {-> New parametros.vazio()};
-	parametro_fecho {-> parametro} = 
-		separador parametro {-> parametro.parametro};
-
-	parametro {-> parametro}= 
-		{id} tipo id {-> New parametro.id(tipo,id)}
-		|{assinatura} assinatura {-> New parametro.assinatura(assinatura)};
-
-	assinatura {->assinatura} = 
-		tipo id abre_parenteses parametros_assinatura fecha_parenteses {-> New assinatura(tipo, id, parametros_assinatura)};
-
-	parametros_assinatura {-> parametros_assinatura} = 
-		parametro_assinatura parametros_assinatura_fecho* {-> New parametros_assinatura(parametro_assinatura, [parametros_assinatura_fecho.parametro_assinatura])}
-		|{vazio} {-> New parametros_assinatura.vazio()};
-
-	parametros_assinatura_fecho {-> parametro_assinatura}= 
-		separador parametro_assinatura {-> parametro_assinatura.parametro_assinatura};
-	
-	parametro_assinatura {-> parametro_assinatura} = 
-		{tipo} tipo {-> New parametro_assinatura.tipo(tipo)}
-		|{assinatura} assinatura {-> New parametro_assinatura.assinatura(assinatura)};
-	
-	atributos {-> atributos} = 
- 	    atributos_fecho* {-> New atributos([atributos_fecho.blloco_fecho])};
-    atributos_fecho {-> blloco_fecho} = 
- 	    {objeto} dec_obj {-> dec_obj.blloco_fecho}
-     	|{constante} dec_cons {-> dec_cons.blloco_fecho};
-	metodos {-> metodos} = 
- 	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
- 	    
- 	def_molde {-> def_molde} = 
- 	    molde id_molde contem atributos metodos fim {-> New def_molde(id_molde, atributos,metodos)};
-
 
 Abstract Syntax Tree
 	inicio = 
 		programa;
-
-	exp = 
-		{ternario} [esq]:exp [cent]:exp [dir]:exp
-		|{ou} [esq]:exp [dir]:exp
-		|{e} [esq]:exp [dir]:exp
-		|{comparacao} [esq]:exp [dir]:exp
-		|{menor_que} [esq]:exp [dir]:exp
-		|{menor_igual} [esq]:exp [dir]:exp
-		|{soma} [esq]:exp [dir]:exp
-		|{subtracao} [esq]:exp [dir]:exp
-		|{multiplicacao} [esq]:exp [dir]:exp
-		|{divisao} [esq]:exp [dir]:exp
-		|{modulo} [esq]:exp [dir]:exp
-		|{negacao} exp
-		|{negativo} exp
-		|{chamada} id id_fecho* lista_exp
-		|{instancia} lista_init
-		|{bloco} blloco_fecho* exp
-		|{numero} numero
-		|{id} id
-		|{string} string
-		|{texto} texto
-		|{verdade} verdade
-		|{falso} falso;
-
+	
+	programa = 
+	    familia [esquerda]:def_molde [direita]:def_molde*;
+	
 	familia = 
-		{familia} [esq]:relacao [dir]:relacao*
+		[esquerdo]:relacao [direito]:relacao*
 		|{vazio};
 
 	relacao = 
 		[esquerdo]:id_molde [direito]:id_molde;
+	
+	def_molde = 
+ 	    id_molde atributos metodos;
+	
+	atributos = 
+ 	    bloco_fecho*;
 
-	blloco_fecho = 
-		{constante} tipo_primitivo id
-		|{objeto} tipo_molde id
-		|{definicao} id_ou_attr exp;
-	
-	lista_exp = 
-		{exp} exp l_exp_fecho*
-		|{vazio};
-	
-	lista_init = 
-		{init} init_objeto l_init_fecho*
-		|{vazio};
-	
-	l_init_fecho = 
-		init_objeto;
-	
-	init_objeto = 
-		id id_fecho* exp;
-	
-	l_exp_fecho = 
-		exp;
-	
-	id_ou_attr = 
-		{id} id
-		|{attr} id id_fecho+;
-	
-	id_fecho = 
-		id;
+	metodos = 
+ 	    dec_funcao*;
 
 	tipo = 
 		{primitivo} primitivo
 		|{molde} id_molde;
-
-	tipo_primitivo = 
-		primitivo;
-	
-	tipo_molde = 
-		id_molde;
 
 	dec_funcao =
 		{func1} tipo id parametros exp
 		|{func2} tipo id parametros;
 
 	parametros = 
- 	    {parametro} [esq]:parametro [dir]:parametro*
+ 	    [esquerdo]:parametro [direito]:parametro*
  	    |{vazio};
 
 	parametro = 
@@ -304,21 +275,62 @@ Abstract Syntax Tree
 		tipo id parametros_assinatura;
 
 	parametros_assinatura = 
-		[esq]:parametro_assinatura [dir]:parametro_assinatura*
+		[esquerdo]:parametro_assinatura [direito]:parametro_assinatura*
 		|{vazio};
 	
 	parametro_assinatura = 
 		{tipo} tipo
 		|{assinatura} assinatura;
+	
+	bloco_fecho = 
+		{constante} tipo_primitivo id
+		|{objeto} tipo_molde id
+		|{definicao} id_ou_attr exp;
 
-	atributos = 
- 	    blloco_fecho*;
-		
-	metodos = 
- 	    dec_funcao*;
- 	   
- 	def_molde = 
- 	    id_molde atributos metodos ;
- 	    
- 	programa = 
-	    familia [esquerda]:def_molde [direita]:def_molde*;
+	tipo_primitivo = 
+		primitivo;
+
+	tipo_molde = 
+		id_molde;
+
+	id_ou_attr = 
+		{id} id
+		|{atributo} id id_fecho+;
+	
+	id_fecho = 
+		id;
+	
+	lista_exp = 
+		[esquerdo]:exp [direito]:exp*
+		|{vazio};
+	
+	lista_init = 
+		[esquerdo]:init_objeto [direito]:init_objeto*
+		|{vazio};
+	
+	init_objeto = 
+		id id_fecho* exp;
+
+	exp = 
+		{ternario} [esquerdo]:exp [central]:exp [direito]:exp
+		|{ou} [esquerdo]:exp [direito]:exp
+		|{e} [esquerdo]:exp [direito]:exp
+		|{comparacao} [esquerdo]:exp [direito]:exp
+		|{menor_que} [esquerdo]:exp [direito]:exp
+		|{menor_igual} [esquerdo]:exp [direito]:exp
+		|{soma} [esquerdo]:exp [direito]:exp
+		|{subtracao} [esquerdo]:exp [direito]:exp
+		|{multiplicacao} [esquerdo]:exp [direito]:exp
+		|{divisao} [esquerdo]:exp [direito]:exp
+		|{modulo} [esquerdo]:exp [direito]:exp
+		|{negacao} exp
+		|{negativo} exp
+		|{chamada} id id_fecho* lista_exp
+		|{instancia} id_molde lista_init
+		|{bloco} bloco_fecho* exp
+		|{numero} numero
+		|{id} id
+		|{string} string
+		|{texto} texto
+		|{verdade} verdade
+		|{falso} falso;

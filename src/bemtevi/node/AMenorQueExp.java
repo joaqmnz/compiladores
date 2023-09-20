@@ -7,8 +7,8 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AMenorQueExp extends PExp
 {
-    private PExp _esq_;
-    private PExp _dir_;
+    private PExp _esquerdo_;
+    private PExp _direito_;
 
     public AMenorQueExp()
     {
@@ -16,13 +16,13 @@ public final class AMenorQueExp extends PExp
     }
 
     public AMenorQueExp(
-        @SuppressWarnings("hiding") PExp _esq_,
-        @SuppressWarnings("hiding") PExp _dir_)
+        @SuppressWarnings("hiding") PExp _esquerdo_,
+        @SuppressWarnings("hiding") PExp _direito_)
     {
         // Constructor
-        setEsq(_esq_);
+        setEsquerdo(_esquerdo_);
 
-        setDir(_dir_);
+        setDireito(_direito_);
 
     }
 
@@ -30,8 +30,8 @@ public final class AMenorQueExp extends PExp
     public Object clone()
     {
         return new AMenorQueExp(
-            cloneNode(this._esq_),
-            cloneNode(this._dir_));
+            cloneNode(this._esquerdo_),
+            cloneNode(this._direito_));
     }
 
     @Override
@@ -40,16 +40,16 @@ public final class AMenorQueExp extends PExp
         ((Analysis) sw).caseAMenorQueExp(this);
     }
 
-    public PExp getEsq()
+    public PExp getEsquerdo()
     {
-        return this._esq_;
+        return this._esquerdo_;
     }
 
-    public void setEsq(PExp node)
+    public void setEsquerdo(PExp node)
     {
-        if(this._esq_ != null)
+        if(this._esquerdo_ != null)
         {
-            this._esq_.parent(null);
+            this._esquerdo_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AMenorQueExp extends PExp
             node.parent(this);
         }
 
-        this._esq_ = node;
+        this._esquerdo_ = node;
     }
 
-    public PExp getDir()
+    public PExp getDireito()
     {
-        return this._dir_;
+        return this._direito_;
     }
 
-    public void setDir(PExp node)
+    public void setDireito(PExp node)
     {
-        if(this._dir_ != null)
+        if(this._direito_ != null)
         {
-            this._dir_.parent(null);
+            this._direito_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AMenorQueExp extends PExp
             node.parent(this);
         }
 
-        this._dir_ = node;
+        this._direito_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._esq_)
-            + toString(this._dir_);
+            + toString(this._esquerdo_)
+            + toString(this._direito_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._esq_ == child)
+        if(this._esquerdo_ == child)
         {
-            this._esq_ = null;
+            this._esquerdo_ = null;
             return;
         }
 
-        if(this._dir_ == child)
+        if(this._direito_ == child)
         {
-            this._dir_ = null;
+            this._direito_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AMenorQueExp extends PExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._esq_ == oldChild)
+        if(this._esquerdo_ == oldChild)
         {
-            setEsq((PExp) newChild);
+            setEsquerdo((PExp) newChild);
             return;
         }
 
-        if(this._dir_ == oldChild)
+        if(this._direito_ == oldChild)
         {
-            setDir((PExp) newChild);
+            setDireito((PExp) newChild);
             return;
         }
 

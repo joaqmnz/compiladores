@@ -81,6 +81,204 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAPrograma(APrograma node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFamilia(AFamilia node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioFamilia(AVazioFamilia node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARelacao(ARelacao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefMolde(ADefMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAtributos(AAtributos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMetodos(AMetodos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPrimitivoTipo(APrimitivoTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMoldeTipo(AMoldeTipo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc1DecFuncao(AFunc1DecFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunc2DecFuncao(AFunc2DecFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametros(AParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametros(AVazioParametros node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdParametro(AIdParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametro(AAssinaturaParametro node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinatura(AAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParametrosAssinatura(AParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoParametroAssinatura(ATipoParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAConstanteBlocoFecho(AConstanteBlocoFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoPrimitivo(ATipoPrimitivo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATipoMolde(ATipoMolde node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdIdOuAttr(AIdIdOuAttr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAtributoIdOuAttr(AAtributoIdOuAttr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIdFecho(AIdFecho node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAListaExp(AListaExp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioListaExp(AVazioListaExp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAListaInit(AListaInit node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVazioListaInit(AVazioListaInit node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAInitObjeto(AInitObjeto node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseATernarioExp(ATernarioExp node)
     {
         defaultCase(node);
@@ -208,216 +406,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAFalsoExp(AFalsoExp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFamiliaFamilia(AFamiliaFamilia node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVazioFamilia(AVazioFamilia node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseARelacao(ARelacao node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAConstanteBllocoFecho(AConstanteBllocoFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAObjetoBllocoFecho(AObjetoBllocoFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseADefinicaoBllocoFecho(ADefinicaoBllocoFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAExpListaExp(AExpListaExp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVazioListaExp(AVazioListaExp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInitListaInit(AInitListaInit node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVazioListaInit(AVazioListaInit node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALInitFecho(ALInitFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInitObjeto(AInitObjeto node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALExpFecho(ALExpFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIdIdOuAttr(AIdIdOuAttr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAttrIdOuAttr(AAttrIdOuAttr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIdFecho(AIdFecho node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAPrimitivoTipo(APrimitivoTipo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMoldeTipo(AMoldeTipo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATipoPrimitivo(ATipoPrimitivo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATipoMolde(ATipoMolde node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFunc1DecFuncao(AFunc1DecFuncao node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFunc2DecFuncao(AFunc2DecFuncao node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAParametroParametros(AParametroParametros node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVazioParametros(AVazioParametros node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIdParametro(AIdParametro node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAssinaturaParametro(AAssinaturaParametro node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAssinatura(AAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAParametrosAssinatura(AParametrosAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVazioParametrosAssinatura(AVazioParametrosAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATipoParametroAssinatura(ATipoParametroAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAssinaturaParametroAssinatura(AAssinaturaParametroAssinatura node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAtributos(AAtributos node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMetodos(AMetodos node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseADefMolde(ADefMolde node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAPrograma(APrograma node)
     {
         defaultCase(node);
     }

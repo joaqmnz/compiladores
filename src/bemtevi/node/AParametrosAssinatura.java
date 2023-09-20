@@ -8,8 +8,8 @@ import bemtevi.analysis.*;
 @SuppressWarnings("nls")
 public final class AParametrosAssinatura extends PParametrosAssinatura
 {
-    private PParametroAssinatura _esq_;
-    private final LinkedList<PParametroAssinatura> _dir_ = new LinkedList<PParametroAssinatura>();
+    private PParametroAssinatura _esquerdo_;
+    private final LinkedList<PParametroAssinatura> _direito_ = new LinkedList<PParametroAssinatura>();
 
     public AParametrosAssinatura()
     {
@@ -17,13 +17,13 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     }
 
     public AParametrosAssinatura(
-        @SuppressWarnings("hiding") PParametroAssinatura _esq_,
-        @SuppressWarnings("hiding") List<?> _dir_)
+        @SuppressWarnings("hiding") PParametroAssinatura _esquerdo_,
+        @SuppressWarnings("hiding") List<?> _direito_)
     {
         // Constructor
-        setEsq(_esq_);
+        setEsquerdo(_esquerdo_);
 
-        setDir(_dir_);
+        setDireito(_direito_);
 
     }
 
@@ -31,8 +31,8 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     public Object clone()
     {
         return new AParametrosAssinatura(
-            cloneNode(this._esq_),
-            cloneList(this._dir_));
+            cloneNode(this._esquerdo_),
+            cloneList(this._direito_));
     }
 
     @Override
@@ -41,16 +41,16 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
         ((Analysis) sw).caseAParametrosAssinatura(this);
     }
 
-    public PParametroAssinatura getEsq()
+    public PParametroAssinatura getEsquerdo()
     {
-        return this._esq_;
+        return this._esquerdo_;
     }
 
-    public void setEsq(PParametroAssinatura node)
+    public void setEsquerdo(PParametroAssinatura node)
     {
-        if(this._esq_ != null)
+        if(this._esquerdo_ != null)
         {
-            this._esq_.parent(null);
+            this._esquerdo_.parent(null);
         }
 
         if(node != null)
@@ -63,21 +63,21 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
             node.parent(this);
         }
 
-        this._esq_ = node;
+        this._esquerdo_ = node;
     }
 
-    public LinkedList<PParametroAssinatura> getDir()
+    public LinkedList<PParametroAssinatura> getDireito()
     {
-        return this._dir_;
+        return this._direito_;
     }
 
-    public void setDir(List<?> list)
+    public void setDireito(List<?> list)
     {
-        for(PParametroAssinatura e : this._dir_)
+        for(PParametroAssinatura e : this._direito_)
         {
             e.parent(null);
         }
-        this._dir_.clear();
+        this._direito_.clear();
 
         for(Object obj_e : list)
         {
@@ -88,7 +88,7 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
             }
 
             e.parent(this);
-            this._dir_.add(e);
+            this._direito_.add(e);
         }
     }
 
@@ -96,21 +96,21 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     public String toString()
     {
         return ""
-            + toString(this._esq_)
-            + toString(this._dir_);
+            + toString(this._esquerdo_)
+            + toString(this._direito_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._esq_ == child)
+        if(this._esquerdo_ == child)
         {
-            this._esq_ = null;
+            this._esquerdo_ = null;
             return;
         }
 
-        if(this._dir_.remove(child))
+        if(this._direito_.remove(child))
         {
             return;
         }
@@ -122,13 +122,13 @@ public final class AParametrosAssinatura extends PParametrosAssinatura
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._esq_ == oldChild)
+        if(this._esquerdo_ == oldChild)
         {
-            setEsq((PParametroAssinatura) newChild);
+            setEsquerdo((PParametroAssinatura) newChild);
             return;
         }
 
-        for(ListIterator<PParametroAssinatura> i = this._dir_.listIterator(); i.hasNext();)
+        for(ListIterator<PParametroAssinatura> i = this._direito_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
