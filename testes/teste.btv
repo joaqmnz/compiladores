@@ -1,0 +1,122 @@
+molde LetraA se passa por Vogal;molde LetraB se passa por Consoante.
+
+molde Atributos contem
+    constante : Bool bool; 
+    constante : Numero num;
+    constante : Texto texto;
+
+    objeto : Minimo m;
+
+    funcao : Numero minima () ;
+
+    funcao : Texto minimatexto ();
+    
+    funcao : Bool minimabool ();
+
+    funcao : Numero uni (Numero a);
+    
+    funcao : Numero duni (Numero a | Numero b);
+    
+    funcao : Numero te (Numero a | Numero  b | Numero c);
+
+    funcao : Numero minima () [
+       1
+    ]
+
+    funcao : Texto minimatexto () [
+       "oi"
+    ]
+    
+    funcao : Bool minimabool () [
+       verdade
+    ]
+
+    funcao : Numero uni (Numero a) [
+       1
+    ]
+    
+    funcao : Numero duni (Numero a | Numero b) [
+       2
+    ]
+    
+    funcao : Numero te (Numero a | Numero  b | Numero c) [
+       3
+    ]
+
+    funcao : Minimo minima (Minimo m | Minimo m) [
+       m
+    ]
+
+    funcao : Texto busca (Numero n | Texto func (Numero) ) [
+       func (n)
+    ]
+
+    funcao : Imagem mapeamento (Dominio d | Imagem func (Dominio) ) [
+       func (d)
+    ]
+
+    funcao : Texto aplica ()[
+       busca (5 | linha)
+    ]
+
+    >> funcao: Texto principal ()[
+    
+       objeto: Casa casaA;
+       objeto: Casa casaB;
+       
+       constante: Numero bobo;
+       
+       bobo = 0;
+       
+       casaA = CasaMuitoEngracada [];
+       casaB = CasaNaoTaoEngracada [objeto.rua = "Rua A" | objeto.numero = 2];
+       
+       "Era uma casa..."
+    ]
+
+    funcao : Numero soma (Numero a | Numero b) [ a + b ]
+    
+    funcao : Numero subtracao (Numero a | Numero b) [ a - b ]
+    
+    funcao : Numero multiplicacao (Numero a | Numero b) [ a * b ]
+    
+    funcao : Numero divisao (Numero a | Numero b) [ a / b ]
+
+    funcao : Numero mod (Numero a | Numero b) [ a % b ]
+
+    funcao : Bool igual (Numero a | Numero b) [ a == b ]
+
+    funcao : Bool menor (Numero a | Numero b) [ a < b ]
+
+    funcao : Bool menorigual (Numero a | Numero b) [ a <= b ]
+
+    funcao : Bool conjuncao (Bool a | Bool b) [ a e b ]
+
+    funcao : Bool disjuncao (Bool a | Bool b) [ a ou b ]
+
+    funcao : Bool negacaoBooleana (Bool b) [ ! b ]
+
+    funcao : Numero negacaoNumerica (Numero a) [ -a ]
+    
+    funcao : Numero parenteses (Numero a) [ (a) ]
+
+    funcao : Numero aritmeticasA (Numero a | Numero b) [ a + b * a ]
+    
+    funcao : Numero aritmeticasB (Numero a | Numero b) [ (a + b) * a ]
+
+    funcao : Bool relacionaisA (Numero a | Numero b) [ a < b - 2 ]
+
+    funcao : Bool relacionaisbooleanas (Numero a | Numero b) [ a < b ou b < a e b < 0 ]  
+    
+    funcao : Bool booleana () [ verdade e falso ou verdade]
+
+    funcao : Bool negacaoBooleana (Bool b) [ ! b e verdade ]
+
+    funcao : Numero negacaoNumerica (Numero a) [ a + b * - a ]
+
+    funcao : Numero testeternarioA (Numero a | Numero b) [ se ( a < b) entao a senao b  ]
+
+    funcao : Numero testeternarioB (Numero a | Numero b) [ 1 + (se ( a < b) entao a senao b)  ]
+
+    funcao : Numero testeternarioC (Numero a | Numero b) [ se ( a < b) entao a senao b + 1 ]
+fim
