@@ -1,6 +1,9 @@
-molde LetraA se passa por Vogal; molde LetraB se passa por Consoante;
+molde LetraA se passa por Vogal; molde LetraB se passa por Consoante.
 
 molde Vogal contem
+    constante : Numero c;
+    constante : Numero c;
+    constante : Numero c;
     constante : Numero c;
 fim
 

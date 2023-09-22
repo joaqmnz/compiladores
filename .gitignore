@@ -1,8 +1,2 @@
-src/bemtevi/analysis
-src/bemtevi/lexer
-src/bemtevi/node
-src/bemtevi/parser
-src/bemtevi/ASTDisplay.class
-src/bemtevi/ASTPrinter.class
-src/bemtevi/ASTTreeDumper.class
+src/bemtevi
 src/Main.class
