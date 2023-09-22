@@ -1,4 +1,8 @@
-src/grupo_8_2.sable
-src/bemtevi
+src/bemtevi/analysis
+src/bemtevi/lexer
+src/bemtevi/node
+src/bemtevi/parser
+src/bemtevi/ASTDisplay.class
+src/bemtevi/ASTPrinter.class
+src/bemtevi/ASTTreeDumper.class
 src/Main.class
-teste/
