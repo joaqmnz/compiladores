@@ -2,6 +2,7 @@ import bemtevi.parser.*;
 import bemtevi.lexer.*;
 import bemtevi.node.*;
 import java.io.*;
+
 import bemtevi.ASTDisplay;
 
 public class Main
@@ -23,7 +24,7 @@ public class Main
          // tree.apply(new ASTPrinter());
 
          //Imprime árvore em interface gráfica
-         // tree.apply(new ASTDisplay());
+         tree.apply(new ASTDisplay());
 
          tree.apply(new Semantico());
 

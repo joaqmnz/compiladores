@@ -1,8 +1,11 @@
 import bemtevi.analysis.*;
 import bemtevi.node.*;
+import java.util.*;
 
 public class Semantico extends DepthFirstAdapter
 {
+    private Stack<Hashtable<String, Integer>> pilha = new Stack<Hashtable<String, Integer>>();
+
     public Semantico(){}
 
     @Override
