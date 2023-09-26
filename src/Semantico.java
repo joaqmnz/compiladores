@@ -26,7 +26,13 @@ public class Semantico extends DepthFirstAdapter
     @Override
     public void inAFamilia(AFamilia node)
     {
-        System.out.println("Entrando em familia\n");
+        System.out.println("Entrando em família\n");
+        PRelacao esquerdo = node.getEsquerdo();
+
+        esquerdo.apply(this);
+
+        System.out.println(esquerdo.toString());
+
     }
 
     @Override
