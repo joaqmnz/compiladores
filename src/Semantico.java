@@ -6,7 +6,10 @@ public class Semantico extends DepthFirstAdapter
 {
     private Stack<Hashtable<String, Integer>> pilha = new Stack<Hashtable<String, Integer>>();
 
-    public Semantico(){}
+    public Semantico()
+    {
+        
+    }
 
     @Override
     public void inStart(Start node)

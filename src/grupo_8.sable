@@ -85,17 +85,11 @@ Productions
  		molde [esquerdo]:id_molde se passa por [direito]:id_molde {-> New relacao(esquerdo, direito)};
 
 	def_molde {-> def_molde} = 
- 	    molde id_molde contem atributos metodos fim {-> New def_molde(id_molde, atributos, metodos)};
+ 	    molde id_molde contem atributos* dec_funcao* fim {-> New def_molde(id_molde, [atributos.bloco_fecho], [dec_funcao])};
 
-	atributos {-> atributos} = 
- 	    atributos_fecho* {-> New atributos([atributos_fecho.bloco_fecho])};
-
-    atributos_fecho {-> bloco_fecho} = 
+	atributos {-> bloco_fecho} = 
  	    {objeto} dec_obj {-> dec_obj.bloco_fecho}
      	|{constante} dec_cons {-> dec_cons.bloco_fecho};
-
-	metodos {-> metodos} = 
- 	    dec_funcao* {-> New metodos([dec_funcao.dec_funcao])};
 
 	tipo {-> tipo} = 
 		{primitivo} primitivo {-> New tipo.primitivo(primitivo)}
@@ -247,14 +241,8 @@ Abstract Syntax Tree
 		[esquerdo]:id_molde [direito]:id_molde;
 	
 	def_molde = 
- 	    id_molde atributos metodos;
+ 	    id_molde bloco_fecho* dec_funcao*;
 	
-	atributos = 
- 	    bloco_fecho*;
-
-	metodos = 
- 	    dec_funcao*;
-
 	tipo = 
 		{primitivo} primitivo
 		|{molde} id_molde;
