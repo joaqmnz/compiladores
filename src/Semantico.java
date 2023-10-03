@@ -5,11 +5,14 @@ import java.util.*;
 public class Semantico extends DepthFirstAdapter
 {
     private Stack<Hashtable<String, String>> tabela_simbolos;
+    private Stack<String[]> tabela_tipos;
     
     public Semantico()
     {
         this.tabela_simbolos = new Stack<Hashtable<String, String>>();
         this.tabela_simbolos.push(new Hashtable<String, String>());
+
+        this.tabela_tipos = new Stack<String[]>();
     }
 
     private boolean existe(String key)
@@ -42,6 +45,36 @@ public class Semantico extends DepthFirstAdapter
         return existe;
     }
 
+    private String obter_valor_chave(String key)
+    {
+        Stack<Hashtable<String, String>> aux = new Stack<Hashtable<String, String>>();
+        String valor_chave = "";
+        int size = this.tabela_simbolos.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            Hashtable<String, String> escopo_atual = this.tabela_simbolos.peek();
+
+            if(escopo_atual.containsKey(key))
+            {
+                valor_chave = escopo_atual.get(key);
+                break;
+            }
+            
+            aux.push(this.tabela_simbolos.pop());
+        }
+
+        if(aux.size() > 0)
+        {
+            for(int i = 0; i < aux.size(); i++)
+            {
+                this.tabela_simbolos.push(aux.pop());
+            }
+        }
+
+        return valor_chave;
+    }
+
     @Override
     public void inAPrograma(APrograma node)
     {
@@ -50,16 +83,16 @@ public class Semantico extends DepthFirstAdapter
         System.out.println("Adicionando Comunicacao como filha de Todos");
         escopo_atual.put("Comunicacao ", "Todos");
 
-        System.out.println("Adicionando função: Primitivo -> escreva");
+        System.out.println("Adicionando função: escreva -> Primitivo");
         escopo_atual.put("escreva ", "primitivo");
 
-        System.out.println("Adicionando função: Texto -> leiaTexto");
+        System.out.println("Adicionando função: leiaTexto -> Texto");
         escopo_atual.put("leiaTexto ", "Texto");
 
-        System.out.println("Adicionando função:  Numero -> leiaNumero");
+        System.out.println("Adicionando função:  leiaNumero -> Numero");
         escopo_atual.put("leiaNumero ", "Numero");
 
-        System.out.println("Adicionando função: Bool -> leiaBool");
+        System.out.println("Adicionando função: leiaBool -> Bool");
         escopo_atual.put("leiaBool ", "Bool");
 
         this.tabela_simbolos.push(escopo_atual);
@@ -118,7 +151,7 @@ public class Semantico extends DepthFirstAdapter
 
         if(!this.existe(nome_funcao.toString()))
         {
-            System.out.println("Adicionando função: " + retorno_funcao.toString() + "-> " + nome_funcao.toString());
+            System.out.println("Adicionando função: " + nome_funcao.toString() + "-> " + retorno_funcao.toString());
             novo_escopo.put(nome_funcao.toString(), retorno_funcao.toString());
 
             this.tabela_simbolos.push(novo_escopo);
@@ -146,7 +179,7 @@ public class Semantico extends DepthFirstAdapter
         PTipo tipo = node.getTipo();
         TId id = node.getId();
 
-        System.out.println("Adicionando parâmetro: " + tipo.toString() + "-> " + id.toString());
+        System.out.println("Adicionando parâmetro: " + id.toString() + "-> " + tipo.toString());
         
         escopo_atual.put(id.toString(), tipo.toString());
 
@@ -163,7 +196,7 @@ public class Semantico extends DepthFirstAdapter
 
         if(!escopo_atual.containsKey(id.toString()))
         {
-            System.out.println("Adicionando constante: " + tipo.toString() + "-> " + id.toString());
+            System.out.println("Adicionando constante: " + id.toString() + "-> " + tipo.toString());
             escopo_atual.put(id.toString(), tipo.toString());
         }
         else
@@ -186,7 +219,7 @@ public class Semantico extends DepthFirstAdapter
         {
             if(escopo_atual.containsKey(molde.toString()))
             {
-                System.out.println("Adicionando objeto: " + molde.toString() + "-> " + id.toString());
+                System.out.println("Adicionando objeto: " + id.toString() + "-> " + molde.toString());
                 escopo_atual.put(id.toString(), molde.toString());
             }
             else
@@ -223,4 +256,91 @@ public class Semantico extends DepthFirstAdapter
         }
     }
 
+    @Override
+    public void outAIdExp(AIdExp node)
+    {
+        TId id = node.getId();
+
+        if(this.existe(id.toString()))
+        {
+            String tipo_id = this.obter_valor_chave(id.toString());
+            if(tipo_id.intern() == "Numero ")
+            {
+                String elemento[] = new String[2];
+                elemento[0] = id.toString().replace(" ", "");
+                elemento[1] = tipo_id;
+                this.tabela_tipos.push(elemento);
+            }
+            else
+                throw new RuntimeException("Tipo incorreto de " + id.toString() + "= " + tipo_id);
+        }
+        else
+        {
+            throw new RuntimeException("Variável " + id.toString() + "não declarada");
+        }
+    }
+
+    @Override
+    public void outANumeroExp(ANumeroExp node)
+    {
+        TNumero numero = node.getNumero();
+        String elemento[] = new String[2];
+        elemento[0] = numero.toString().replace(" ", "");
+        elemento[1] = "Numero ";
+        this.tabela_tipos.push(elemento);
+    }
+
+    @Override
+    public void outASomaExp(ASomaExp node)
+    {
+        String elemento1[] = this.tabela_tipos.pop();
+        String elemento2[] = this.tabela_tipos.pop();
+
+        if(elemento1[1].intern() == "Numero ")
+        {
+            if(!(elemento2[1].intern() == "Numero "))
+            {
+                throw new RuntimeException("Impossível realizar soma entre Numero e " + elemento2[1]);
+            }
+            else
+            {
+                System.out.println("Soma: " + elemento1[0] + " + " + elemento2[0]);
+                String elemento[] = new String[2];
+                elemento[0] = "( " + elemento1[0] + " + " + elemento2[0] + " )";
+                elemento[1] = "Numero ";
+                this.tabela_tipos.push(elemento);
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Tipo " + elemento1[1] + " não pertence à uma soma");
+        }
+    }
+
+    @Override
+    public void outASubtracaoExp(ASubtracaoExp node)
+    {
+        String elemento1[] = this.tabela_tipos.pop();
+        String elemento2[] = this.tabela_tipos.pop();
+
+        if(elemento1[1].intern() == "Numero ")
+        {
+            if(!(elemento2[1].intern() == "Numero "))
+            {
+                throw new RuntimeException("Impossível realizar subtração entre Numero e " + elemento2[1]);
+            }
+            else
+            {
+                System.out.println("Subtração: " + elemento1[0] + " - " + elemento2[0]);
+                String elemento[] = new String[2];
+                elemento[0] = "( " + elemento1[0] + " - " + elemento2[0] + " )";
+                elemento[1] = "Numero ";
+                this.tabela_tipos.push(elemento);
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Tipo " + elemento1[1] + " não pertence à uma subtração");
+        }
+    }
 }
