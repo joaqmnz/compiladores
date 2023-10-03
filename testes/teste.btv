@@ -11,7 +11,7 @@ molde Atributos contem
       x = leiaNumero();
 
       constante: Numero y;
-      y = 3 + 1;
+      y = leiaTexto();
 
       screen.escreva(calcular_sequencia(x | y))
    ]

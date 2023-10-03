@@ -5,34 +5,29 @@ import java.util.*;
 public class Semantico extends DepthFirstAdapter
 {
     private Stack<Hashtable<String, String>> tabela_simbolos;
-    private boolean entrar; //Variavel que serve para saber se deve ou nao entrar no nó atual
-    //definir uma funcao para obter o tipo de retorno
-
+    
     public Semantico()
     {
         this.tabela_simbolos = new Stack<Hashtable<String, String>>();
         this.tabela_simbolos.push(new Hashtable<String, String>());
-        this.entrar = true;
     }
 
-    //verificar como esta o push e pop da tabela_simbolos
     private boolean existe(String key)
     {
         Stack<Hashtable<String, String>> aux = new Stack<Hashtable<String, String>>();
         boolean existe = false;
+        int size = this.tabela_simbolos.size();
 
-        for(int i = 0; i < this.tabela_simbolos.size(); i++)
+        for(int i = 0; i < size; i++)
         {
             Hashtable<String, String> escopo_atual = this.tabela_simbolos.peek();
-
-            for(String k : escopo_atual.keySet()) System.out.println(k);
 
             if(escopo_atual.containsKey(key))
             {
                 existe = true;
                 break;
             }
-
+            
             aux.push(this.tabela_simbolos.pop());
         }
 
@@ -89,6 +84,10 @@ public class Semantico extends DepthFirstAdapter
             System.out.println("Adicionando " + esquerdo.toString() + "como filha de " + direito.toString());
             escopo_atual.put(esquerdo.toString(), direito.toString());
         }
+        else
+        {
+            throw new RuntimeException("Molde " + esquerdo.toString() + "já declarado");
+        }
 
         this.tabela_simbolos.push(escopo_atual);
     }
@@ -112,15 +111,22 @@ public class Semantico extends DepthFirstAdapter
     @Override
     public void inAFunc1DecFuncao(AFunc1DecFuncao node)
     {
-        Hashtable<String, String> escopo_atual = new Hashtable<String, String>();
+        Hashtable<String, String> novo_escopo = new Hashtable<String, String>();
 
         PTipo retorno_funcao = node.getTipo();
         TId nome_funcao = node.getId();
 
-        System.out.println("Adicionando função: " + retorno_funcao.toString() + "-> " + nome_funcao.toString());
-        escopo_atual.put(nome_funcao.toString(), retorno_funcao.toString());
+        if(!this.existe(nome_funcao.toString()))
+        {
+            System.out.println("Adicionando função: " + retorno_funcao.toString() + "-> " + nome_funcao.toString());
+            novo_escopo.put(nome_funcao.toString(), retorno_funcao.toString());
 
-        this.tabela_simbolos.push(escopo_atual);
+            this.tabela_simbolos.push(novo_escopo);
+        }
+        else
+        {
+            throw new RuntimeException("Função " + nome_funcao.toString() + "já declarada");
+        }
     }
 
     @Override
@@ -180,6 +186,7 @@ public class Semantico extends DepthFirstAdapter
         {
             if(escopo_atual.containsKey(molde.toString()))
             {
+                System.out.println("Adicionando objeto: " + molde.toString() + "-> " + id.toString());
                 escopo_atual.put(id.toString(), molde.toString());
             }
             else
@@ -189,7 +196,7 @@ public class Semantico extends DepthFirstAdapter
         }
         else
         {
-            throw new RuntimeException("Id " + id.toString() + "já declarado");
+            throw new RuntimeException("Id " + id.toString() + "já existente");
         }
     }
 
@@ -216,34 +223,4 @@ public class Semantico extends DepthFirstAdapter
         }
     }
 
-    // @Override
-    // public void inASomaExp(ASomaExp node)
-    // {
-    //     Hashtable<String, String> escopo_atual = this.tabela_simbolos.peek();
-
-    //     PExp esquerdo = node.getEsquerdo();
-    //     PExp direito = node.getDireito();
-
-    //     // String tipo_esquerdo = escopo_atual.get(esquerdo.toString());
-    //     String tipo_direito = escopo_atual.get(direito.toString());
-
-    //     if(!escopo_atual.containsKey(esquerdo.toString()))
-    //     {
-    //         throw new RuntimeException("Variável " + esquerdo.toString() + "não declarada");
-    //     }
-    //     if(!escopo_atual.containsKey(direito.toString()))
-    //     {
-    //         throw new RuntimeException("Variável " + direito.toString() + "não declarada");
-    //     }
-
-    //     if(!(tipo_direito.intern() == tipo_esquerdo.intern()))
-    //     {
-    //         System.out.println("Variável " + esquerdo.toString() + "-> " + tipo_esquerdo);
-    //         System.out.println("Variável " + direito.toString() + "-> " + tipo_direito);
-
-    //         throw new RuntimeException("Tipos de variáveis incompatíveis");
-    //     }
-        
-    //     System.out.println("Soma: " + esquerdo.toString() + "+ " + direito.toString());
-    // }
 }
