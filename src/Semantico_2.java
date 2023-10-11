@@ -115,6 +115,11 @@ public class Semantico_2 extends DepthFirstAdapter
     @Override //OK
     public void inAPrograma(APrograma node)
     {
+
+        System.out.println("---------------------------------------");
+        System.out.println("Início da Análise Semântica");
+        System.out.println("---------------------------------------");
+
         this.familias = new ArvoreFamilia("Todos");
         this.familias.inserir("Comunicacao");
 
@@ -136,6 +141,14 @@ public class Semantico_2 extends DepthFirstAdapter
         comunicacao.inserirInformacao(screen);
 
         this.moldes.push(comunicacao);
+    }
+
+    @Override
+    public void outAPrograma(APrograma node)
+    {
+        System.out.println("---------------------------------------");
+        System.out.println("Fim da Análise Semântica");
+        System.out.println("---------------------------------------");
     }
 
     @Override //OK
