@@ -1,17 +1,29 @@
 import bemtevi.analysis.*;
 import bemtevi.node.*;
 import java.util.*;
+import utils.Molde.*;
+import utils.Tipos.Abstrato.Molde;
+import utils.Arvore.ArvoreFamilia;
 
 public class Semantico extends DepthFirstAdapter
 {
+    private boolean inserirAtributosMolde; // variavel para inserir informacoes do molde em constante e objeto
+    private ArvoreFamilia familia; // arvore das familias
     private Stack<Hashtable<String, String>> tabela_simbolos;
+    private Stack<Molde> moldes; // pilha de moldes
     private Stack<Hashtable<String, String>> funcoes;
     private Stack<String[]> tabela_tipos;
     
     public Semantico()
     {
+        this.inserirAtributosMolde = true;
+
+        this.familia = new ArvoreFamilia("Todos");
+
         this.tabela_simbolos = new Stack<Hashtable<String, String>>();
         this.tabela_simbolos.push(new Hashtable<String, String>());
+
+        this.moldes = new Stack<Molde>();
 
         this.tabela_tipos = new Stack<String[]>();
 
@@ -54,6 +66,33 @@ public class Semantico extends DepthFirstAdapter
 
         if(size > 0)
             for(int i = 0; i < size; i++) pilha.push(aux.pop());
+
+        return existe;
+    }
+
+    private boolean existeMolde(String idMolde)
+    {
+        Stack<Molde> aux = new Stack<Molde>();
+        boolean existe = false;
+        int size = this.moldes.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            Molde moldeAtual = this.moldes.peek();
+
+            if(moldeAtual.getNome().intern() == idMolde.intern())
+            {
+                existe = true;
+                break;
+            }
+            
+            aux.push(this.moldes.pop());
+        }
+
+        size = aux.size();
+
+        if(size > 0)
+            for(int i = 0; i < size; i++) this.moldes.push(aux.pop());
 
         return existe;
     }
@@ -122,65 +161,63 @@ public class Semantico extends DepthFirstAdapter
         this.tabela_tipos.push(elemento);
     }
 
+    private void inserirMolde(Molde molde)
+    {
+        if(!this.existeMolde(molde.getNome()))
+        {
+            this.moldes.push(molde);
+        }
+        else throw new RuntimeException("[ERRO] Molde '" + molde.getNome() + "' já declarado");
+    }
+
+    private void inserirInformacaoMolde(EscopoMolde informacao)
+    {
+        Molde molde_atual = this.moldes.pop();
+        molde_atual.inserirInformacao(informacao);
+        this.moldes.push(molde_atual);
+    }
+
     @Override
     public void inAPrograma(APrograma node)
     {
         Hashtable<String, String> leianumero = new Hashtable<String, String>();
-        // System.out.println("Inserindo função: leiaNumero -> Numero");
+        System.out.println("Inserindo função: leiaNumero -> Numero");
         leianumero.put("nome", "leiaNumero");
         leianumero.put("retorno", "Numero");
         leianumero.put("parametros", "falso");
         this.funcoes.push(leianumero);
         
         Hashtable<String, String> leiatexto = new Hashtable<String, String>();
-        // System.out.println("Inserindo função: leiaTexto -> Texto");
+        System.out.println("Inserindo função: leiaTexto -> Texto");
         leiatexto.put("nome", "leiaTexto");
         leiatexto.put("retorno", "Texto");
         leiatexto.put("parametros", "falso");
         this.funcoes.push(leiatexto);
     }
 
-    @Override
+    @Override // OK
     public void inARelacao(ARelacao node)
     {
-        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+        String esquerdo = node.getEsquerdo().toString().trim();
+        String direito = node.getDireito().toString().trim();
 
-        TIdMolde esquerdo = node.getEsquerdo();
-        TIdMolde direito = node.getDireito();
-
-        if(!escopo_atual.containsKey(direito.toString()))
+        if(!this.familia.existeMolde(direito))
         {
-            // System.out.println("Adicionando " + direito.toString() + "como filha de Todos");
-            escopo_atual.put(direito.toString(), "Todos");
+            this.familia.inserir(direito);
+            this.familia.inserirFilho(direito, esquerdo);
         }
-
-        if(!escopo_atual.containsKey(esquerdo.toString()))
-        {
-            // System.out.println("Adicionando " + esquerdo.toString() + "como filha de " + direito.toString());
-            escopo_atual.put(esquerdo.toString(), direito.toString());
-        }
-        else
-        {
-            throw new RuntimeException("Molde " + esquerdo.toString() + "já declarado");
-        }
-
-        this.tabela_simbolos.push(escopo_atual);
+        else this.familia.inserirFilho(direito, esquerdo);
     }
 
-    @Override
+    @Override //OK
     public void inADefMolde(ADefMolde node)
     {
-        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+        Hashtable<String, String> novo_escopo = new Hashtable<String, String>();
+        this.tabela_simbolos.push(novo_escopo);
 
-        TIdMolde molde = node.getIdMolde();
-
-        if(!escopo_atual.containsKey(molde.toString()))
-        {
-            // System.out.println("Adicionando " + molde.toString() + "como filha de Todos");
-            escopo_atual.put(molde.toString(), "Todos");
-        }
-
-        this.tabela_simbolos.push(escopo_atual);
+        String idMolde = node.getIdMolde().toString().trim();
+        Molde molde = new Molde(idMolde);
+        this.inserirMolde(molde);
     }
 
     @Override
@@ -193,7 +230,7 @@ public class Semantico extends DepthFirstAdapter
 
         if(!this.existe(this.tabela_simbolos, nome_funcao.toString(), true))
         {
-            // System.out.println("Adicionando função: " + nome_funcao.toString() + "-> " + retorno_funcao.toString());
+            System.out.println("Adicionando função: " + nome_funcao.toString() + "-> " + retorno_funcao.toString());
             novo_escopo.put(nome_funcao.toString(), retorno_funcao.toString());
 
             this.tabela_simbolos.push(novo_escopo);
@@ -202,83 +239,146 @@ public class Semantico extends DepthFirstAdapter
         {
             throw new RuntimeException("Função " + nome_funcao.toString() + "já declarada");
         }
+
+        this.inserirAtributosMolde = false;
     }
 
     @Override
     public void outAFunc1DecFuncao(AFunc1DecFuncao node)
     {
-        TId funcao = node.getId();
-
-        // System.out.println("Removendo escopo da função " + funcao.toString());
+        System.out.println("Removendo escopo da função " + node.getId().toString());
         this.tabela_simbolos.pop();
     }
 
-    @Override
+    @Override //OK
+    public void outAParametros(AParametros node)
+    {
+        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+
+        int retirar = node.getDireito().size() + 1;
+        for(int i = 0; i < retirar; i++)
+        {
+            String elemento[] = this.tabela_tipos.pop();
+            if(!escopo_atual.containsKey(elemento[0]))
+            {
+                System.out.println("[INSERÇÃO] Adicionando parâmetro '" + elemento[0] + "' -> " + elemento[1]);
+                escopo_atual.put(elemento[0], elemento[1]);
+            }
+            else throw new RuntimeException("[ERRO] Parâmetro '" + elemento[0] + "' já declarado");
+        }
+
+        this.tabela_simbolos.push(escopo_atual);
+    }
+
+    @Override //OK
     public void inAIdParametro(AIdParametro node)
     {
-        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+        String tipo = node.getTipo().toString().trim();
+        String id = node.getId().toString().trim();
 
-        PTipo tipo = node.getTipo();
-        TId id = node.getId();
-
-        // System.out.println("Adicionando parâmetro: " + id.toString() + "-> " + tipo.toString());
-        
-        escopo_atual.put(id.toString(), tipo.toString());
-
-        this.tabela_simbolos.push(escopo_atual);
+        this.inserir_tabela_tipos(id, tipo);
     }
 
-    @Override
+    @Override //OK
     public void inAConstanteBlocoFecho(AConstanteBlocoFecho node)
     {
-        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+        String tipo = node.getTipoPrimitivo().toString().trim();
+        String id = node.getId().toString().trim();
 
-        PTipoPrimitivo tipo = node.getTipoPrimitivo();
-        TId id = node.getId();
-
-        if(!escopo_atual.containsKey(id.toString()))
-        {
-            // System.out.println("Adicionando constante: " + id.toString() + "-> " + tipo.toString());
-            escopo_atual.put(id.toString(), tipo.toString());
-        }
+        if(this.inserirAtributosMolde) this.inserirInformacaoMolde(new Constante(id, tipo));
         else
         {
-            throw new RuntimeException("Constante " + id.toString() + "já declarada");
-        }
-
-        this.tabela_simbolos.push(escopo_atual);
-    }
-
-    @Override
-    public void inAObjetoBlocoFecho(AObjetoBlocoFecho node)
-    {
-        Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
-
-        PTipoMolde molde = node.getTipoMolde();
-        TId id = node.getId();
-
-        if(!escopo_atual.containsKey(id.toString()))
-        {
-            if(escopo_atual.containsKey(molde.toString()))
+            Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+            if(!escopo_atual.containsKey(id))
             {
-                // System.out.println("Adicionando objeto: " + id.toString() + "-> " + molde.toString());
-                escopo_atual.put(id.toString(), molde.toString());
+                System.out.println("[INSERÇÃO] Adicionando constante '" + id + "' -> " + tipo);
+                escopo_atual.put(id, tipo);
+                if(this.inserirAtributosMolde) this.inserirInformacaoMolde(new Constante(id, tipo));
             }
             else
             {
-                throw new RuntimeException("Tipo molde " + molde.toString() + "não declarado");
+                throw new RuntimeException("[ERRO] Constante '" + id + "' já declarada");
             }
+
+            this.tabela_simbolos.push(escopo_atual);
         }
+    }
+
+    @Override //OK
+    public void inAObjetoBlocoFecho(AObjetoBlocoFecho node)
+    {
+        String molde = node.getTipoMolde().toString().trim();
+        String id = node.getId().toString().trim();
+
+        if(this.inserirAtributosMolde) this.inserirInformacaoMolde(new Objeto(id, molde));
         else
         {
-            throw new RuntimeException("Id " + id.toString() + "já existente");
+            Hashtable<String, String> escopo_atual = this.tabela_simbolos.pop();
+            if(!escopo_atual.containsKey(id))
+            {
+                if(this.familia.existeMolde(molde))
+                {
+                    System.out.println("[INSERÇÃO] Adicionando objeto '" + id + "' -> " + molde);
+                    escopo_atual.put(id, molde);
+                }
+                else
+                {
+                    throw new RuntimeException("[ERRO] Tipo molde '" + molde + "' não declarado");
+                }
+            }
+            else
+            {
+                throw new RuntimeException("[ERRO] Id '" + id + "' já declarado");
+            }
         }
     }
 
     @Override
-    public void inADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
+    public void outADefinicaoBlocoFecho(ADefinicaoBlocoFecho node)
     {
-        
+        String elemento1[] = this.tabela_tipos.pop();
+        String elemento2[] = this.tabela_tipos.pop();
+
+        if(elemento1[1].intern() == elemento2[1].intern())
+        {
+            System.out.println("Atribuindo: " + elemento2[0] + " = " + elemento1[0]);
+        }
+        else
+        {
+            throw new RuntimeException("Não é possível atribuir '" + elemento1[1] + "' a um '" + elemento2[1] + "'");
+        }
+    }
+
+    @Override
+    public void outAIdIdOuAttr(AIdIdOuAttr node)
+    {
+        String id = node.getId().toString().trim();
+
+        if(this.existe(this.tabela_simbolos, id, true))
+        {
+            String tipo = this.obter_valor_chave(id);
+            this.inserir_tabela_tipos(id, tipo);
+        }
+        else
+            throw new RuntimeException("Variável " + id + "não declarada");
+    }
+
+    @Override
+    public void outAAtributoIdOuAttr(AAtributoIdOuAttr node)
+    {
+        String atributo = node.getId().toString().trim();
+        if(this.existe(this.tabela_simbolos, atributo, true))
+        {
+            String tipo = this.obter_valor_chave(atributo);
+            if(tipo.intern() != "Numero" && tipo.intern() != "Bool" && tipo.intern() != "Texto")
+            {
+                int retirar = node.getIdFecho().size();
+
+            }
+            else throw new RuntimeException("[ERRO] Variável '" + atributo + "' não é um objeto");
+        }
+        else throw new RuntimeException("[ERRO] Variável '" + atributo + "' não declarada");
+
     }
 
     @Override
@@ -289,33 +389,49 @@ public class Semantico extends DepthFirstAdapter
     }
 
     @Override
+    public void outAVazioListaExp(AVazioListaExp node)
+    {
+        this.inserir_tabela_tipos("0", "Numero");
+    }
+
+    @Override
     public void outAChamadaExp(AChamadaExp node)
     {
         String elemento[] = this.tabela_tipos.pop();
         int desempilhar = Integer.parseInt(elemento[0]);
+
         String funcao_chamada = node.getId().toString().trim();
 
         if(this.existe(this.funcoes, funcao_chamada, false))
         {
             Hashtable<String, String> funcao = this.obter_funcao(funcao_chamada);
-            if(funcao.get("parametros").intern() == "verdade") System.out.println("Aceita parametros");
-            else throw new RuntimeException("Função " + funcao_chamada + " não aceita parâmetros, mas " + desempilhar + " foram passados");
+            if(funcao.get("parametros").intern() == "verdade".intern())
+            {
+                System.out.println("Aceita parametros");
+            }
+            else
+            {
+                if(desempilhar > 0)
+                    throw new RuntimeException("Função " + funcao_chamada + " não aceita parâmetros, mas " + desempilhar + " foram passados");
+                else
+                    this.inserir_tabela_tipos(funcao_chamada, funcao.get("retorno"));
+            }
         }
     }
 
     @Override
     public void outAIdExp(AIdExp node)
     {
-        TId id = node.getId();
+        String id = node.getId().toString().trim();
 
-        if(this.existe(this.tabela_simbolos, id.toString(), true))
+        if(this.existe(this.tabela_simbolos, id, true))
         {
-            String tipo_id = this.obter_valor_chave(id.toString());
-            this.inserir_tabela_tipos(id.toString().replace(" ", ""), tipo_id);
+            String tipo_id = this.obter_valor_chave(id);
+            this.inserir_tabela_tipos(id.trim(), tipo_id);
         }
         else
         {
-            throw new RuntimeException("Variável " + id.toString() + "não declarada");
+            throw new RuntimeException("Variável " + id + "não declarada");
         }
     }
 

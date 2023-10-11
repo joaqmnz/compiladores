@@ -1,12 +1,23 @@
 molde LetraA se passa por Vogal;molde LetraB se passa por Consoante.
 
 molde Atributos contem
-   constante : Bool bool; 
-   constante : Numero num;
-   constante : Texto texto;
+   constante : Numero x;
 
-   funcao : Numero soma (Numero a | Numero b | Texto c)
+   funcao : Numero soma (Numero n | Texto f (Numero))
    [
-      3 + (a * b - (10 - 8))
+      constante: Numero x;
+      x = 3 + 7;
+
+      constante: Numero y;
+      y = 1;
+
+      se(y < (x - 10)) entao
+      [
+         verdade
+      ]
+      senao
+      [
+         y
+      ]
    ]
 fim
